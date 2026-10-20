@@ -107,7 +107,7 @@ function renderProductsTable() {
 
   tbody.innerHTML = prods.map(p => `
     <tr>
-      <td><img src="${p.image}" class="prod-thumb-sm" alt="${p.name}"></td>
+      <td><img src="${p.image.startsWith('http') || p.image.startsWith('data:') ? p.image : '../' + p.image}" class="prod-thumb-sm" alt="${p.name}"></td>
       <td><strong>${p.name}</strong></td>
       <td><span style="background: #e2e8f0; padding: 4px 10px; border-radius: 6px; font-size: 0.82rem;">${p.categoryName || p.category}</span></td>
       <td><strong style="color: #2563eb;">${p.price} ${currency}</strong></td>

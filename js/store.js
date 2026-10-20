@@ -10,12 +10,25 @@ let searchQuery = '';
 // Load initial store data
 async function initStore() {
   try {
+    const res = await fetch('data/products.json?v=' + Date.now());
+    const freshData = await res.json();
+    
     const localOverride = localStorage.getItem('techno_store_data');
     if (localOverride) {
-      storeData = JSON.parse(localOverride);
+      const parsed = JSON.parse(localOverride);
+      // Auto-migrate any broken/old image links to fresh local images
+      if (parsed.products && Array.isArray(parsed.products)) {
+        parsed.products.forEach(p => {
+          const fresh = freshData.products.find(fp => fp.id === p.id);
+          if (fresh && (!p.image || p.image.includes('unsplash') || p.image.includes('photo-1622445262464'))) {
+            p.image = fresh.image;
+          }
+        });
+      }
+      storeData = parsed;
+      localStorage.setItem('techno_store_data', JSON.stringify(storeData));
     } else {
-      const res = await fetch('data/products.json');
-      storeData = await res.json();
+      storeData = freshData;
     }
   } catch (e) {
     console.error('Failed to load store data:', e);
