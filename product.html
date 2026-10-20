@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">تفاصيل المنتج | تكنو نوفا - Techno Nova</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Main Style -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .product-page-container {
+            max-width: 1240px;
+            margin: 40px auto 60px;
+            padding: 0 20px;
+        }
+        .tech-breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+        .tech-breadcrumb a { color: #0284c7; text-decoration: none; }
+        .tech-breadcrumb a:hover { text-decoration: underline; }
+        
+        .product-detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            gap: 45px;
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 40px;
+            border: 1px solid var(--color-border);
+            box-shadow: 0 10px 30px rgba(15,23,42,0.05);
+        }
+        @media (max-width: 900px) {
+            .product-detail-grid { grid-template-columns: 1fr; padding: 25px; }
+        }
+        
+        .product-gallery {
+            position: relative;
+        }
+        .product-main-img-box {
+            position: relative;
+            background: #f8fafc;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--color-border);
+            height: 420px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .product-main-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        .product-main-img-box:hover img {
+            transform: scale(1.05);
+        }
+        
+        .product-info-col h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #0f172a;
+            line-height: 1.35;
+            margin: 12px 0 15px;
+        }
+        
+        .product-meta-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .stock-badge {
+            background: #dcfce7;
+            color: #16a34a;
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .product-price-box {
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .current-price-lg {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #0284c7;
+        }
+        .old-price-lg {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            text-decoration: line-through;
+            margin-right: 10px;
+        }
+        
+        .action-btns-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        @media (max-width: 600px) {
+            .action-btns-grid { grid-template-columns: 1fr; }
+        }
+        
+        .btn-add-cart-lg {
+            background: #0284c7;
+            color: #fff;
+            border: none;
+            padding: 16px;
+            border-radius: 14px;
+            font-size: 1.05rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: 0.25s;
+            box-shadow: 0 6px 20px rgba(2, 132, 199, 0.35);
+        }
+        .btn-add-cart-lg:hover {
+            background: #0369a1;
+            transform: translateY(-2px);
+        }
+        
+        .btn-wa-order-lg {
+            background: #22c55e;
+            color: #fff;
+            border: none;
+            padding: 16px;
+            border-radius: 14px;
+            font-size: 1.05rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: 0.25s;
+            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.35);
+            text-decoration: none;
+        }
+        .btn-wa-order-lg:hover {
+            background: #16a34a;
+            transform: translateY(-2px);
+            color: #fff;
+        }
+        
+        .product-tabs-box {
+            background: #ffffff;
+            border-radius: 20px;
+            border: 1px solid var(--color-border);
+            margin-top: 40px;
+            padding: 35px;
+        }
+        .tab-buttons {
+            display: flex;
+            gap: 15px;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            overflow-x: auto;
+        }
+        .tab-btn {
+            background: none;
+            border: none;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #64748b;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .tab-btn.active {
+            color: #0284c7;
+            background: #e0f2fe;
+        }
+        
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .specs-table td {
+            padding: 14px 18px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.95rem;
+        }
+        .specs-table tr:nth-child(even) { background: #f8fafc; }
+        .specs-table td:first-child { font-weight: 700; color: #0f172a; width: 35%; }
+        
+        .qty-control {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .qty-btn-lg {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            border: 1px solid #cbd5e1;
+            background: #f8fafc;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .qty-val-lg {
+            font-size: 1.2rem;
+            font-weight: 800;
+            min-width: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Authentic Tech Header -->
+    <header class="tech-header">
+        <div class="tech-container">
+            <div class="tech-header-main">
+                <a href="index.html" class="tech-logo-link">
+                    <div class="tech-logo-icon">
+                        <i class="fa-solid fa-microchip"></i>
+                    </div>
+                    <div class="tech-logo-text">
+                        <span class="tech-logo-title">تكنو نوفا</span>
+                        <span class="tech-logo-sub">TECHNO NOVA</span>
+                    </div>
+                </a>
+
+                <div class="tech-search-bar">
+                    <form onsubmit="event.preventDefault(); window.location.href='shop.html?search=' + encodeURIComponent(document.getElementById('techSearchInput').value);" style="display:flex; width:100%;">
+                        <input type="text" id="techSearchInput" class="tech-search-input" placeholder="ابحث في أكثر من 1,000 جهاز ذكي وملحق أصلي...">
+                        <button type="submit" class="tech-search-btn">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <span>بحث</span>
+                        </button>
+                    </form>
+                </div>
+
+                <div class="tech-header-actions">
+                    <a href="admin/index.html" class="tech-action-btn" title="لوحة التحكم الإدارية" style="background: rgba(2, 132, 199, 0.12); color: #0284c7; font-weight: 700; border-radius: 12px; border: 1px solid rgba(2, 132, 199, 0.3);">
+                        <i class="fa-solid fa-user-shield"></i>
+                    </a>
+                    <button class="tech-action-btn" onclick="toggleCartDrawer()" title="سلة المشتريات">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span class="tech-action-badge" id="cartCountBadge">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <nav class="tech-navbar">
+            <div class="tech-container">
+                <div class="tech-navbar-inner">
+                    <ul class="tech-nav-menu">
+                        <li class="tech-nav-item">
+                            <a href="shop.html" class="tech-nav-mega-btn" style="background-color: #2563eb !important; color: #ffffff !important;">
+                                <i class="fa-solid fa-layer-group" style="color: #ffffff !important;"></i>
+                                <span style="color: #ffffff !important;">كافة الأقسام الذكية</span>
+                            </a>
+                        </li>
+                        <li class="tech-nav-item"><a href="index.html">الرئيسية</a></li>
+                        <li class="tech-nav-item"><a href="shop.html">المتجر</a></li>
+                        <li class="tech-nav-item"><a href="about.html">من نحن</a></li>
+                        <li class="tech-nav-item"><a href="contact.html">اتصل بنا</a></li>
+                    </ul>
+                    <div class="tech-nav-hotline">
+                        <i class="fa-solid fa-headset"></i>
+                        <span>الخط الساخن: <a href="tel:01027093535" style="color:inherit; font-weight:700;">01027093535</a></span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Product Details Container -->
+    <main class="product-page-container">
+        <!-- Breadcrumb -->
+        <div class="tech-breadcrumb">
+            <a href="index.html"><i class="fa-solid fa-house"></i> الرئيسية</a>
+            <i class="fa-solid fa-chevron-left" style="font-size:0.7rem;"></i>
+            <a href="shop.html">المتجر والأجهزة</a>
+            <i class="fa-solid fa-chevron-left" style="font-size:0.7rem;"></i>
+            <span id="breadcrumbCategory">الأجهزة</span>
+            <i class="fa-solid fa-chevron-left" style="font-size:0.7rem;"></i>
+            <span id="breadcrumbTitle" style="color:#0f172a; font-weight:700;">جاري التحميل...</span>
+        </div>
+
+        <div class="product-detail-grid" id="productDetailBox">
+            <!-- Left Gallery -->
+            <div class="product-gallery">
+                <div class="product-main-img-box">
+                    <img id="detailImg" src="images/prod_smart_watch.jpg" alt="صورة المنتج">
+                </div>
+                <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; margin-top:16px;">
+                    <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:12px; text-align:center;">
+                        <i class="fa-solid fa-shield-halved" style="color:#0284c7; font-size:1.3rem; margin-bottom:5px;"></i>
+                        <div style="font-size:0.8rem; font-weight:700;">ضمان سنتين</div>
+                    </div>
+                    <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:12px; text-align:center;">
+                        <i class="fa-solid fa-truck-fast" style="color:#0284c7; font-size:1.3rem; margin-bottom:5px;"></i>
+                        <div style="font-size:0.8rem; font-weight:700;">شحن 24-48 ساعة</div>
+                    </div>
+                    <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:12px; text-align:center;">
+                        <i class="fa-solid fa-rotate-left" style="color:#0284c7; font-size:1.3rem; margin-bottom:5px;"></i>
+                        <div style="font-size:0.8rem; font-weight:700;">استرجاع 14 يوم</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Info -->
+            <div class="product-info-col">
+                <div class="product-meta-row">
+                    <span id="detailBadge" class="tech-badge" style="background:#0284c7; color:#fff; padding:4px 12px; border-radius:20px; font-weight:700; font-size:0.8rem;">جديد</span>
+                    <span class="stock-badge"><i class="fa-solid fa-circle-check"></i> متوفر في المستودع</span>
+                    <span id="detailRating" style="color:#f59e0b; font-weight:700;"><i class="fa-solid fa-star"></i> 4.9 (120+ تقييم)</span>
+                </div>
+
+                <h1 id="detailTitle">ساعة ألترا برو الذكية تيتانيوم AMOLED</h1>
+                <p id="detailDesc" style="color:#475569; font-size:1rem; line-height:1.7; margin-bottom:20px;">
+                    جاري تحميل المواصفات...
+                </p>
+
+                <div class="product-price-box">
+                    <div>
+                        <span style="font-size:0.85rem; color:#64748b; display:block;">السعر الخاص للعرض:</span>
+                        <span id="detailPrice" class="current-price-lg">680 ر.س</span>
+                        <span id="detailOldPrice" class="old-price-lg">890 ر.س</span>
+                    </div>
+                    <span style="background:#ef4444; color:#fff; padding:6px 14px; border-radius:30px; font-weight:800; font-size:0.85rem;">شامل الضريبة 15%</span>
+                </div>
+
+                <!-- Quantity -->
+                <div class="qty-control">
+                    <span style="font-weight:700; color:#0f172a; margin-left:10px;">الكمية:</span>
+                    <button class="qty-btn-lg" onclick="changeDetailQty(-1)">-</button>
+                    <span class="qty-val-lg" id="detailQty">1</span>
+                    <button class="qty-btn-lg" onclick="changeDetailQty(1)">+</button>
+                </div>
+
+                <!-- Buttons -->
+                <div class="action-btns-grid">
+                    <button class="btn-add-cart-lg" onclick="addCurrentProductToCart()">
+                        <i class="fa-solid fa-cart-plus"></i> أضف إلى السلة
+                    </button>
+                    <a id="btnDirectWhatsApp" href="#" target="_blank" class="btn-wa-order-lg">
+                        <i class="fa-brands fa-whatsapp" style="font-size:1.3rem;"></i> طلب فوري عبر واتساب
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Details Tabs -->
+        <div class="product-tabs-box">
+            <div class="tab-buttons">
+                <button class="tab-btn active" onclick="switchProductTab('specsTab')">المواصفات الفنية التفصيلية</button>
+                <button class="tab-btn" onclick="switchProductTab('warrantyTab')">الضمان وسياسة التوصيل</button>
+                <button class="tab-btn" onclick="switchProductTab('reviewsTab')">تجارب وتقييمات العملاء</button>
+            </div>
+
+            <div id="specsTab" class="product-tab-content">
+                <table class="specs-table" id="specsTableBody"></table>
+            </div>
+
+            <div id="warrantyTab" class="product-tab-content" style="display:none; line-height:1.8; color:#334155;">
+                <h3 style="font-weight:800; margin-bottom:12px; color:#0f172a;"><i class="fa-solid fa-certificate" style="color:#0284c7;"></i> وثيقة الضمان الذهبي لمدة عامين:</h3>
+                <p id="detailWarrantyText">كافة الأجهزة الإلكترونية مشمولة بضمان رسمي معتمد لمدة 24 شهراً يشمل الصيانة والاستبدال الفوري في حال وجود أي عيب مصنعي.</p>
+                <h4 style="font-weight:700; margin:20px 0 8px; color:#0f172a;"><i class="fa-solid fa-truck" style="color:#0284c7;"></i> مواعيد وسياسة الشحن:</h4>
+                <p>يتم تجهيز وشحن الطلبات فور تأكيدها، مع توفير التوصيل لكافة المدن خلال 24 إلى 48 ساعة كحد أقصى، مع إمكانية فحص الجهاز قبل الاستلام.</p>
+            </div>
+
+            <div id="reviewsTab" class="product-tab-content" style="display:none;">
+                <div style="display:flex; align-items:center; gap:20px; background:#f8fafc; padding:20px; border-radius:14px; margin-bottom:20px;">
+                    <div style="font-size:3rem; font-weight:900; color:#0284c7;" id="reviewsScore">4.9</div>
+                    <div>
+                        <div style="color:#f59e0b; font-size:1.2rem; margin-bottom:4px;">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <div style="color:#64748b; font-size:0.9rem;">بناءً على تقييم المشترين المعتمدين للمنتج</div>
+                    </div>
+                </div>
+                <div id="reviewsList" style="display:flex; flex-direction:column; gap:15px;"></div>
+            </div>
+        </div>
+
+        <!-- Related Products -->
+        <div style="margin-top:60px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px;">
+                <h2 style="font-size:1.5rem; font-weight:800; color:#0f172a;">أجهزة أخرى قد تهمك</h2>
+                <a href="shop.html" style="color:#0284c7; font-weight:700; text-decoration:none;">عرض كافة المنتجات <i class="fa-solid fa-arrow-left"></i></a>
+            </div>
+            <div class="tech-products-grid" id="relatedProductsGrid" style="grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));"></div>
+        </div>
+    </main>
+
+    <!-- Authentic Footer -->
+    <footer class="tech-footer">
+        <div class="tech-container">
+            <div class="tech-footer-grid">
+                <div class="tech-footer-col">
+                    <div class="tech-logo-link" style="margin-bottom: 16px;">
+                        <div class="tech-logo-icon"><i class="fa-solid fa-microchip"></i></div>
+                        <div class="tech-logo-text">
+                            <span class="tech-logo-title" style="color:#fff;">تكنو نوفا</span>
+                            <span class="tech-logo-sub">TECHNO NOVA</span>
+                        </div>
+                    </div>
+                    <p style="color:#94a3b8; font-size:0.9rem; line-height:1.7;">وجهتك الأولى للأجهزة الذكية الأصلية مع ضمان الوكيل وسرعة التوصيل لباب منزلك.</p>
+                </div>
+                <div class="tech-footer-col">
+                    <h4 class="tech-footer-title">روابط سريعة</h4>
+                    <ul class="tech-footer-links">
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="shop.html">كافة الأجهزة</a></li>
+                        <li><a href="about.html">من نحن</a></li>
+                        <li><a href="contact.html">اتصل بنا</a></li>
+                        <li><a href="admin/index.html">لوحة التحكم</a></li>
+                    </ul>
+                </div>
+                <div class="tech-footer-col">
+                    <h4 class="tech-footer-title">خدمة العملاء والطلبات</h4>
+                    <ul class="tech-footer-links">
+                        <li><i class="fa-solid fa-phone"></i> <a href="tel:01027093535">01027093535</a></li>
+                        <li><i class="fa-brands fa-whatsapp"></i> <a href="https://wa.me/201027093535" target="_blank">+20 102 709 3535</a></li>
+                        <li><i class="fa-solid fa-clock"></i> يومياً 9 ص - 11 م</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tech-footer-bottom">
+                <p>© 2026 متجر تكنو نوفا | Techno Nova - جميع الحقوق محفوظة</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Slide-Out Cart Drawer -->
+    <div class="tech-drawer-overlay" id="cartOverlay" onclick="toggleCartDrawer()"></div>
+    <div class="tech-cart-drawer" id="cartDrawer">
+        <div class="tech-drawer-header">
+            <h3><i class="fa-solid fa-bag-shopping" style="color: var(--color-primary);"></i> سلة مشترياتك (<span id="cartCountHeader">0</span>)</h3>
+            <button class="tech-drawer-close" onclick="toggleCartDrawer()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="tech-drawer-body" id="cartItemsContainer"></div>
+        <div class="tech-drawer-footer">
+            <div class="tech-drawer-total">
+                <span>الإجمالي المقدر:</span>
+                <span id="cartTotalSum" style="color: var(--color-primary);">0 ر.س</span>
+            </div>
+            <button class="tech-drawer-checkout" onclick="proceedCheckout()">
+                <span>إتمام الطلب عبر واتساب</span>
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="tech-toast" id="techToast">
+        <i class="fa-solid fa-circle-check" style="color: #22c55e; font-size: 18px;"></i>
+        <span id="toastMsg">تمت الإضافة بنجاح!</span>
+    </div>
+
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/201027093535" target="_blank" class="tech-floating-whatsapp" style="position: fixed; bottom: 25px; right: 25px; width: 60px; height: 60px; background: #25d366; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5); z-index: 9999; text-decoration: none;" title="تواصل عبر واتساب">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <script src="js/store.js"></script>
+    <script>
+        let currentProd = null;
+        let selectedQty = 1;
+
+        async function initProductPage() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const prodId = parseInt(urlParams.get('id') || '1');
+
+            // Fetch product data
+            let products = [];
+            const local = localStorage.getItem('techno_store_data');
+            if (local) {
+                const parsed = JSON.parse(local);
+                products = parsed.products || [];
+            } else {
+                try {
+                    const res = await fetch('data/products.json?v=' + Date.now());
+                    const data = await res.json();
+                    products = data.products || [];
+                } catch(e) { console.error(e); }
+            }
+
+            currentProd = products.find(p => p.id === prodId) || products[0];
+            if (!currentProd) return;
+
+            document.getElementById('pageTitle').textContent = `${currentProd.name} | تكنو نوفا`;
+            document.getElementById('breadcrumbTitle').textContent = currentProd.name;
+            document.getElementById('breadcrumbCategory').textContent = currentProd.categoryName || 'الأجهزة الذكية';
+            document.getElementById('detailTitle').textContent = currentProd.name;
+            document.getElementById('detailDesc').textContent = currentProd.description;
+            document.getElementById('detailPrice').textContent = `${currentProd.price} ر.س`;
+            document.getElementById('detailOldPrice').textContent = currentProd.oldPrice ? `${currentProd.oldPrice} ر.س` : '';
+            document.getElementById('detailImg').src = currentProd.image;
+            document.getElementById('detailImg').alt = currentProd.name;
+            document.getElementById('detailBadge').textContent = currentProd.badge || 'عرض خاص';
+            document.getElementById('detailRating').innerHTML = `<i class="fa-solid fa-star"></i> ${currentProd.rating || 5.0} (${currentProd.reviewsCount || 80}+ تقييم)`;
+
+            if (currentProd.warranty) {
+                document.getElementById('detailWarrantyText').textContent = currentProd.warranty;
+            }
+
+            // Specs table
+            const specsBody = document.getElementById('specsTableBody');
+            if (currentProd.specs && currentProd.specs.length > 0) {
+                specsBody.innerHTML = currentProd.specs.map(s => {
+                    const parts = s.split(':');
+                    if (parts.length > 1) {
+                        return `<tr><td>${parts[0].trim()}</td><td>${parts.slice(1).join(':').trim()}</td></tr>`;
+                    }
+                    return `<tr><td>الميزة والمواصفة</td><td>${s}</td></tr>`;
+                }).join('');
+            }
+
+            // Direct WhatsApp link
+            const waMsg = `مرحباً، أود الاستفسار وطلب شراء: *${currentProd.name}*\nالسعر: *${currentProd.price} ر.س*\nالكمية المطلوبة: *${selectedQty}*\nرابط المنتج: ${window.location.href}`;
+            document.getElementById('btnDirectWhatsApp').href = `https://wa.me/201027093535?text=${encodeURIComponent(waMsg)}`;
+
+            // Render Related
+            const relatedGrid = document.getElementById('relatedProductsGrid');
+            const related = products.filter(p => p.id !== currentProd.id).slice(0, 3);
+            relatedGrid.innerHTML = related.map(p => `
+                <div class="tech-product-card">
+                    <div class="tech-product-image-box">
+                        <span class="tech-product-badge">${p.badge || 'مميز'}</span>
+                        <a href="product.html?id=${p.id}"><img src="${p.image}" alt="${p.name}"></a>
+                    </div>
+                    <div class="tech-product-body">
+                        <div class="tech-product-category">${p.categoryName || 'إلكترونيات'}</div>
+                        <h3 class="tech-product-title"><a href="product.html?id=${p.id}" style="color:inherit; text-decoration:none;">${p.name}</a></h3>
+                        <div class="tech-product-footer">
+                            <div class="tech-price-wrap">
+                                <span class="tech-current-price">${p.price} ر.س</span>
+                                ${p.oldPrice ? `<span class="tech-old-price">${p.oldPrice} ر.س</span>` : ''}
+                            </div>
+                            <button class="tech-card-action-btn" onclick="addToCart('${p.name}', ${p.price}, '${p.image}')"><i class="fa-solid fa-cart-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Fake reviews
+            const reviewsList = document.getElementById('reviewsList');
+            reviewsList.innerHTML = `
+                <div style="background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:16px;">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                        <strong>فهد السبيعي</strong>
+                        <span style="color:#f59e0b;"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
+                    </div>
+                    <p style="color:#475569; font-size:0.9rem;">منتج ممتاز جداً وتجربة الشراء كانت سلسة، التوصيل وصل في أقل من 24 ساعة والجهاز أصلي 100%.</p>
+                </div>
+                <div style="background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:16px;">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                        <strong>ياسر العمري</strong>
+                        <span style="color:#f59e0b;"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
+                    </div>
+                    <p style="color:#475569; font-size:0.9rem;">خامات فاخرة وصوت نقي جداً، شكراً لفريق خدمة العملاء على حسن التعامل وسرعة الرد عبر واتساب.</p>
+                </div>
+            `;
+        }
+
+        function changeDetailQty(delta) {
+            selectedQty = Math.max(1, selectedQty + delta);
+            document.getElementById('detailQty').textContent = selectedQty;
+            if (currentProd) {
+                const waMsg = `مرحباً، أود الاستفسار وطلب شراء: *${currentProd.name}*\nالسعر: *${currentProd.price} ر.س*\nالكمية المطلوبة: *${selectedQty}*\nرابط المنتج: ${window.location.href}`;
+                document.getElementById('btnDirectWhatsApp').href = `https://wa.me/201027093535?text=${encodeURIComponent(waMsg)}`;
+            }
+        }
+
+        function addCurrentProductToCart() {
+            if (!currentProd) return;
+            for (let i = 0; i < selectedQty; i++) {
+                addToCart(currentProd.name, currentProd.price, currentProd.image);
+            }
+        }
+
+        function switchProductTab(tabId) {
+            document.querySelectorAll('.product-tab-content').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabId).style.display = 'block';
+            event.target.classList.add('active');
+        }
+
+        document.addEventListener('DOMContentLoaded', initProductPage);
+    </script>
+</body>
+</html>

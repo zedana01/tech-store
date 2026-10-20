@@ -224,7 +224,7 @@
     /* ==========================================================================
        3. CART & INTERACTIVE DRAWER
        ========================================================================== */
-    var cart = [];
+    var cart = JSON.parse(localStorage.getItem('tech_cart') || '[]');
 
     function addToCart(title, price, img) {
         cart.push({ title: title, price: price, img: img });
@@ -234,6 +234,7 @@
 
     function removeFromCart(index) {
         cart.splice(index, 1);
+        localStorage.setItem('tech_cart', JSON.stringify(cart));
         updateCartUI();
     }
 
@@ -291,11 +292,50 @@
     }
 
     function proceedCheckout() {
-        if (cart.length === 0) {
+        if (!cart || cart.length === 0) {
             showToast('السلة فارغة! أضف بعض الأجهزة أولاً للمتابعة.');
             return;
         }
-        showToast('جاري تحويلك إلى بوابة الدفع الآمنة والتقسيط...');
+        
+        var total = 0;
+        var itemsText = "";
+        cart.forEach(function(item, idx) {
+            var sub = item.price * item.quantity;
+            total += sub;
+            itemsText += "\n" + (idx + 1) + ") *" + item.name + "*\n   الكمية: " + item.quantity + " × " + item.price + " = " + sub + " ر.س";
+        });
+        
+        var orderId = "TECH-" + Math.floor(100000 + Math.random() * 900000);
+        var dateStr = new Date().toLocaleString('ar-EG');
+        
+        // Save to orders log
+        var existingOrders = JSON.parse(localStorage.getItem('techno_orders') || '[]');
+        existingOrders.unshift({
+            id: orderId,
+            customerName: "عميل المتجر (طلب سريع)",
+            customerPhone: "واتساب",
+            city: "شحن سريع",
+            items: cart.slice(),
+            total: total,
+            currency: "ر.س",
+            date: dateStr,
+            status: "جديد"
+        });
+        localStorage.setItem('techno_orders', JSON.stringify(existingOrders));
+        
+        var msg = "*طلب شراء جديد من متجر تكنو نوفا* 🛍️\n";
+        msg += "*رقم الطلب:* " + orderId + "\n";
+        msg += "*التاريخ:* " + dateStr + "\n";
+        msg += "--------------------------------\n";
+        msg += "*المنتجات المطلوبة:*" + itemsText + "\n";
+        msg += "--------------------------------\n";
+        msg += "💰 *الإجمالي الكلي:* *" + total + " ر.س*\n\n";
+        msg += "أرجو تأكيد توفر الطلب والبدء في الشحن والتوصيل فوراً.";
+        
+        showToast('جاري تحويلك إلى واتساب لتأكيد الطلب والشحن...');
+        setTimeout(function() {
+            window.open("https://wa.me/201027093535?text=" + encodeURIComponent(msg), "_blank");
+        }, 800);
     }
 
     function showToast(msg) {
@@ -409,3 +449,9 @@ function proceedCheckout() {
         window.open(waUrl, "_blank");
     }, 800);
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    if (typeof updateCartUI === 'function') {
+        updateCartUI();
+    }
+});

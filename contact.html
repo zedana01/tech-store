@@ -1,172 +1,427 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>اتصل بنا | تكنو نوفا - Techno Nova</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اتصل بنا | تكنو نوفا - Techno Nova</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Main Style -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .page-hero-banner {
+            background: linear-gradient(135deg, #090d16 0%, #0f172a 100%);
+            color: #ffffff;
+            padding: 70px 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        .page-hero-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(2, 132, 199, 0.25) 0%, rgba(2, 132, 199, 0) 70%);
+            filter: blur(50px);
+        }
+        .page-hero-title {
+            font-size: 2.6rem;
+            font-weight: 900;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 2;
+        }
+        .page-hero-sub {
+            color: #94a3b8;
+            font-size: 1.15rem;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .contact-main-container {
+            max-width: 1200px;
+            margin: 50px auto 80px;
+            padding: 0 20px;
+        }
+        
+        .contact-grid-wrap {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 40px;
+        }
+        @media (max-width: 900px) {
+            .contact-grid-wrap { grid-template-columns: 1fr; }
+        }
+        
+        .contact-info-card {
+            background: #ffffff;
+            border-radius: 24px;
+            border: 1px solid var(--color-border);
+            padding: 35px;
+            box-shadow: 0 10px 30px rgba(15,23,42,0.04);
+        }
+        .contact-method-item {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 18px;
+            border-radius: 16px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 16px;
+            transition: 0.25s;
+        }
+        .contact-method-item:hover {
+            border-color: #0284c7;
+            transform: translateY(-2px);
+        }
+        .contact-icon-box {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        .contact-form-card {
+            background: #ffffff;
+            border-radius: 24px;
+            border: 1px solid var(--color-border);
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(15,23,42,0.04);
+        }
+        .form-group-custom {
+            margin-bottom: 20px;
+        }
+        .form-label-custom {
+            display: block;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+        .form-input-custom {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid #cbd5e1;
+            font-size: 0.95rem;
+            font-family: inherit;
+            outline: none;
+            transition: 0.2s;
+        }
+        .form-input-custom:focus {
+            border-color: #0284c7;
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+        }
+        
+        .faq-section {
+            margin-top: 60px;
+        }
+        .faq-item {
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid var(--color-border);
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+        .faq-item h4 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+        .faq-item p {
+            color: #475569;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+    </style>
 </head>
 <body>
 
-  <!-- Top Announcement Bar -->
-  <div class="top-bar">
-    <div class="container">
-      <div class="top-bar-left">
-        <span><i class="fas fa-truck"></i> خدمة عملاء واستشارات فنية مباشرة</span>
-      </div>
-      <div class="top-bar-right">
-        <a href="tel:01027093535" class="store-phone-text"><i class="fas fa-phone-alt"></i> 01027093535</a>
-        <a href="admin/index.html" style="color: #93c5fd; font-weight: 700;"><i class="fas fa-user-shield"></i> لوحة التحكم</a>
-      </div>
-    </div>
-  </div>
+    <!-- Authentic Tech Header -->
+    <header class="tech-header">
+        <div class="tech-container">
+            <div class="tech-header-main">
+                <a href="index.html" class="tech-logo-link">
+                    <div class="tech-logo-icon">
+                        <i class="fa-solid fa-microchip"></i>
+                    </div>
+                    <div class="tech-logo-text">
+                        <span class="tech-logo-title">تكنو نوفا</span>
+                        <span class="tech-logo-sub">TECHNO NOVA</span>
+                    </div>
+                </a>
 
-  <!-- Navbar -->
-  <header class="navbar">
-    <div class="container nav-wrapper">
-      <a href="index.html" class="logo">
-        <i class="fas fa-microchip"></i>
-        <div><span class="store-name-text">تكنو نوفا</span></div>
-      </a>
+                <div class="tech-search-bar">
+                    <form onsubmit="event.preventDefault(); window.location.href='shop.html?search=' + encodeURIComponent(document.getElementById('techSearchInput').value);" style="display:flex; width:100%;">
+                        <input type="text" id="techSearchInput" class="tech-search-input" placeholder="ابحث في أكثر من 1,000 جهاز ذكي وملحق أصلي...">
+                        <button type="submit" class="tech-search-btn">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <span>بحث</span>
+                        </button>
+                    </form>
+                </div>
 
-      <ul class="nav-links" id="navLinks">
-        <li><a href="index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
-        <li><a href="shop.html"><i class="fas fa-layer-group"></i> كافة الأجهزة</a></li>
-        <li><a href="about.html"><i class="fas fa-info-circle"></i> من نحن</a></li>
-        <li><a href="contact.html" class="active"><i class="fas fa-envelope"></i> اتصل بنا</a></li>
-      </ul>
-
-      <div class="nav-actions">
-        <button class="cart-btn" onclick="openCartDrawer()" title="سلة المشتريات">
-          <i class="fas fa-shopping-cart"></i>
-          <span class="cart-badge">0</span>
-        </button>
-        <a href="admin/index.html" class="admin-link-btn" title="دخول الإدارة">
-          <i class="fas fa-cog"></i> <span>الإدارة</span>
-        </a>
-      </div>
-    </div>
-  </header>
-
-  <!-- Contact Banner -->
-  <section style="background: linear-gradient(135deg, #0b1120 0%, #1e293b 100%); color: #fff; padding: 50px 0; text-align: center;">
-    <div class="container">
-      <h1 style="font-size: 2.3rem; font-weight: 800; margin-bottom: 10px;">يسعدنا دائماً تواصلكم معنا</h1>
-      <p style="color: #94a3b8; font-size: 1rem;">فريق خدمة العملاء جاهز للإجابة على جميع استفساراتكم ومساعدتكم في اختيار جهازكم القادم</p>
-    </div>
-  </section>
-
-  <!-- Contact Grid -->
-  <section class="section">
-    <div class="container" style="max-width: 1000px;">
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
-        
-        <!-- Direct Contact Cards -->
-        <div>
-          <div style="background: #fff; border-radius: 16px; padding: 30px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
-            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
-              <div style="width: 50px; height: 50px; border-radius: 12px; background: #dcfce7; color: #16a34a; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
-                <i class="fab fa-whatsapp"></i>
-              </div>
-              <div>
-                <h4 style="font-size: 1.1rem; font-weight: 800; color: #0f172a;">محادثة واتساب الفورية</h4>
-                <p style="font-size: 0.85rem; color: #64748b;">الرد خلال دقائق لمتابعة الطلبات والاستفسارات</p>
-              </div>
+                <div class="tech-header-actions">
+                    <a href="admin/index.html" class="tech-action-btn" title="لوحة التحكم الإدارية" style="background: rgba(2, 132, 199, 0.12); color: #0284c7; font-weight: 700; border-radius: 12px; border: 1px solid rgba(2, 132, 199, 0.3);">
+                        <i class="fa-solid fa-user-shield"></i>
+                    </a>
+                    <button class="tech-action-btn" onclick="toggleCartDrawer()" title="سلة المشتريات">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span class="tech-action-badge" id="cartCountBadge">0</span>
+                    </button>
+                </div>
             </div>
-            <a href="https://wa.me/201027093535" target="_blank" class="btn-whatsapp-checkout store-whatsapp-link">
-              <i class="fab fa-whatsapp"></i> راسلنا عبر واتساب
-            </a>
-          </div>
-
-          <div style="background: #fff; border-radius: 16px; padding: 30px; border: 1px solid #e2e8f0;">
-            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
-              <div style="width: 50px; height: 50px; border-radius: 12px; background: #eff6ff; color: #2563eb; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
-                <i class="fas fa-phone-alt"></i>
-              </div>
-              <div>
-                <h4 style="font-size: 1.1rem; font-weight: 800; color: #0f172a;">الاتصال الهاتفي المباشر</h4>
-                <p style="font-size: 0.85rem; color: #64748b;">خط المبيعات المباشر (متاح يومياً)</p>
-              </div>
-            </div>
-            <a href="tel:01027093535" class="btn-primary store-phone-text" style="width: 100%; justify-content: center;">
-              <i class="fas fa-phone-alt"></i> اتصل بنا: 01027093535
-            </a>
-          </div>
         </div>
 
-        <!-- Contact Form -->
-        <div style="background: #fff; border-radius: 16px; padding: 30px; border: 1px solid #e2e8f0;">
-          <h3 style="font-size: 1.3rem; font-weight: 800; color: #0f172a; margin-bottom: 8px;">أرسل رسالة سريعة</h3>
-          <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 20px;">سيتم تحويل رسالتك إلى فريق الدعم الفني فوراً</p>
+        <nav class="tech-navbar">
+            <div class="tech-container">
+                <div class="tech-navbar-inner">
+                    <ul class="tech-nav-menu">
+                        <li class="tech-nav-item">
+                            <a href="shop.html" class="tech-nav-mega-btn" style="background-color: #2563eb !important; color: #ffffff !important;">
+                                <i class="fa-solid fa-layer-group" style="color: #ffffff !important;"></i>
+                                <span style="color: #ffffff !important;">كافة الأقسام الذكية</span>
+                            </a>
+                        </li>
+                        <li class="tech-nav-item"><a href="index.html">الرئيسية</a></li>
+                        <li class="tech-nav-item"><a href="shop.html">المتجر</a></li>
+                        <li class="tech-nav-item"><a href="about.html">من نحن</a></li>
+                        <li class="tech-nav-item active"><a href="contact.html">اتصل بنا</a></li>
+                    </ul>
+                    <div class="tech-nav-hotline">
+                        <i class="fa-solid fa-headset"></i>
+                        <span>الخط الساخن: <a href="tel:01027093535" style="color:inherit; font-weight:700;">01027093535</a></span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-          <form onsubmit="handleContactSubmit(event)">
-            <div style="margin-bottom: 15px;">
-              <label style="display: block; font-weight: 700; font-size: 0.88rem; margin-bottom: 6px;">الاسم الكريم</label>
-              <input type="text" id="contactName" required placeholder="اسمك" style="width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px;">
+    <!-- Page Banner -->
+    <section class="page-hero-banner">
+        <h1 class="page-hero-title">يسعدنا دائماً تواصلكم معنا</h1>
+        <p class="page-hero-sub">فريق خدمة العملاء والدعم التقني متاح لمساعدتكم في الاستفسارات والطلبات ومتابعة الشحنات على مدار اليوم.</p>
+    </section>
+
+    <!-- Main Content -->
+    <main class="contact-main-container">
+        <div class="contact-grid-wrap">
+            
+            <!-- Left Info -->
+            <div class="contact-info-card">
+                <h3 style="font-size:1.4rem; font-weight:800; color:#0f172a; margin-bottom:20px;">وسائل الاتصال المباشرة</h3>
+                
+                <a href="https://wa.me/201027093535" target="_blank" class="contact-method-item" style="text-decoration:none; color:inherit;">
+                    <div class="contact-icon-box" style="background:#dcfce7; color:#16a34a;">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </div>
+                    <div>
+                        <div style="font-size:0.8rem; color:#64748b; font-weight:700;">خدمة عملاء واتساب المباشرة</div>
+                        <div style="font-size:1.15rem; font-weight:800; color:#16a34a;">+20 102 709 3535</div>
+                    </div>
+                </a>
+
+                <a href="tel:01027093535" class="contact-method-item" style="text-decoration:none; color:inherit;">
+                    <div class="contact-icon-box" style="background:#e0f2fe; color:#0284c7;">
+                        <i class="fa-solid fa-phone-volume"></i>
+                    </div>
+                    <div>
+                        <div style="font-size:0.8rem; color:#64748b; font-weight:700;">الاتصال الهاتفي السريع</div>
+                        <div style="font-size:1.15rem; font-weight:800; color:#0284c7;">01027093535</div>
+                    </div>
+                </a>
+
+                <div class="contact-method-item">
+                    <div class="contact-icon-box" style="background:#fef3c7; color:#d97706;">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+                    <div>
+                        <div style="font-size:0.8rem; color:#64748b; font-weight:700;">أوقات العمل والمبيعات</div>
+                        <div style="font-size:0.95rem; font-weight:700; color:#0f172a;">يومياً من 9:00 صباحاً حتى 11:00 مساءً</div>
+                    </div>
+                </div>
+
+                <div class="contact-method-item">
+                    <div class="contact-icon-box" style="background:#f1f5f9; color:#475569;">
+                        <i class="fa-solid fa-truck-ramp-box"></i>
+                    </div>
+                    <div>
+                        <div style="font-size:0.8rem; color:#64748b; font-weight:700;">الشحن والتوصيل</div>
+                        <div style="font-size:0.95rem; font-weight:700; color:#0f172a;">شحن لكافة المدن والمحافظات خلال 24 - 48 ساعة</div>
+                    </div>
+                </div>
             </div>
-            <div style="margin-bottom: 15px;">
-              <label style="display: block; font-weight: 700; font-size: 0.88rem; margin-bottom: 6px;">رقم الجوال / الواتساب</label>
-              <input type="tel" id="contactPhone" required placeholder="010xxxxxxx" style="width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px;">
+
+            <!-- Right Form -->
+            <div class="contact-form-card">
+                <h3 style="font-size:1.4rem; font-weight:800; color:#0f172a; margin-bottom:10px;">أرسل استفسارك أو طلبك</h3>
+                <p style="color:#64748b; font-size:0.9rem; margin-bottom:25px;">املأ البيانات التالية وسيتم توجيه رسالتك مباشرة لفريق الدعم عبر واتساب للرد عليك فوراً.</p>
+
+                <form onsubmit="handleContactWhatsAppSubmit(event)">
+                    <div class="form-group-custom">
+                        <label class="form-label-custom">الاسم الكريم *</label>
+                        <input type="text" id="contactName" required class="form-input-custom" placeholder="مثال: عبدالله محمد">
+                    </div>
+
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;" class="form-group-custom">
+                        <div>
+                            <label class="form-label-custom">رقم الهاتف / الواتساب *</label>
+                            <input type="tel" id="contactPhone" required class="form-input-custom" placeholder="010xxxxxxx">
+                        </div>
+                        <div>
+                            <label class="form-label-custom">نوع الاستفسار</label>
+                            <select id="contactTopic" class="form-input-custom">
+                                <option value="طلب شراء جهاز جديد">طلب شراء جهاز جديد</option>
+                                <option value="متابعة حالة شحنة">متابعة حالة شحنة</option>
+                                <option value="استفسار عن الضمان والمواصفات">استفسار عن الضمان والمواصفات</option>
+                                <option value="طلب كميات للشركات">طلب كميات للشركات</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group-custom">
+                        <label class="form-label-custom">تفاصيل الرسالة أو الجهاز المطلوب *</label>
+                        <textarea id="contactMsg" rows="4" required class="form-input-custom" placeholder="اكتب استفسارك بالتفصيل وسنقوم بالتواصل معك فوراً..." style="resize:none;"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-wa-order-lg" style="width:100%; border-radius:12px; font-size:1.05rem; cursor:pointer;">
+                        <i class="fa-brands fa-whatsapp" style="font-size:1.3rem;"></i> إرسال الاستفسار عبر واتساب
+                    </button>
+                </form>
             </div>
-            <div style="margin-bottom: 20px;">
-              <label style="display: block; font-weight: 700; font-size: 0.88rem; margin-bottom: 6px;">تفاصيل رسالتك أو استفسارك</label>
-              <textarea id="contactMessage" rows="4" required placeholder="اكتب استفسارك هنا بالتفصيل..." style="width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px; resize: none;"></textarea>
+
+        </div>
+
+        <!-- FAQ -->
+        <div class="faq-section">
+            <h2 style="font-size:1.6rem; font-weight:800; color:#0f172a; text-align:center; margin-bottom:30px;">الأسئلة الأكثر شيوعاً</h2>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+                <div class="faq-item">
+                    <h4><i class="fa-solid fa-circle-question" style="color:#0284c7;"></i> هل الأجهزة الإلكترونية أصلية ومضمونة؟</h4>
+                    <p>نعم، كافة منتجاتنا أصلية 100% بسيريال موثق وتأتي مع ضمان ذهبي معتمد لمدة سنتين يشمل الاستبدال الفوري ضد أي عيب صناعة.</p>
+                </div>
+                <div class="faq-item">
+                    <h4><i class="fa-solid fa-circle-question" style="color:#0284c7;"></i> كم يستغرق وصول الطلب؟</h4>
+                    <p>تصل الطلبات داخل المدن الرئيسية خلال 24 ساعة، وباقي المناطق خلال 48 ساعة كحد أقصى مع إمكانية المعاينة قبل الاستلام.</p>
+                </div>
+                <div class="faq-item">
+                    <h4><i class="fa-solid fa-circle-question" style="color:#0284c7;"></i> ما هي وسائل الدفع المتاحة؟</h4>
+                    <p>نوفر خيارات الدفع عند الاستلام، والدفع الإلكتروني عبر مدى، فيزا، ماستركارد، آبل باي، وكذلك التقسيط بدون فوائد عبر تابي وتمارا.</p>
+                </div>
+                <div class="faq-item">
+                    <h4><i class="fa-solid fa-circle-question" style="color:#0284c7;"></i> كيف يمكنني استرجاع أو استبدال منتج؟</h4>
+                    <p>نوفر سياسة استبدال واسترجاع ميسرة خلال 14 يوماً من تاريخ الاستلام، بشرط بقاء المنتج بكامل ملحقاته وعلبته الأصلية.</p>
+                </div>
             </div>
-            <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 13px;">
-              <i class="fas fa-paper-plane"></i> إرسال الرسالة
+        </div>
+    </main>
+
+    <!-- Authentic Footer -->
+    <footer class="tech-footer">
+        <div class="tech-container">
+            <div class="tech-footer-grid">
+                <div class="tech-footer-col">
+                    <div class="tech-logo-link" style="margin-bottom: 16px;">
+                        <div class="tech-logo-icon"><i class="fa-solid fa-microchip"></i></div>
+                        <div class="tech-logo-text">
+                            <span class="tech-logo-title" style="color:#fff;">تكنو نوفا</span>
+                            <span class="tech-logo-sub">TECHNO NOVA</span>
+                        </div>
+                    </div>
+                    <p style="color:#94a3b8; font-size:0.9rem; line-height:1.7;">وجهتك الأولى للأجهزة الذكية الأصلية مع ضمان الوكيل وسرعة التوصيل لباب منزلك.</p>
+                </div>
+                <div class="tech-footer-col">
+                    <h4 class="tech-footer-title">روابط سريعة</h4>
+                    <ul class="tech-footer-links">
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="shop.html">كافة الأجهزة</a></li>
+                        <li><a href="about.html">من نحن</a></li>
+                        <li><a href="contact.html">اتصل بنا</a></li>
+                        <li><a href="admin/index.html">لوحة التحكم</a></li>
+                    </ul>
+                </div>
+                <div class="tech-footer-col">
+                    <h4 class="tech-footer-title">خدمة العملاء والطلبات</h4>
+                    <ul class="tech-footer-links">
+                        <li><i class="fa-solid fa-phone"></i> <a href="tel:01027093535">01027093535</a></li>
+                        <li><i class="fa-brands fa-whatsapp"></i> <a href="https://wa.me/201027093535" target="_blank">+20 102 709 3535</a></li>
+                        <li><i class="fa-solid fa-clock"></i> يومياً 9 ص - 11 م</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tech-footer-bottom">
+                <p>© 2026 متجر تكنو نوفا | Techno Nova - جميع الحقوق محفوظة</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Slide-Out Cart Drawer -->
+    <div class="tech-drawer-overlay" id="cartOverlay" onclick="toggleCartDrawer()"></div>
+    <div class="tech-cart-drawer" id="cartDrawer">
+        <div class="tech-drawer-header">
+            <h3><i class="fa-solid fa-bag-shopping" style="color: var(--color-primary);"></i> سلة مشترياتك (<span id="cartCountHeader">0</span>)</h3>
+            <button class="tech-drawer-close" onclick="toggleCartDrawer()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="tech-drawer-body" id="cartItemsContainer"></div>
+        <div class="tech-drawer-footer">
+            <div class="tech-drawer-total">
+                <span>الإجمالي المقدر:</span>
+                <span id="cartTotalSum" style="color: var(--color-primary);">0 ر.س</span>
+            </div>
+            <button class="tech-drawer-checkout" onclick="proceedCheckout()">
+                <span>إتمام الطلب عبر واتساب</span>
+                <i class="fa-solid fa-arrow-left"></i>
             </button>
-          </form>
         </div>
-
-      </div>
     </div>
-  </section>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-bottom" style="border: none; padding: 0;">
-        <p>جميع الحقوق محفوظة © 2026 لمتجر <span class="store-name-text">تكنو نوفا | Techno Nova</span></p>
-      </div>
+    <!-- Toast Notification -->
+    <div class="tech-toast" id="techToast">
+        <i class="fa-solid fa-circle-check" style="color: #22c55e; font-size: 18px;"></i>
+        <span id="toastMsg">تمت الإضافة بنجاح!</span>
     </div>
-  </footer>
 
-  <!-- Slide-out Cart Drawer -->
-  <div class="cart-drawer-overlay" id="cartOverlay" onclick="closeCartDrawer()"></div>
-  <div class="cart-drawer" id="cartDrawer">
-    <div class="cart-header">
-      <h3><i class="fas fa-shopping-bag"></i> سلة المشتريات</h3>
-      <button class="close-cart-btn" onclick="closeCartDrawer()"><i class="fas fa-times"></i></button>
-    </div>
-    <div class="cart-items-body" id="cartItemsList"></div>
-    <div class="cart-footer">
-      <div class="cart-total-row">
-        <span>الإجمالي التقديري:</span>
-        <span class="cart-total-price" id="cartTotalPrice">0 ر.س</span>
-      </div>
-      <button class="btn-whatsapp-checkout" onclick="initiateWhatsAppCheckout()">
-        <i class="fab fa-whatsapp"></i> إتمام الطلب عبر واتساب
-      </button>
-    </div>
-  </div>
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/201027093535" target="_blank" class="tech-floating-whatsapp" style="position: fixed; bottom: 25px; right: 25px; width: 60px; height: 60px; background: #25d366; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5); z-index: 9999; text-decoration: none;" title="تواصل عبر واتساب">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
 
-  <a href="https://wa.me/201027093535" target="_blank" class="floating-whatsapp store-whatsapp-link">
-    <i class="fab fa-whatsapp"></i>
-  </a>
+    <script src="js/store.js"></script>
+    <script>
+        function handleContactWhatsAppSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('contactName').value.trim();
+            const phone = document.getElementById('contactPhone').value.trim();
+            const topic = document.getElementById('contactTopic').value;
+            const msg = document.getElementById('contactMsg').value.trim();
 
-  <script src="js/store.js"></script>
-  <script>
-    function handleContactSubmit(e) {
-      e.preventDefault();
-      const name = document.getElementById('contactName').value;
-      const phone = document.getElementById('contactPhone').value;
-      const msg = document.getElementById('contactMessage').value;
-      const fullText = `*رسالة واستفسار جديد من نموذج اتصل بنا* ✉️\n\n• *الاسم:* ${name}\n• *الهاتف:* ${phone}\n• *الرسالة:*\n${msg}`;
-      window.open(`https://wa.me/201027093535?text=${encodeURIComponent(fullText)}`, '_blank');
-      showToast('جاري فتح المحادثة المباشرة عبر واتساب...');
-      e.target.reset();
-    }
-  </script>
+            const waText = `*استفسار جديد من نموذج اتصل بنا (متجر تكنو نوفا)* ✉️\n\n` +
+                `• *الاسم:* ${name}\n` +
+                `• *الهاتف:* ${phone}\n` +
+                `• *الموضوع:* ${topic}\n` +
+                `• *الرسالة:*\n${msg}`;
+
+            const url = `https://wa.me/201027093535?text=${encodeURIComponent(waText)}`;
+            showToast("جاري تحويلك إلى واتساب لإرسال الرسالة...");
+            setTimeout(() => {
+                window.open(url, '_blank');
+            }, 800);
+            e.target.reset();
+        }
+    </script>
 </body>
 </html>

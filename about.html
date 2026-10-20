@@ -1,120 +1,335 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>من نحن | تكنو نوفا - Techno Nova</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>من نحن | تكنو نوفا - Techno Nova</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Main Style -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .page-hero-banner {
+            background: linear-gradient(135deg, #090d16 0%, #0f172a 100%);
+            color: #ffffff;
+            padding: 70px 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        .page-hero-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(2, 132, 199, 0.25) 0%, rgba(2, 132, 199, 0) 70%);
+            filter: blur(50px);
+        }
+        .page-hero-title {
+            font-size: 2.6rem;
+            font-weight: 900;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 2;
+        }
+        .page-hero-sub {
+            color: #94a3b8;
+            font-size: 1.15rem;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .about-main-container {
+            max-width: 1140px;
+            margin: 50px auto 80px;
+            padding: 0 20px;
+        }
+        
+        .about-card {
+            background: #ffffff;
+            border-radius: 24px;
+            border: 1px solid var(--color-border);
+            padding: 45px;
+            box-shadow: 0 10px 30px rgba(15,23,42,0.04);
+            margin-bottom: 40px;
+            line-height: 1.9;
+            color: #334155;
+        }
+        .about-card h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .stats-grid-about {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        .stat-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 18px;
+            padding: 30px 20px;
+            text-align: center;
+            transition: 0.3s;
+        }
+        .stat-box:hover {
+            transform: translateY(-5px);
+            border-color: #0284c7;
+            box-shadow: 0 10px 25px rgba(2, 132, 199, 0.1);
+        }
+        .stat-num {
+            font-size: 2.4rem;
+            font-weight: 900;
+            color: #0284c7;
+            margin-bottom: 6px;
+        }
+        .stat-lbl {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #475569;
+        }
+        
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .val-item {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+        .val-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            background: #e0f2fe;
+            color: #0284c7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+    </style>
 </head>
 <body>
 
-  <!-- Top Announcement Bar -->
-  <div class="top-bar">
-    <div class="container">
-      <div class="top-bar-left">
-        <span><i class="fas fa-truck"></i> شحن سريع وضمان ذهبي عامين</span>
-      </div>
-      <div class="top-bar-right">
-        <a href="tel:01027093535" class="store-phone-text"><i class="fas fa-phone-alt"></i> 01027093535</a>
-        <a href="admin/index.html" style="color: #93c5fd; font-weight: 700;"><i class="fas fa-user-shield"></i> لوحة التحكم</a>
-      </div>
-    </div>
-  </div>
+    <!-- Authentic Tech Header -->
+    <header class="tech-header">
+        <div class="tech-container">
+            <div class="tech-header-main">
+                <a href="index.html" class="tech-logo-link">
+                    <div class="tech-logo-icon">
+                        <i class="fa-solid fa-microchip"></i>
+                    </div>
+                    <div class="tech-logo-text">
+                        <span class="tech-logo-title">تكنو نوفا</span>
+                        <span class="tech-logo-sub">TECHNO NOVA</span>
+                    </div>
+                </a>
 
-  <!-- Navbar -->
-  <header class="navbar">
-    <div class="container nav-wrapper">
-      <a href="index.html" class="logo">
-        <i class="fas fa-microchip"></i>
-        <div><span class="store-name-text">تكنو نوفا</span></div>
-      </a>
+                <div class="tech-search-bar">
+                    <form onsubmit="event.preventDefault(); window.location.href='shop.html?search=' + encodeURIComponent(document.getElementById('techSearchInput').value);" style="display:flex; width:100%;">
+                        <input type="text" id="techSearchInput" class="tech-search-input" placeholder="ابحث في أكثر من 1,000 جهاز ذكي وملحق أصلي...">
+                        <button type="submit" class="tech-search-btn">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <span>بحث</span>
+                        </button>
+                    </form>
+                </div>
 
-      <ul class="nav-links" id="navLinks">
-        <li><a href="index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
-        <li><a href="shop.html"><i class="fas fa-layer-group"></i> كافة الأجهزة</a></li>
-        <li><a href="about.html" class="active"><i class="fas fa-info-circle"></i> من نحن</a></li>
-        <li><a href="contact.html"><i class="fas fa-envelope"></i> اتصل بنا</a></li>
-      </ul>
-
-      <div class="nav-actions">
-        <button class="cart-btn" onclick="openCartDrawer()" title="سلة المشتريات">
-          <i class="fas fa-shopping-cart"></i>
-          <span class="cart-badge">0</span>
-        </button>
-        <a href="admin/index.html" class="admin-link-btn" title="دخول الإدارة">
-          <i class="fas fa-cog"></i> <span>الإدارة</span>
-        </a>
-      </div>
-    </div>
-  </header>
-
-  <!-- About Banner -->
-  <section style="background: linear-gradient(135deg, #0b1120 0%, #1e293b 100%); color: #fff; padding: 60px 0; text-align: center;">
-    <div class="container">
-      <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 12px;">من نحن في تكنو نوفا</h1>
-      <p style="color: #94a3b8; font-size: 1.1rem; max-width: 680px; margin: 0 auto;">نجمع بين أحدث التقنيات العالمية والضمان الحقيقي لتوفير تجربة تسوق إلكترونية استثنائية ترتقي لحياتك اليومية.</p>
-    </div>
-  </section>
-
-  <!-- About Content -->
-  <section class="section">
-    <div class="container" style="max-width: 900px;">
-      <div style="background: #fff; border-radius: 18px; padding: 40px; border: 1px solid #e2e8f0; box-shadow: 0 4px 20px rgba(0,0,0,0.05); line-height: 1.9;">
-        <h2 style="color: #0f172a; font-weight: 800; margin-bottom: 16px; font-size: 1.6rem;">قصتنا ورؤيتنا</h2>
-        <p style="color: #475569; margin-bottom: 20px;">
-          تأسس متجر <strong>تكنو نوفا (Techno Nova)</strong> بهدف سد الفجوة بين التقنيات المتطورة وسهولة الحصول عليها بأسعار عادلة وضمان حقيقي. ننتقي منتجاتنا بعناية فائقة من أفضل الشركات المصنعة عالمياً، ونحرص على فحص كل منتج واعتماده قبل عرضه لعملائنا.
-        </p>
-
-        <h3 style="color: #0f172a; font-weight: 800; margin: 25px 0 12px; font-size: 1.3rem;">لماذا يختارنا العملاء؟</h3>
-        <ul style="padding-right: 20px; color: #475569; margin-bottom: 25px;">
-          <li style="margin-bottom: 8px;"><strong>أصلية وجودة مؤكدة:</strong> كافة الأجهزة حاصلة على شهادات الجودة والاعتماد وبسيريال أصلي موثق.</li>
-          <li style="margin-bottom: 8px;"><strong>دعم فني واستشارات مجانية:</strong> فريق متخصص يساعدك في اختيار المنتج الأنسب لاحتياجك وميزانيتك.</li>
-          <li style="margin-bottom: 8px;"><strong>مرونة وسرعة في التوصيل:</strong> شبكة شحن سريعة تغطي كافة المدن مع إمكانية الدفع عند الاستلام.</li>
-          <li style="margin-bottom: 8px;"><strong>طلب سهل وسريع عبر واتساب:</strong> بدون تعقيد وبنقرة زر واحدة.</li>
-        </ul>
-
-        <div style="text-align: center; margin-top: 35px;">
-          <a href="shop.html" class="btn-primary" style="padding: 14px 32px; font-size: 1.05rem;">
-            <i class="fas fa-shopping-bag"></i> ابدأ التسوق الآن
-          </a>
+                <div class="tech-header-actions">
+                    <a href="admin/index.html" class="tech-action-btn" title="لوحة التحكم الإدارية" style="background: rgba(2, 132, 199, 0.12); color: #0284c7; font-weight: 700; border-radius: 12px; border: 1px solid rgba(2, 132, 199, 0.3);">
+                        <i class="fa-solid fa-user-shield"></i>
+                    </a>
+                    <button class="tech-action-btn" onclick="toggleCartDrawer()" title="سلة المشتريات">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span class="tech-action-badge" id="cartCountBadge">0</span>
+                    </button>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-bottom" style="border: none; padding: 0;">
-        <p>جميع الحقوق محفوظة © 2026 لمتجر <span class="store-name-text">تكنو نوفا | Techno Nova</span></p>
-      </div>
-    </div>
-  </footer>
+        <nav class="tech-navbar">
+            <div class="tech-container">
+                <div class="tech-navbar-inner">
+                    <ul class="tech-nav-menu">
+                        <li class="tech-nav-item">
+                            <a href="shop.html" class="tech-nav-mega-btn" style="background-color: #2563eb !important; color: #ffffff !important;">
+                                <i class="fa-solid fa-layer-group" style="color: #ffffff !important;"></i>
+                                <span style="color: #ffffff !important;">كافة الأقسام الذكية</span>
+                            </a>
+                        </li>
+                        <li class="tech-nav-item"><a href="index.html">الرئيسية</a></li>
+                        <li class="tech-nav-item"><a href="shop.html">المتجر</a></li>
+                        <li class="tech-nav-item active"><a href="about.html">من نحن</a></li>
+                        <li class="tech-nav-item"><a href="contact.html">اتصل بنا</a></li>
+                    </ul>
+                    <div class="tech-nav-hotline">
+                        <i class="fa-solid fa-headset"></i>
+                        <span>الخط الساخن: <a href="tel:01027093535" style="color:inherit; font-weight:700;">01027093535</a></span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-  <!-- Slide-out Cart Drawer -->
-  <div class="cart-drawer-overlay" id="cartOverlay" onclick="closeCartDrawer()"></div>
-  <div class="cart-drawer" id="cartDrawer">
-    <div class="cart-header">
-      <h3><i class="fas fa-shopping-bag"></i> سلة المشتريات</h3>
-      <button class="close-cart-btn" onclick="closeCartDrawer()"><i class="fas fa-times"></i></button>
-    </div>
-    <div class="cart-items-body" id="cartItemsList"></div>
-    <div class="cart-footer">
-      <div class="cart-total-row">
-        <span>الإجمالي التقديري:</span>
-        <span class="cart-total-price" id="cartTotalPrice">0 ر.س</span>
-      </div>
-      <button class="btn-whatsapp-checkout" onclick="initiateWhatsAppCheckout()">
-        <i class="fab fa-whatsapp"></i> إتمام الطلب عبر واتساب
-      </button>
-    </div>
-  </div>
+    <!-- Page Banner -->
+    <section class="page-hero-banner">
+        <h1 class="page-hero-title">من نحن في تكنو نوفا</h1>
+        <p class="page-hero-sub">عالمك للأجهزة الذكية والتقنيات العصرية.. نجمع بين أحدث ابتكارات العالم والضمان الحقيقي المعتمد.</p>
+    </section>
 
-  <a href="https://wa.me/201027093535" target="_blank" class="floating-whatsapp store-whatsapp-link">
-    <i class="fab fa-whatsapp"></i>
-  </a>
+    <!-- Main Content -->
+    <main class="about-main-container">
+        <div class="about-card">
+            <h2><i class="fa-solid fa-bolt" style="color:#0284c7;"></i> قصتنا ورؤيتنا المستقبلية</h2>
+            <p>
+                انطلق متجر <strong>تكنو نوفا (Techno Nova)</strong> كمنصة متخصصة تهدف إلى إعادة تعريف تجربة اقتناء الأجهزة الذكية في العالم العربي. نؤمن بأن التكنولوجيا المتقدمة ليست مجرد أجهزة عادية، بل هي أسلوب حياة يرتقي بإنتاجيتك وراحتك اليومية.
+            </p>
+            <p style="margin-top:14px;">
+                لذلك، نحرص في تكنو نوفا على ألا نعرض أي منتج إلا بعد اختباره وفحصه والتأكد من مطابقته لأعلى معايير الجودة العالمية، وتقديم ضمان رسمي لمدة عامين كاملين مع خدمة ما بعد البيع المباشرة التي تضع العميل أولاً دائماً.
+            </p>
 
-  <script src="js/store.js"></script>
+            <!-- Stats -->
+            <div class="stats-grid-about">
+                <div class="stat-box">
+                    <div class="stat-num">+15,000</div>
+                    <div class="stat-lbl">عميل يثق بأجهزتنا</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-num">100%</div>
+                    <div class="stat-lbl">منتجات أصلية معتمدة</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-num">24-48</div>
+                    <div class="stat-lbl">ساعة سرعة التوصيل</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-num">سنتين</div>
+                    <div class="stat-lbl">ضمان ذهبي شامل</div>
+                </div>
+            </div>
+
+            <h2 style="margin-top:40px;"><i class="fa-solid fa-gem" style="color:#0284c7;"></i> قيمنا والتزامنا تجاهكم</h2>
+            <div class="values-grid">
+                <div class="val-item">
+                    <div class="val-icon"><i class="fa-solid fa-award"></i></div>
+                    <div>
+                        <h4 style="font-weight:800; font-size:1.05rem; color:#0f172a; margin-bottom:6px;">أصالة ومطابقة تامة</h4>
+                        <p style="font-size:0.9rem; color:#64748b;">كافة الأجهزة مصحوبة بسيريال أصلي وضمان رسمي معتمد.</p>
+                    </div>
+                </div>
+                <div class="val-item">
+                    <div class="val-icon"><i class="fa-solid fa-truck-fast"></i></div>
+                    <div>
+                        <h4 style="font-weight:800; font-size:1.05rem; color:#0f172a; margin-bottom:6px;">شحن فوري لباب منزلك</h4>
+                        <p style="font-size:0.9rem; color:#64748b;">توصيل آمن وسريع مع إمكانية المعاينة قبل الاستلام والدفع.</p>
+                    </div>
+                </div>
+                <div class="val-item">
+                    <div class="val-icon"><i class="fa-solid fa-comments"></i></div>
+                    <div>
+                        <h4 style="font-weight:800; font-size:1.05rem; color:#0f172a; margin-bottom:6px;">دعم فني عبر واتساب</h4>
+                        <p style="font-size:0.9rem; color:#64748b;">مستشارون تقنيون يساعدونك في الاختيار ومتابعة طلبك لحظة بلحظة.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align:center; margin-top:50px;">
+                <a href="shop.html" class="tech-hero-btn primary" style="display:inline-flex; padding:15px 35px; font-size:1.05rem;">
+                    <i class="fa-solid fa-shopping-bag"></i> تصفح متجر الأجهزة الآن
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Authentic Footer -->
+    <footer class="tech-footer">
+        <div class="tech-container">
+            <div class="tech-footer-grid">
+                <div class="tech-footer-col">
+                    <div class="tech-logo-link" style="margin-bottom: 16px;">
+                        <div class="tech-logo-icon"><i class="fa-solid fa-microchip"></i></div>
+                        <div class="tech-logo-text">
+                            <span class="tech-logo-title" style="color:#fff;">تكنو نوفا</span>
+                            <span class="tech-logo-sub">TECHNO NOVA</span>
+                        </div>
+                    </div>
+                    <p style="color:#94a3b8; font-size:0.9rem; line-height:1.7;">وجهتك الأولى للأجهزة الذكية الأصلية مع ضمان الوكيل وسرعة التوصيل لباب منزلك.</p>
+                </div>
+                <div class="tech-footer-col">
+                    <h4 class="tech-footer-title">روابط سريعة</h4>
+                    <ul class="tech-footer-links">
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="shop.html">كافة الأجهزة</a></li>
+                        <li><a href="about.html">من نحن</a></li>
+                        <li><a href="contact.html">اتصل بنا</a></li>
+                        <li><a href="admin/index.html">لوحة التحكم</a></li>
+                    </ul>
+                </div>
+                <div class="tech-footer-col">
+                    <h4 class="tech-footer-title">خدمة العملاء والطلبات</h4>
+                    <ul class="tech-footer-links">
+                        <li><i class="fa-solid fa-phone"></i> <a href="tel:01027093535">01027093535</a></li>
+                        <li><i class="fa-brands fa-whatsapp"></i> <a href="https://wa.me/201027093535" target="_blank">+20 102 709 3535</a></li>
+                        <li><i class="fa-solid fa-clock"></i> يومياً 9 ص - 11 م</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tech-footer-bottom">
+                <p>© 2026 متجر تكنو نوفا | Techno Nova - جميع الحقوق محفوظة</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Slide-Out Cart Drawer -->
+    <div class="tech-drawer-overlay" id="cartOverlay" onclick="toggleCartDrawer()"></div>
+    <div class="tech-cart-drawer" id="cartDrawer">
+        <div class="tech-drawer-header">
+            <h3><i class="fa-solid fa-bag-shopping" style="color: var(--color-primary);"></i> سلة مشترياتك (<span id="cartCountHeader">0</span>)</h3>
+            <button class="tech-drawer-close" onclick="toggleCartDrawer()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="tech-drawer-body" id="cartItemsContainer"></div>
+        <div class="tech-drawer-footer">
+            <div class="tech-drawer-total">
+                <span>الإجمالي المقدر:</span>
+                <span id="cartTotalSum" style="color: var(--color-primary);">0 ر.س</span>
+            </div>
+            <button class="tech-drawer-checkout" onclick="proceedCheckout()">
+                <span>إتمام الطلب عبر واتساب</span>
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="tech-toast" id="techToast">
+        <i class="fa-solid fa-circle-check" style="color: #22c55e; font-size: 18px;"></i>
+        <span id="toastMsg">تمت الإضافة بنجاح!</span>
+    </div>
+
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/201027093535" target="_blank" class="tech-floating-whatsapp" style="position: fixed; bottom: 25px; right: 25px; width: 60px; height: 60px; background: #25d366; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5); z-index: 9999; text-decoration: none;" title="تواصل عبر واتساب">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <script src="js/store.js"></script>
 </body>
 </html>
