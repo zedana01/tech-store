@@ -550,20 +550,31 @@
             const relatedGrid = document.getElementById('relatedProductsGrid');
             const related = products.filter(p => p.id !== currentProd.id).slice(0, 3);
             relatedGrid.innerHTML = related.map(p => `
-                <div class="tech-product-card">
-                    <div class="tech-product-image-box">
-                        <span class="tech-product-badge">${p.badge || 'مميز'}</span>
-                        <a href="product.html?id=${p.id}"><img src="${p.image}" alt="${p.name}"></a>
-                    </div>
-                    <div class="tech-product-body">
-                        <div class="tech-product-category">${p.categoryName || 'إلكترونيات'}</div>
-                        <h3 class="tech-product-title"><a href="product.html?id=${p.id}" style="color:inherit; text-decoration:none;">${p.name}</a></h3>
-                        <div class="tech-product-footer">
-                            <div class="tech-price-wrap">
-                                <span class="tech-current-price">${p.price} ر.س</span>
-                                ${p.oldPrice ? `<span class="tech-old-price">${p.oldPrice} ر.س</span>` : ''}
+                <div class="tech-card" style="box-shadow: 0 4px 18px rgba(0,0,0,0.06); border: 1px solid #e2e8f0; border-radius: 16px;">
+                    <span class="tech-card-badge">${p.badge || 'مميز'}</span>
+                    <a href="product?id=${p.id}" class="tech-card-img-box" style="text-decoration:none; display:block;">
+                        <img decoding="async" src="${p.image}" alt="${p.name}">
+                    </a>
+                    <div class="tech-card-body">
+                        <div>
+                            <div class="tech-card-cat">${p.categoryName || 'إلكترونيات'}</div>
+                            <h4 class="tech-card-title"><a href="product?id=${p.id}" style="color:inherit; text-decoration:none;">${p.name}</a></h4>
+                        </div>
+                        <div>
+                            <div class="tech-card-pricing">
+                                <span class="tech-price-current">${p.price} ر.س</span>
+                                ${p.oldPrice ? `<span class="tech-price-old">${p.oldPrice} ر.س</span>` : ''}
                             </div>
-                            <button class="tech-card-action-btn" onclick="addToCart('${p.name}', ${p.price}, '${p.image}')"><i class="fa-solid fa-cart-plus"></i></button>
+                            <div class="tech-card-actions">
+                                <button class="tech-btn-add" onclick="addToCart('${p.name.replace(/'/g, "\\'")}', ${p.price}, '${p.image}')">
+                                    <i class="fa-solid fa-cart-plus"></i>
+                                    <span>إضافة للسلة</span>
+                                </button>
+                                <a href="product?id=${p.id}" class="tech-btn-view">
+                                    <i class="fa-regular fa-eye"></i>
+                                    <span>عرض المنتج</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

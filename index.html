@@ -202,48 +202,48 @@
                     <span class="tech-section-subtitle">تصفح حسب الاهتمام</span>
                     <h2 class="tech-section-title">الأقسام الإلكترونية الذكية</h2>
                 </div>
-                <a href="#catalog" class="btn-tech-secondary" style="padding: 10px 20px; font-size: 13.5px;" onclick="filterCategory('all')">
+                <a href="category?cat=all" class="btn-tech-secondary" style="padding: 10px 20px; font-size: 13.5px;">
                     <span>عرض كافة المنتجات</span>
                     <i class="fa-solid fa-arrow-left"></i>
                 </a>
             </div>
 
             <div class="tech-categories-grid">
-                <div class="tech-cat-card" onclick="filterCategory('audio')">
+                <a href="category?cat=audio" class="tech-cat-card" style="text-decoration:none; color:inherit; display:block;">
                     <div class="tech-cat-icon">
                         <i class="fa-solid fa-headphones"></i>
                     </div>
                     <h3 class="tech-cat-name">سماعات وصوتيات</h3>
                     <span class="tech-cat-count">18 منتج متوفر</span>
-                </div>
-                <div class="tech-cat-card" onclick="filterCategory('watches')">
+                </a>
+                <a href="category?cat=watches" class="tech-cat-card" style="text-decoration:none; color:inherit; display:block;">
                     <div class="tech-cat-icon" style="background: var(--color-cyan-light); color: var(--color-cyan);">
                         <i class="fa-solid fa-stopwatch"></i>
                     </div>
                     <h3 class="tech-cat-name">ساعات ذكية ورياضية</h3>
                     <span class="tech-cat-count">12 طراز متطور</span>
-                </div>
-                <div class="tech-cat-card" onclick="filterCategory('chargers')">
+                </a>
+                <a href="category?cat=chargers" class="tech-cat-card" style="text-decoration:none; color:inherit; display:block;">
                     <div class="tech-cat-icon" style="background: #fdf2f8; color: #db2777;">
                         <i class="fa-solid fa-charging-station"></i>
                     </div>
                     <h3 class="tech-cat-name">شواحن ومنصات MagSafe</h3>
                     <span class="tech-cat-count">15 منتج سريع</span>
-                </div>
-                <div class="tech-cat-card" onclick="filterCategory('drones')">
+                </a>
+                <a href="category?cat=drones" class="tech-cat-card" style="text-decoration:none; color:inherit; display:block;">
                     <div class="tech-cat-icon" style="background: #f0fdf4; color: #16a34a;">
                         <i class="fa-solid fa-helicopter"></i>
                     </div>
                     <h3 class="tech-cat-name">درون وتصوير 4K</h3>
                     <span class="tech-cat-count">8 طائرات احترافية</span>
-                </div>
-                <div class="tech-cat-card" onclick="filterCategory('smarthome')">
+                </a>
+                <a href="category?cat=home" class="tech-cat-card" style="text-decoration:none; color:inherit; display:block;">
                     <div class="tech-cat-icon" style="background: #faf5ff; color: #9333ea;">
                         <i class="fa-solid fa-house-signal"></i>
                     </div>
                     <h3 class="tech-cat-name">أجهزة منزل ذكي</h3>
                     <span class="tech-cat-count">14 نظام متكامل</span>
-                </div>
+                </a>
             </div>
         </div>
     </section>
@@ -306,10 +306,16 @@
                                         <span class="tech-price-current">680 ر.س</span>
                                         <span class="tech-price-old">890 ر.س</span>
                                     </div>
-                                    <button class="tech-btn-add" onclick="addToCart('ساعة ألترا برو الذكية تيتانيوم AMOLED', 680, 'images/prod_smart_watch.jpg')">
-                                        <i class="fa-solid fa-cart-plus"></i>
-                                        <span>أضف للسلة</span>
-                                    </button>
+                                    <div class="tech-card-actions">
+                                        <button class="tech-btn-add" onclick="addToCart('ساعة ألترا برو الذكية تيتانيوم AMOLED', 680, 'images/prod_smart_watch.jpg')">
+                                            <i class="fa-solid fa-cart-plus"></i>
+                                            <span>إضافة للسلة</span>
+                                        </button>
+                                        <a href="product?id=1" class="tech-btn-view">
+                                            <i class="fa-regular fa-eye"></i>
+                                            <span>عرض المنتج</span>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -338,10 +344,16 @@
                                         <span class="tech-price-current">950 ر.س</span>
                                         <span class="tech-price-old">1,250 ر.س</span>
                                     </div>
-                                    <button class="tech-btn-add" onclick="addToCart('سماعات الرأس الفاخرة عازلة للضوضاء ANC Pro', 950, 'images/prod_silver_headphones.jpg')">
-                                        <i class="fa-solid fa-cart-plus"></i>
-                                        <span>أضف للسلة</span>
-                                    </button>
+                                    <div class="tech-card-actions">
+                                        <button class="tech-btn-add" onclick="addToCart('سماعات الرأس الفاخرة عازلة للضوضاء ANC Pro', 950, 'images/prod_silver_headphones.jpg')">
+                                            <i class="fa-solid fa-cart-plus"></i>
+                                            <span>إضافة للسلة</span>
+                                        </button>
+                                        <a href="product?id=2" class="tech-btn-view">
+                                            <i class="fa-regular fa-eye"></i>
+                                            <span>عرض المنتج</span>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -370,10 +382,16 @@
                                         <span class="tech-price-current">290 ر.س</span>
                                         <span class="tech-price-old">390 ر.س</span>
                                     </div>
-                                    <button class="tech-btn-add" onclick="addToCart('محطة شحن مغناطيسية لاسلكية 3 في 1 MagFast', 290, 'images/prod_wireless_charger.jpg')">
-                                        <i class="fa-solid fa-cart-plus"></i>
-                                        <span>أضف للسلة</span>
-                                    </button>
+                                    <div class="tech-card-actions">
+                                        <button class="tech-btn-add" onclick="addToCart('محطة شحن مغناطيسية لاسلكية 3 في 1 MagFast', 290, 'images/prod_wireless_charger.jpg')">
+                                            <i class="fa-solid fa-cart-plus"></i>
+                                            <span>إضافة للسلة</span>
+                                        </button>
+                                        <a href="product?id=3" class="tech-btn-view">
+                                            <i class="fa-regular fa-eye"></i>
+                                            <span>عرض المنتج</span>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -402,10 +420,16 @@
                                         <span class="tech-price-current">420 ر.س</span>
                                         <span class="tech-price-old">550 ر.س</span>
                                     </div>
-                                    <button class="tech-btn-add" onclick="addToCart('مكبر الصوت الذكي الأسطواني بمحيط ضوئي تفاعلي', 420, 'images/prod_smart_speaker.jpg')">
-                                        <i class="fa-solid fa-cart-plus"></i>
-                                        <span>أضف للسلة</span>
-                                    </button>
+                                    <div class="tech-card-actions">
+                                        <button class="tech-btn-add" onclick="addToCart('مكبر الصوت الذكي الأسطواني بمحيط ضوئي تفاعلي', 420, 'images/prod_smart_speaker.jpg')">
+                                            <i class="fa-solid fa-cart-plus"></i>
+                                            <span>إضافة للسلة</span>
+                                        </button>
+                                        <a href="product?id=4" class="tech-btn-view">
+                                            <i class="fa-regular fa-eye"></i>
+                                            <span>عرض المنتج</span>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -434,10 +458,16 @@
                                         <span class="tech-price-current">340 ر.س</span>
                                         <span class="tech-price-old">480 ر.س</span>
                                     </div>
-                                    <button class="tech-btn-add" onclick="addToCart('سماعات إيربودز برو اللاسلكية بنقاء استوديو مذهل', 340, 'images/prod_earbuds_pro.jpg')">
-                                        <i class="fa-solid fa-cart-plus"></i>
-                                        <span>أضف للسلة</span>
-                                    </button>
+                                    <div class="tech-card-actions">
+                                        <button class="tech-btn-add" onclick="addToCart('سماعات إيربودز برو اللاسلكية بنقاء استوديو مذهل', 340, 'images/prod_earbuds_pro.jpg')">
+                                            <i class="fa-solid fa-cart-plus"></i>
+                                            <span>إضافة للسلة</span>
+                                        </button>
+                                        <a href="product?id=5" class="tech-btn-view">
+                                            <i class="fa-regular fa-eye"></i>
+                                            <span>عرض المنتج</span>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -466,10 +496,16 @@
                                         <span class="tech-price-current">1,850 ر.س</span>
                                         <span class="tech-price-old">2,400 ر.س</span>
                                     </div>
-                                    <button class="tech-btn-add" onclick="addToCart('طائرة درون احترافية SkyMaster 4K بمثبت ثلاثي المحاور', 1850, 'images/prod_smart_drone.jpg')">
-                                        <i class="fa-solid fa-cart-plus"></i>
-                                        <span>أضف للسلة</span>
-                                    </button>
+                                    <div class="tech-card-actions">
+                                        <button class="tech-btn-add" onclick="addToCart('طائرة درون احترافية SkyMaster 4K بمثبت ثلاثي المحاور', 1850, 'images/prod_smart_drone.jpg')">
+                                            <i class="fa-solid fa-cart-plus"></i>
+                                            <span>إضافة للسلة</span>
+                                        </button>
+                                        <a href="product?id=6" class="tech-btn-view">
+                                            <i class="fa-regular fa-eye"></i>
+                                            <span>عرض المنتج</span>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -599,10 +635,16 @@
                                         <span class="tech-price-current">680 ر.س</span>
                                         <span class="tech-price-old">890 ر.س</span>
                                     </div>
-                                    <button class="tech-btn-add" onclick="addToCart('ساعة ألترا برو الذكية تيتانيوم AMOLED', 680, 'images/prod_smart_watch.jpg')">
-                                        <i class="fa-solid fa-cart-plus"></i>
-                                        <span>إضافة إلى السلة</span>
-                                    </button>
+                                    <div class="tech-card-actions">
+                                        <button class="tech-btn-add" onclick="addToCart('ساعة ألترا برو الذكية تيتانيوم AMOLED', 680, 'images/prod_smart_watch.jpg')">
+                                            <i class="fa-solid fa-cart-plus"></i>
+                                            <span>إضافة للسلة</span>
+                                        </button>
+                                        <a href="product?id=1" class="tech-btn-view">
+                                            <i class="fa-regular fa-eye"></i>
+                                            <span>عرض المنتج</span>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -634,10 +676,16 @@
                                         <span class="tech-price-current">950 ر.س</span>
                                         <span class="tech-price-old">1,250 ر.س</span>
                                     </div>
-                                    <button class="tech-btn-add" onclick="addToCart('سماعات الرأس الفاخرة عازلة للضوضاء ANC Pro', 950, 'images/prod_silver_headphones.jpg')">
-                                        <i class="fa-solid fa-cart-plus"></i>
-                                        <span>إضافة إلى السلة</span>
-                                    </button>
+                                    <div class="tech-card-actions">
+                                        <button class="tech-btn-add" onclick="addToCart('سماعات الرأس الفاخرة عازلة للضوضاء ANC Pro', 950, 'images/prod_silver_headphones.jpg')">
+                                            <i class="fa-solid fa-cart-plus"></i>
+                                            <span>إضافة للسلة</span>
+                                        </button>
+                                        <a href="product?id=2" class="tech-btn-view">
+                                            <i class="fa-regular fa-eye"></i>
+                                            <span>عرض المنتج</span>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -669,10 +717,16 @@
                                         <span class="tech-price-current">290 ر.س</span>
                                         <span class="tech-price-old">390 ر.س</span>
                                     </div>
-                                    <button class="tech-btn-add" onclick="addToCart('محطة شحن مغناطيسية لاسلكية 3 في 1 MagFast', 290, 'images/prod_wireless_charger.jpg')">
-                                        <i class="fa-solid fa-cart-plus"></i>
-                                        <span>إضافة إلى السلة</span>
-                                    </button>
+                                    <div class="tech-card-actions">
+                                        <button class="tech-btn-add" onclick="addToCart('محطة شحن مغناطيسية لاسلكية 3 في 1 MagFast', 290, 'images/prod_wireless_charger.jpg')">
+                                            <i class="fa-solid fa-cart-plus"></i>
+                                            <span>إضافة للسلة</span>
+                                        </button>
+                                        <a href="product?id=3" class="tech-btn-view">
+                                            <i class="fa-regular fa-eye"></i>
+                                            <span>عرض المنتج</span>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -704,10 +758,16 @@
                                         <span class="tech-price-current">420 ر.س</span>
                                         <span class="tech-price-old">550 ر.س</span>
                                     </div>
-                                    <button class="tech-btn-add" onclick="addToCart('مكبر الصوت الذكي الأسطواني بمحيط ضوئي تفاعلي', 420, 'images/prod_smart_speaker.jpg')">
-                                        <i class="fa-solid fa-cart-plus"></i>
-                                        <span>إضافة إلى السلة</span>
-                                    </button>
+                                    <div class="tech-card-actions">
+                                        <button class="tech-btn-add" onclick="addToCart('مكبر الصوت الذكي الأسطواني بمحيط ضوئي تفاعلي', 420, 'images/prod_smart_speaker.jpg')">
+                                            <i class="fa-solid fa-cart-plus"></i>
+                                            <span>إضافة للسلة</span>
+                                        </button>
+                                        <a href="product?id=4" class="tech-btn-view">
+                                            <i class="fa-regular fa-eye"></i>
+                                            <span>عرض المنتج</span>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -739,10 +799,16 @@
                                         <span class="tech-price-current">340 ر.س</span>
                                         <span class="tech-price-old">480 ر.س</span>
                                     </div>
-                                    <button class="tech-btn-add" onclick="addToCart('سماعات إيربودز برو اللاسلكية بنقاء استوديو مذهل', 340, 'images/prod_earbuds_pro.jpg')">
-                                        <i class="fa-solid fa-cart-plus"></i>
-                                        <span>إضافة إلى السلة</span>
-                                    </button>
+                                    <div class="tech-card-actions">
+                                        <button class="tech-btn-add" onclick="addToCart('سماعات إيربودز برو اللاسلكية بنقاء استوديو مذهل', 340, 'images/prod_earbuds_pro.jpg')">
+                                            <i class="fa-solid fa-cart-plus"></i>
+                                            <span>إضافة للسلة</span>
+                                        </button>
+                                        <a href="product?id=5" class="tech-btn-view">
+                                            <i class="fa-regular fa-eye"></i>
+                                            <span>عرض المنتج</span>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -774,10 +840,16 @@
                                         <span class="tech-price-current">1,850 ر.س</span>
                                         <span class="tech-price-old">2,400 ر.س</span>
                                     </div>
-                                    <button class="tech-btn-add" onclick="addToCart('طائرة درون احترافية SkyMaster 4K بمثبت ثلاثي المحاور', 1850, 'images/prod_smart_drone.jpg')">
-                                        <i class="fa-solid fa-cart-plus"></i>
-                                        <span>إضافة إلى السلة</span>
-                                    </button>
+                                    <div class="tech-card-actions">
+                                        <button class="tech-btn-add" onclick="addToCart('طائرة درون احترافية SkyMaster 4K بمثبت ثلاثي المحاور', 1850, 'images/prod_smart_drone.jpg')">
+                                            <i class="fa-solid fa-cart-plus"></i>
+                                            <span>إضافة للسلة</span>
+                                        </button>
+                                        <a href="product?id=6" class="tech-btn-view">
+                                            <i class="fa-regular fa-eye"></i>
+                                            <span>عرض المنتج</span>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

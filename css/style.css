@@ -2090,3 +2090,218 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
     max-width: 700px !important;
     display: block !important;
 }
+
+
+/* ==========================================================================
+   DUAL CARD ACTION BUTTONS (ADD TO CART + VIEW PRODUCT)
+   ========================================================================== */
+.tech-card-actions {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+    margin-top: 14px !important;
+    width: 100% !important;
+}
+.tech-card-actions .tech-btn-add {
+    margin-top: 0 !important;
+    padding: 10px 8px !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+    border-radius: 12px !important;
+    width: 100% !important;
+}
+.tech-card-actions .tech-btn-view {
+    background: #f1f5f9 !important;
+    color: #1e293b !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 12px !important;
+    padding: 10px 8px !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    transition: all 0.25s ease !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+.tech-card-actions .tech-btn-view:hover {
+    background: #0f172a !important;
+    color: #ffffff !important;
+    border-color: #0f172a !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.2) !important;
+}
+@media (max-width: 480px) {
+    .tech-card-actions {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 6px !important;
+    }
+    .tech-card-actions .tech-btn-add,
+    .tech-card-actions .tech-btn-view {
+        padding: 9px 5px !important;
+        font-size: 12px !important;
+        gap: 4px !important;
+    }
+}
+
+/* ==========================================================================
+   WIDE CATEGORY BANNER HERO & CHIPS
+   ========================================================================== */
+.tech-cat-banner-section {
+    padding: 24px 0 28px 0;
+    background: #f8fafc;
+}
+.tech-cat-banner-card {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    min-height: 280px;
+    display: flex;
+    align-items: center;
+    background: #0f172a;
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.tech-cat-banner-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.tech-cat-banner-card:hover .tech-cat-banner-bg {
+    transform: scale(1.03);
+}
+.tech-cat-banner-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.92) 0%, rgba(30, 58, 138, 0.82) 55%, rgba(15, 23, 42, 0.72) 100%);
+}
+.tech-cat-banner-content {
+    position: relative;
+    z-index: 2;
+    padding: 44px 48px;
+    max-width: 820px;
+    color: #ffffff;
+    text-align: right;
+}
+.tech-cat-breadcrumb {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13.5px;
+    color: #93c5fd;
+    margin-bottom: 12px;
+}
+.tech-cat-breadcrumb a {
+    color: #93c5fd;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.tech-cat-breadcrumb a:hover {
+    color: #ffffff;
+}
+.tech-cat-breadcrumb i {
+    font-size: 10px;
+    opacity: 0.7;
+}
+.tech-cat-banner-title {
+    font-size: 32px;
+    font-weight: 900;
+    color: #ffffff !important;
+    line-height: 1.35;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+}
+.tech-cat-banner-desc {
+    font-size: 15px;
+    color: #f1f5f9 !important;
+    line-height: 1.75;
+    margin-bottom: 20px;
+    max-width: 680px;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.3);
+}
+.tech-cat-banner-stats {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    padding: 8px 18px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+    font-size: 13px;
+    color: #ffffff;
+    backdrop-filter: blur(8px);
+}
+.tech-cat-banner-stats span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Category Quick Filter Chips */
+.tech-cat-chips-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    overflow-x: auto;
+    padding: 16px 4px;
+    margin-top: 18px;
+    scrollbar-width: thin;
+}
+.tech-cat-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 50px;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #334155;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+}
+.tech-cat-chip:hover {
+    border-color: #0284c7;
+    color: #0284c7;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(2, 132, 199, 0.12);
+}
+.tech-cat-chip.active {
+    background: #0284c7;
+    border-color: #0284c7;
+    color: #ffffff;
+    box-shadow: 0 6px 18px rgba(2, 132, 199, 0.3);
+}
+.tech-cat-chip i {
+    font-size: 14px;
+}
+@media (max-width: 768px) {
+    .tech-cat-banner-card {
+        min-height: 220px;
+        border-radius: 16px;
+    }
+    .tech-cat-banner-content {
+        padding: 24px 20px;
+    }
+    .tech-cat-banner-title {
+        font-size: 22px;
+    }
+    .tech-cat-banner-desc {
+        font-size: 13.5px;
+    }
+}

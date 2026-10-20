@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">قسم الأجهزة الذكية | متجر تكنو نوفا - Techno Nova</title>
+    <meta name="description" content="تصفح أحدث الأجهزة والملحقات الإلكترونية الذكية مع ضمان سنتين وشحن سريع من متجر تكنو نوفا.">
+    <!-- Font Awesome 6 Pro / Free -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Main Style -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- 1. TOP ANNOUNCEMENT BAR -->
+    <div class="tech-topbar">
+        <div class="tech-container">
+            <div class="tech-topbar-inner">
+                <div class="tech-topbar-text">
+                    <i class="fa-solid fa-bolt"></i>
+                    <span>عروض تكنو نوفا الحصرية: شحن مجاني لكافة الطلبات فوق 300 ر.س + ضمان استبدال فوري لمدة سنتين!</span>
+                </div>
+                <div class="tech-topbar-links">
+                    <a href="#" onclick="event.preventDefault(); openTrackingModal();"><i class="fa-solid fa-truck-fast"></i> تتبع شحنتك</a>
+                    <a href="#" onclick="event.preventDefault(); openSupportModal();"><i class="fa-solid fa-headset"></i> الدعم الفني 24/7</a>
+                    <a href="admin/index.html"><i class="fa-solid fa-lock"></i> لوحة الإدارة</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. MAIN HEADER -->
+    <header class="tech-header">
+        <div class="tech-container">
+            <div class="tech-header-main">
+                <!-- Logo -->
+                <a href="index.html" class="tech-logo-link">
+                    <div class="tech-logo-icon">
+                        <i class="fa-solid fa-microchip"></i>
+                    </div>
+                    <div class="tech-logo-text">
+                        <span class="tech-logo-title">تكنو نوفا</span>
+                        <span class="tech-logo-sub">TECHNOVA STORE</span>
+                    </div>
+                </a>
+
+                <!-- Search Form -->
+                <form class="tech-search-form" onsubmit="event.preventDefault(); searchCategoryProducts();">
+                    <input type="text" id="catSearchInput" class="tech-search-input" placeholder="ابحث في هذا القسم عن جهازك المفضل..." onkeyup="searchCategoryProducts()">
+                    <button type="submit" class="tech-search-btn">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <span>بحث</span>
+                    </button>
+                </form>
+
+                <!-- Header Actions -->
+                <div class="tech-header-actions">
+                    <a href="admin/index.html" class="tech-action-btn" title="لوحة التحكم الإدارية" style="background: rgba(2, 132, 199, 0.12); color: #0284c7; font-weight: 700; border-radius: 12px; border: 1px solid rgba(2, 132, 199, 0.3);">
+                        <i class="fa-solid fa-user-shield"></i>
+                    </a>
+                    <div class="tech-action-btn" onclick="showToast('تمت إضافة المنتج إلى قائمة أجهزتك المفضلة ❤️')">
+                        <i class="fa-regular fa-heart" style="font-size: 18px; color: var(--color-primary);"></i>
+                        <span class="tech-action-badge">3</span>
+                    </div>
+                    <div class="tech-action-btn" onclick="toggleCartDrawer()">
+                        <i class="fa-solid fa-bag-shopping" style="font-size: 18px; color: var(--color-primary);"></i>
+                        <span>سلة المشتريات</span>
+                        <span class="tech-action-badge" id="cartBadge">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Secondary Nav -->
+        <div class="tech-navbar">
+            <div class="tech-container">
+                <div class="tech-navbar-inner">
+                    <ul class="tech-nav-menu">
+                        <li class="tech-nav-item">
+                            <a href="category?cat=all" class="tech-nav-mega-btn" style="background-color: #2563eb !important; color: #ffffff !important;">
+                                <i class="fa-solid fa-layer-group" style="color: #ffffff !important;"></i>
+                                <span style="color: #ffffff !important;">كافة الأقسام الذكية</span>
+                            </a>
+                        </li>
+                        <li class="tech-nav-item"><a href="index.html">الرئيسية</a></li>
+                        <li class="tech-nav-item"><a href="shop.html">المتجر والأجهزة</a></li>
+                        <li class="tech-nav-item"><a href="about.html">من نحن</a></li>
+                        <li class="tech-nav-item"><a href="contact.html">اتصل بنا</a></li>
+                        <li class="tech-nav-item"><a href="index.html#flashDeals">عروض التوفير الخاطفة</a></li>
+                    </ul>
+                    <div class="tech-nav-hotline">
+                        <i class="fa-solid fa-phone-volume"></i>
+                        <span>الرقم الموحد المباشر: <strong>800-TECH-NOVA</strong></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 3. WIDE CATEGORY BANNER HERO -->
+    <section class="tech-cat-banner-section">
+        <div class="tech-container">
+            <div class="tech-cat-banner-card">
+                <img id="catBannerBg" class="tech-cat-banner-bg" src="images/cat_banner_watches.jpg" alt="بانر القسم">
+                <div class="tech-cat-banner-overlay"></div>
+                <div class="tech-cat-banner-content">
+                    <div class="tech-cat-breadcrumb">
+                        <a href="index.html"><i class="fa-solid fa-house"></i> الرئيسية</a>
+                        <i class="fa-solid fa-chevron-left"></i>
+                        <a href="shop.html">الأقسام الذكية</a>
+                        <i class="fa-solid fa-chevron-left"></i>
+                        <span id="catBreadcrumbTitle">ساعات ذكية ورياضية</span>
+                    </div>
+                    <h1 class="tech-cat-banner-title" id="catTitle">ساعات ذكية ورياضية فائقة الأداء</h1>
+                    <p class="tech-cat-banner-desc" id="catDesc">
+                        أحدث إصدارات الساعات الذكية بهياكل تيتانيوم فاخرة، شاشات AMOLED، وتتبع دقيق للصحة والأنشطة الرياضية مع بطاريات تدوم طويلاً.
+                    </p>
+                    <div class="tech-cat-banner-stats">
+                        <span id="catCountBadge"><i class="fa-solid fa-boxes-stacked"></i> متوفر في هذا القسم</span>
+                        <span><i class="fa-solid fa-shield-halved"></i> ضمان الوكيل سنتين</span>
+                        <span><i class="fa-solid fa-truck-fast"></i> توصيل فوري مجاني</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Category Switcher Chips -->
+            <div class="tech-cat-chips-bar">
+                <a href="category?cat=all" class="tech-cat-chip" data-cat="all">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span>كل المنتجات</span>
+                </a>
+                <a href="category?cat=watches" class="tech-cat-chip" data-cat="watches">
+                    <i class="fa-solid fa-clock"></i>
+                    <span>ساعات ذكية</span>
+                </a>
+                <a href="category?cat=audio" class="tech-cat-chip" data-cat="audio">
+                    <i class="fa-solid fa-headphones"></i>
+                    <span>سماعات وصوتيات</span>
+                </a>
+                <a href="category?cat=chargers" class="tech-cat-chip" data-cat="chargers">
+                    <i class="fa-solid fa-bolt"></i>
+                    <span>شواحن MagSafe</span>
+                </a>
+                <a href="category?cat=drones" class="tech-cat-chip" data-cat="drones">
+                    <i class="fa-solid fa-camera"></i>
+                    <span>درون وتصوير 4K</span>
+                </a>
+                <a href="category?cat=home" class="tech-cat-chip" data-cat="home">
+                    <i class="fa-solid fa-house-signal"></i>
+                    <span>أجهزة منزل ذكي</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. PRODUCTS CATALOG GRID FOR THIS CATEGORY -->
+    <section class="tech-section" style="padding-top: 10px;">
+        <div class="tech-container">
+            <!-- Controls Bar -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 14px; background: #ffffff; padding: 14px 20px; border-radius: 16px; border: 1px solid var(--color-border);">
+                <div style="font-size: 15px; font-weight: 700; color: var(--color-navy); display: flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-filter" style="color: var(--color-primary);"></i>
+                    <span id="catProductsStatus">عرض كافة منتجات القسم</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span style="font-size: 13.5px; color: var(--color-slate); font-weight: 600;">ترتيب حسب:</span>
+                    <select id="sortSelect" onchange="sortCategoryProducts()" style="padding: 8px 14px; border: 1.5px solid var(--color-border); border-radius: 10px; font-family: var(--font-main); font-size: 13px; font-weight: 600; outline: none; background: #f8fafc;">
+                        <option value="featured">الأكثر تميزاً وشهرة</option>
+                        <option value="price-asc">السعر: من الأقل للأعلى</option>
+                        <option value="price-desc">السعر: من الأعلى للأقل</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Products Grid Container -->
+            <div class="tech-catalog-grid" id="categoryProductsGrid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px;">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. FOOTER -->
+    <footer class="tech-footer">
+        <div class="tech-container">
+            <div class="tech-footer-grid">
+                <div class="tech-footer-col">
+                    <div class="tech-logo-link" style="margin-bottom: 16px;">
+                        <div class="tech-logo-icon"><i class="fa-solid fa-microchip"></i></div>
+                        <div class="tech-logo-text"><span class="tech-logo-title">تكنو نوفا</span><span class="tech-logo-sub">TECHNOVA STORE</span></div>
+                    </div>
+                    <p class="tech-footer-desc">
+                        الوجهة السعودية الأولى للأجهزة الذكية والملحقات التكنولوجية المبتكرة. ننتقي لك أحدث التقنيات العالمية بأعلى معايير الجودة وضمان الوكيل المعتمد.
+                    </p>
+                    <div class="tech-social-links">
+                        <a href="#" class="tech-social-btn"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="#" class="tech-social-btn"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="tech-social-btn"><i class="fa-brands fa-snapchat"></i></a>
+                        <a href="#" class="tech-social-btn"><i class="fa-brands fa-tiktok"></i></a>
+                    </div>
+                </div>
+
+                <div class="tech-footer-col">
+                    <h4 class="tech-footer-heading">الأقسام الإلكترونية</h4>
+                    <ul class="tech-footer-links">
+                        <li><a href="category?cat=watches">ساعات ذكية ورياضية</a></li>
+                        <li><a href="category?cat=audio">سماعات وصوتيات Hi-Res</a></li>
+                        <li><a href="category?cat=chargers">شواحن ومنصات MagSafe</a></li>
+                        <li><a href="category?cat=drones">درون وتصوير جوي 4K</a></li>
+                        <li><a href="category?cat=home">أجهزة المنزل الذكي</a></li>
+                    </ul>
+                </div>
+
+                <div class="tech-footer-col">
+                    <h4 class="tech-footer-heading">خدمة العملاء</h4>
+                    <ul class="tech-footer-links">
+                        <li><a href="about.html">من نحن وقصتنا</a></li>
+                        <li><a href="contact.html">اتصل بنا وفروعنا</a></li>
+                        <li><a href="#" onclick="event.preventDefault(); openTrackingModal();">تتبع مسار شحنتك</a></li>
+                        <li><a href="#" onclick="event.preventDefault(); openSupportModal();">سياسة الضمان والاسترجاع</a></li>
+                        <li><a href="admin/index.html">لوحة تحكم المتجر</a></li>
+                    </ul>
+                </div>
+
+                <div class="tech-footer-col">
+                    <h4 class="tech-footer-heading">النشرة البريدية والعروض</h4>
+                    <p class="tech-footer-desc" style="margin-bottom: 14px;">اشترك ليصلك إشعار فوري عند توفر خصومات الأجهزة الجديدة وكوبونات التوفير:</p>
+                    <form onsubmit="event.preventDefault(); showToast('تم اشتراكك بنجاح في نشرة تكنو نوفا! 🎉');" style="display: flex; gap: 8px;">
+                        <input type="email" required placeholder="بريدك الإلكتروني..." style="flex: 1; padding: 10px 14px; border-radius: 10px; border: 1.5px solid var(--color-border); font-family: var(--font-main); font-size: 13px; outline: none;">
+                        <button type="submit" class="btn-tech-primary" style="padding: 10px 18px; border-radius: 10px; font-size: 13px;">اشتراك</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="tech-footer-bottom">
+                <div class="tech-copy">
+                    © 2026 متجر تكنو نوفا (Techno Nova). كافة الحقوق محفوظة ومسجلة رسمياً.
+                </div>
+                <div class="tech-payment-methods">
+                    <span class="tech-payment-badge">مدى Mada</span>
+                    <span class="tech-payment-badge">Visa / Mastercard</span>
+                    <span class="tech-payment-badge">Apple Pay</span>
+                    <span class="tech-payment-badge">Tabby تابي</span>
+                    <span class="tech-payment-badge">Tamara تمارا</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SLIDE-OUT CART DRAWER -->
+    <div class="tech-drawer-overlay" id="cartOverlay" onclick="toggleCartDrawer()"></div>
+    <div class="tech-cart-drawer" id="cartDrawer">
+        <div class="tech-drawer-header">
+            <h3><i class="fa-solid fa-bag-shopping" style="color: var(--color-primary);"></i> سلة مشترياتك (<span id="cartCountHeader">0</span>)</h3>
+            <button class="tech-drawer-close" onclick="toggleCartDrawer()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="tech-drawer-body" id="cartItemsContainer">
+            <div class="tech-cart-empty">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <h4>سلتك لا تزال فارغة</h4>
+                <p>تصفح أجهزة هذا القسم وأضفها إلى السلة بسهولة</p>
+            </div>
+        </div>
+        <div class="tech-drawer-footer">
+            <div class="tech-drawer-total">
+                <span>الإجمالي المقدر:</span>
+                <span id="cartTotalSum" style="color: var(--color-primary); font-weight: 900;">0 ر.س</span>
+            </div>
+            <button class="tech-drawer-checkout" onclick="proceedCheckout()">
+                <span>إتمام الطلب عبر واتساب</span>
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div class="tech-toast" id="techToast">
+        <i class="fa-solid fa-circle-check" style="color: #22c55e; font-size: 18px;"></i>
+        <span id="toastMsg">تمت الإضافة بنجاح!</span>
+    </div>
+
+    <!-- TRACKING MODAL -->
+    <div class="tech-drawer-overlay" id="trackingOverlay" onclick="closeTrackingModal()"></div>
+    <div class="tech-modal" id="trackingModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:#ffffff; border-radius:20px; padding:30px; z-index:999999; width:90%; max-width:480px; box-shadow:0 20px 50px rgba(15,23,42,0.2); border:1px solid var(--color-border); direction:rtl; text-align:right;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+            <h3 style="font-size:18px; font-weight:900; color:var(--color-navy); display:flex; align-items:center; gap:8px;">
+                <i class="fa-solid fa-truck-fast" style="color:var(--color-primary);"></i> تتبع شحنتك المباشرة
+            </h3>
+            <button onclick="closeTrackingModal()" style="background:#f1f5f9; border:none; width:32px; height:32px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; color:var(--color-slate);">✕</button>
+        </div>
+        <p style="font-size: 13.5px; color: #1e293b; font-weight: 600; line-height: 1.6; margin-bottom: 18px;">
+            أدخل رقم بوليصة الشحن الخاصة بطلبك لمعرفة موقع شحنتك اللحظي:
+        </p>
+        <div style="display:flex; gap:10px; margin-bottom:14px;">
+            <input type="text" id="trackInput" placeholder="مثال: TN-984214-KSA" style="flex:1; padding:12px 16px; border:1.5px solid var(--color-border); border-radius:12px; font-size:14px; outline:none; font-family:var(--font-main);">
+            <button onclick="trackShipment()" class="btn-tech-primary" style="padding:12px 20px; white-space:nowrap;">تتبع الآن</button>
+        </div>
+        <div id="trackResult" style="display:none; padding:14px; border-radius:12px; background:#ecfeff; border:1px solid #a5f3fc; font-size:13px; color:#0e7490;">
+            <i class="fa-solid fa-circle-check" style="color:#0891b2;"></i> <strong>تم العثور على الشحنة:</strong> في طريقها للتوصيل مع مندوب أرامكس، الاستلام المتوقع خلال اليوم.
+        </div>
+    </div>
+
+    <!-- SUPPORT MODAL -->
+    <div class="tech-drawer-overlay" id="supportOverlay" onclick="closeSupportModal()"></div>
+    <div class="tech-modal" id="supportModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:#ffffff; border-radius:20px; padding:30px; z-index:999999; width:90%; max-width:480px; box-shadow:0 20px 50px rgba(15,23,42,0.2); border:1px solid var(--color-border); direction:rtl; text-align:right;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+            <h3 style="font-size:18px; font-weight:900; color:var(--color-navy); display:flex; align-items:center; gap:8px;">
+                <i class="fa-solid fa-headset" style="color:var(--color-primary);"></i> مركز الدعم والضمان
+            </h3>
+            <button onclick="closeSupportModal()" style="background:#f1f5f9; border:none; width:32px; height:32px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; color:var(--color-slate);">✕</button>
+        </div>
+        <p style="font-size: 13.5px; color: #1e293b; font-weight: 600; line-height: 1.6; margin-bottom: 18px;">
+            فريق خدمة العملاء متواجد على مدار الساعة لخدمتكم والإجابة عن استفسارات المنتجات والضمان:
+        </p>
+        <div style="background: #f8fafc; border-radius: 12px; padding: 14px; margin-bottom: 16px; border: 1px solid var(--color-border);">
+            <div style="font-size: 13px; color: var(--color-slate); margin-bottom: 4px;">الهاتف المباشر والواتساب:</div>
+            <div style="font-size: 17px; font-weight: 800; color: var(--color-primary); direction: ltr; text-align: right;">+20 102 709 3535</div>
+        </div>
+        <a href="https://wa.me/201027093535" target="_blank" class="btn-tech-primary" style="display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 12px; text-decoration: none; border-radius: 12px;">
+            <i class="fa-brands fa-whatsapp" style="font-size: 18px;"></i> فتح محادثة واتساب فورية
+        </a>
+    </div>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/201027093535" target="_blank" class="tech-floating-whatsapp" style="position: fixed; bottom: 25px; right: 25px; width: 60px; height: 60px; background: #25d366; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5); z-index: 9999; text-decoration: none; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'" title="تواصل عبر واتساب">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- Category Engine Script -->
+    <script>
+    const categoryMetadata = {
+        'watches': {
+            name: 'ساعات ذكية ورياضية',
+            banner: 'images/cat_banner_watches.jpg',
+            title: 'ساعات ذكية ورياضية فائقة الأداء',
+            desc: 'أحدث إصدارات الساعات الذكية بهياكل تيتانيوم فاخرة، شاشات AMOLED، وتتبع دقيق للصحة والأنشطة الرياضية مع بطاريات تدوم طويلاً.'
+        },
+        'audio': {
+            name: 'سماعات وصوتيات Hi-Res',
+            banner: 'images/cat_banner_audio.jpg',
+            title: 'سماعات وصوتيات Hi-Res الاستثنائية',
+            desc: 'عالمك لنقاء الصوت الحقيقي مع تقنيات العزل النشط للضوضاء ANC الاحترافية وبطاريات تدوم حتى 40 ساعة متواصلة.'
+        },
+        'chargers': {
+            name: 'شواحن ومنصات MagSafe',
+            banner: 'images/cat_banner_chargers.jpg',
+            title: 'شواحن ومنصات MagSafe اللاسلكية',
+            desc: 'منصات شحن 3 في 1 مدمجة للمكتب والسفر تدعم الشحن فائق السرعة والأمان التام لكافة أجهزتك الذكية.'
+        },
+        'drones': {
+            name: 'طائرات درون وتصوير 4K',
+            banner: 'images/cat_banner_drones.jpg',
+            title: 'طائرات درون وتصوير سينمائي 4K',
+            desc: 'ارتقِ بتصويرك الجوي إلى أفق جديد مع مثبتات جيروسكوبية ثلاثية المحاور ومدى طيران احترافي ومقاومة عالية للرياح.'
+        },
+        'home': {
+            name: 'أنظمة وأجهزة المنزل الذكي',
+            banner: 'images/cat_banner_home.jpg',
+            title: 'أنظمة وأجهزة المنزل الذكي',
+            desc: 'مكبرات صوت محيطية تفاعلية بإضاءات RGB وتقنيات ذكية تملأ منزلك بأجواء عصرية مذهلة وتحكم فوري.'
+        },
+        'smarthome': {
+            name: 'أنظمة وأجهزة المنزل الذكي',
+            banner: 'images/cat_banner_home.jpg',
+            title: 'أنظمة وأجهزة المنزل الذكي',
+            desc: 'مكبرات صوت محيطية تفاعلية بإضاءات RGB وتقنيات ذكية تملأ منزلك بأجواء عصرية مذهلة وتحكم فوري.'
+        },
+        'all': {
+            name: 'كافة الأجهزة الذكية',
+            banner: 'images/hero_banner.jpg',
+            title: 'كافة الأجهزة والملحقات الذكية',
+            desc: 'استكشف كافة ابتكارات تكنو نوفا من الساعات، السماعات، الشواحن والدرون بضمان الوكيل وشحن فوري إلى باب بيتك.'
+        }
+    };
+
+    const defaultProducts = [
+        {
+            id: 1,
+            name: 'ساعة ألترا برو الذكية تيتانيوم AMOLED',
+            category: 'watches',
+            categoryName: 'ساعات وأساور ذكية',
+            price: 680,
+            oldPrice: 890,
+            discount: 'خصم 24%',
+            image: 'images/prod_smart_watch.jpg',
+            badge: 'خصم 24%',
+            specs: ['شاشة AMOLED', 'بطارية 14 يوم', 'تيتانيوم مقاوم للصدمات'],
+            reviewsCount: 142
+        },
+        {
+            id: 2,
+            name: 'سماعات الرأس الفاخرة عازلة للضوضاء ANC Pro',
+            category: 'audio',
+            categoryName: 'سماعات وصوتيات',
+            price: 490,
+            oldPrice: 650,
+            discount: 'خصم 25%',
+            image: 'images/prod_headphones.jpg',
+            badge: 'الأكثر مبيعاً',
+            specs: ['عزل ضوضاء ANC', 'صوت Hi-Res محيطي', 'بطارية 40 ساعة'],
+            reviewsCount: 215
+        },
+        {
+            id: 3,
+            name: 'محطة شحن مغناطيسية لاسلكية 3 في 1 MagFast',
+            category: 'chargers',
+            categoryName: 'شواحن ومنصات ذكية',
+            price: 260,
+            oldPrice: 350,
+            discount: 'خصم 26%',
+            image: 'images/prod_magsafe_charger.jpg',
+            badge: 'جديد 2026',
+            specs: ['شحن سريع 15W', 'MagSafe أصلي', 'حماية ضد الحرارة'],
+            reviewsCount: 88
+        },
+        {
+            id: 4,
+            name: 'مكبر الصوت الذكي الأسطواني بمحيط ضوئي تفاعلي',
+            category: 'home',
+            categoryName: 'أجهزة منزل ذكي',
+            price: 380,
+            oldPrice: 480,
+            discount: 'خصم 21%',
+            image: 'images/prod_speaker.jpg',
+            badge: 'مميز جداً',
+            specs: ['صوت محيطي 360°', 'إضاءات RGB متزامنة', 'مقاوم للماء IPX7'],
+            reviewsCount: 94
+        },
+        {
+            id: 5,
+            name: 'سماعات إيربودز برو اللاسلكية بنقاء استوديو مذهل',
+            category: 'audio',
+            categoryName: 'سماعات وصوتيات',
+            price: 320,
+            oldPrice: 420,
+            discount: 'خصم 24%',
+            image: 'images/prod_earbuds.jpg',
+            badge: 'الأعلى تقييماً',
+            specs: ['بلوتوث 5.4', 'شحن لاسلكي سريع', 'ميكروفونات عازلة'],
+            reviewsCount: 176
+        },
+        {
+            id: 6,
+            name: 'طائرة درون احترافية SkyMaster 4K بمثبت ثلاثي المحاور',
+            category: 'drones',
+            categoryName: 'درون وتصوير جوي',
+            price: 1850,
+            oldPrice: 2400,
+            discount: 'خصم 23%',
+            image: 'images/prod_drone.jpg',
+            badge: 'إصدار برو',
+            specs: ['كاميرا 4K HDR', 'مدى طيران 10 كم', 'مثبت 3-Axis Gimbal'],
+            reviewsCount: 63
+        }
+    ];
+
+    let allProducts = defaultProducts;
+    let currentCat = 'all';
+
+    function getParam(key) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(key);
+    }
+
+    function initCategoryPage() {
+        const param = getParam('cat') || 'watches';
+        currentCat = param.toLowerCase();
+        if (currentCat === 'smarthome') currentCat = 'home';
+
+        // Check if products exist in localStorage
+        const stored = localStorage.getItem('technova_products');
+        if (stored) {
+            try {
+                const parsed = JSON.parse(stored);
+                if (Array.isArray(parsed) && parsed.length > 0) {
+                    allProducts = parsed;
+                }
+            } catch (e) {}
+        }
+
+        renderCategoryHeader(currentCat);
+        highlightActiveChip(currentCat);
+        renderProducts(currentCat);
+        if (typeof updateCartUI === 'function') {
+            updateCartUI();
+        }
+    }
+
+    function renderCategoryHeader(cat) {
+        const meta = categoryMetadata[cat] || categoryMetadata['all'];
+        document.getElementById('pageTitle').textContent = meta.name + ' | متجر تكنو نوفا';
+        document.getElementById('catBannerBg').src = meta.banner;
+        document.getElementById('catBreadcrumbTitle').textContent = meta.name;
+        document.getElementById('catTitle').textContent = meta.title;
+        document.getElementById('catDesc').textContent = meta.desc;
+    }
+
+    function highlightActiveChip(cat) {
+        document.querySelectorAll('.tech-cat-chip').forEach(chip => {
+            const chipCat = chip.getAttribute('data-cat');
+            if (chipCat === cat || (cat === 'home' && chipCat === 'smarthome')) {
+                chip.classList.add('active');
+            } else {
+                chip.classList.remove('active');
+            }
+        });
+    }
+
+    function renderProducts(cat, searchTerm = '') {
+        const grid = document.getElementById('categoryProductsGrid');
+        let filtered = allProducts;
+
+        if (cat && cat !== 'all') {
+            filtered = filtered.filter(p => {
+                const pCat = (p.category || '').toLowerCase();
+                if (cat === 'home' && (pCat === 'home' || pCat === 'smarthome')) return true;
+                return pCat === cat;
+            });
+        }
+
+        if (searchTerm) {
+            const term = searchTerm.trim().toLowerCase();
+            filtered = filtered.filter(p => (p.name || '').toLowerCase().includes(term) || (p.categoryName || '').toLowerCase().includes(term));
+        }
+
+        // Update badge status
+        const countBadge = document.getElementById('catCountBadge');
+        if (countBadge) {
+            countBadge.innerHTML = `<i class="fa-solid fa-boxes-stacked"></i> ${filtered.length} منتجات معتمدة متوفرة`;
+        }
+        const statusEl = document.getElementById('catProductsStatus');
+        if (statusEl) {
+            statusEl.textContent = `تم العثور على ${filtered.length} منتج في هذا القسم`;
+        }
+
+        if (filtered.length === 0) {
+            grid.innerHTML = `
+                <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; background: #ffffff; border-radius: 20px; border: 1.5px dashed var(--color-border);">
+                    <i class="fa-solid fa-box-open" style="font-size: 50px; color: var(--color-slate); margin-bottom: 16px;"></i>
+                    <h3 style="font-size: 20px; color: var(--color-navy); margin-bottom: 8px;">لا توجد أجهزة مطابقة حالياً</h3>
+                    <p style="color: var(--color-slate); font-size: 14px; margin-bottom: 20px;">جرب تصفح الأقسام الأخرى أو عرض كافة المنتجات</p>
+                    <a href="category?cat=all" class="btn-tech-primary" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 12px;">
+                        <i class="fa-solid fa-layer-group"></i> عرض كل المنتجات
+                    </a>
+                </div>
+            `;
+            return;
+        }
+
+        grid.innerHTML = filtered.map(p => {
+            const specsHtml = (p.specs || []).map(s => `<span class="tech-spec-tag">${s}</span>`).join('');
+            const escapedName = p.name.replace(/'/g, "\\'");
+            return `
+                <div class="tech-card">
+                    <span class="tech-card-badge">${p.badge || p.discount || 'مميز'}</span>
+                    <a href="product?id=${p.id}" class="tech-card-img-box" style="text-decoration:none; display:block;">
+                        <img decoding="async" src="${p.image}" alt="${p.name}" title="عرض تفاصيل ${p.name}">
+                    </a>
+                    <div class="tech-card-body">
+                        <div>
+                            <div class="tech-card-cat">${p.categoryName || 'أجهزة ذكية'}</div>
+                            <h4 class="tech-card-title">
+                                <a href="product?id=${p.id}" style="color:inherit; text-decoration:none; display:inline-block; transition:color 0.2s;" onmouseover="this.style.color='#0284c7'" onmouseout="this.style.color='inherit'">
+                                    ${p.name}
+                                </a>
+                            </h4>
+                            <div class="tech-card-specs">
+                                ${specsHtml}
+                            </div>
+                            <div class="tech-card-rating">
+                                <div class="tech-card-stars">
+                                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                </div>
+                                <span class="tech-card-reviews">(${p.reviewsCount || 120} تقييم موثق)</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="tech-card-pricing">
+                                <span class="tech-price-current">${p.price} ر.س</span>
+                                ${p.oldPrice ? `<span class="tech-price-old">${p.oldPrice} ر.س</span>` : ''}
+                            </div>
+                            <div class="tech-card-actions">
+                                <button class="tech-btn-add" onclick="addToCart('${escapedName}', ${p.price}, '${p.image}')">
+                                    <i class="fa-solid fa-cart-plus"></i>
+                                    <span>إضافة للسلة</span>
+                                </button>
+                                <a href="product?id=${p.id}" class="tech-btn-view">
+                                    <i class="fa-regular fa-eye"></i>
+                                    <span>عرض المنتج</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function searchCategoryProducts() {
+        const input = document.getElementById('catSearchInput');
+        if (!input) return;
+        renderProducts(currentCat, input.value);
+    }
+
+    function sortCategoryProducts() {
+        const val = document.getElementById('sortSelect').value;
+        if (val === 'price-asc') {
+            allProducts.sort((a, b) => a.price - b.price);
+        } else if (val === 'price-desc') {
+            allProducts.sort((a, b) => b.price - a.price);
+        } else {
+            allProducts.sort((a, b) => (a.id || 0) - (b.id || 0));
+        }
+        renderProducts(currentCat);
+    }
+
+    // Initialize when DOM ready
+    document.addEventListener('DOMContentLoaded', initCategoryPage);
+    </script>
+
+    <script src="js/store.js"></script>
+</body>
+</html>

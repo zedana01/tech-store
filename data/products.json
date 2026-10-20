@@ -49,32 +49,50 @@
     {
       "id": "all",
       "name": "كل المنتجات",
-      "icon": "fa-layer-group"
+      "icon": "fa-layer-group",
+      "banner": "images/hero_banner.jpg",
+      "title": "كافة الأجهزة والملحقات الذكية",
+      "description": "استكشف كافة ابتكارات تكنو نوفا من الساعات، السماعات، الشواحن والدرون بضمان الوكيل وشحن فوري."
     },
     {
       "id": "watches",
       "name": "ساعات ذكية ورياضية",
-      "icon": "fa-clock"
+      "icon": "fa-clock",
+      "banner": "images/cat_banner_watches.jpg",
+      "title": "ساعات ذكية ورياضية فائقة الأداء",
+      "description": "أحدث إصدارات الساعات الذكية بهياكل تيتانيوم فاخرة، شاشات AMOLED، وتتبع دقيق للصحة والأنشطة الرياضية."
     },
     {
       "id": "audio",
       "name": "سماعات وصوتيات",
-      "icon": "fa-headphones"
+      "icon": "fa-headphones",
+      "banner": "images/cat_banner_audio.jpg",
+      "title": "سماعات وصوتيات Hi-Res الاستثنائية",
+      "description": "عالمك لنقاء الصوت الحقيقي مع تقنيات العزل النشط للضوضاء ANC وبطاريات تدوم حتى 40 ساعة متواصلة."
     },
     {
       "id": "chargers",
       "name": "شواحن ومنصات MagSafe",
-      "icon": "fa-bolt"
+      "icon": "fa-bolt",
+      "banner": "images/cat_banner_chargers.jpg",
+      "title": "شواحن ومنصات MagSafe اللاسلكية",
+      "description": "منصات شحن 3 في 1 مدمجة للمكتب والسفر تدعم الشحن فائق السرعة والأمان التام لكافة أجهزتك."
     },
     {
       "id": "drones",
       "name": "درون وتصوير 4K",
-      "icon": "fa-camera"
+      "icon": "fa-camera",
+      "banner": "images/cat_banner_drones.jpg",
+      "title": "طائرات درون وتصوير سينمائي 4K",
+      "description": "ارتقِ بتصويرك الجوي إلى أفق جديد مع مثبتات جيروسكوبية ثلاثية المحاور ومدى طيران احترافي."
     },
     {
       "id": "home",
       "name": "أجهزة منزل ذكي",
-      "icon": "fa-house-signal"
+      "icon": "fa-house-signal",
+      "banner": "images/cat_banner_home.jpg",
+      "title": "أنظمة وأجهزة المنزل الذكي",
+      "description": "مكبرات صوت محيطية تفاعلية بإضاءات RGB وتقنيات ذكية تملأ منزلك بأجواء عصرية مذهلة."
     }
   ],
   "products": [
