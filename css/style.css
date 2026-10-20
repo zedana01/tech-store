@@ -2003,23 +2003,90 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
             }
         }
         
+
+
 /* ==========================================================================
-   BRIGHT TEXT IN DARK BANNERS & SECTIONS (USER PREFERENCE)
+   HOMEPAGE HERO SECTION (PERFECT CONTRAST & READABILITY)
    ========================================================================== */
-.tech-hero-desc,
-.page-hero-sub,
-.tech-section-subtitle,
-.tech-spotlight-desc,
-.tech-hero p,
-.page-hero-banner p {
-    color: #f1f5f9 !important;
-    font-weight: 600 !important;
-    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.4) !important;
+.tech-hero {
+    padding: 50px 0 70px !important;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%) !important;
+    position: relative !important;
+}
+.tech-hero-title {
+    font-size: 42px !important;
+    font-weight: 900 !important;
+    color: #0f172a !important; /* Deep dark navy */
+    line-height: 1.3 !important;
+    letter-spacing: -0.5px !important;
+    text-shadow: none !important;
+}
+.tech-hero-title span {
+    background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+}
+.tech-hero-desc {
+    font-size: 17px !important;
+    color: #334155 !important; /* High contrast readable dark slate */
+    line-height: 1.8 !important;
+    font-weight: 500 !important;
+    text-shadow: none !important;
 }
 
-.tech-hero-title,
-.page-hero-title,
-.tech-spotlight-title {
+/* ==========================================================================
+   UNIFIED INNER PAGES HERO BANNER (CENTERED TITLE & DESCRIPTION)
+   ========================================================================== */
+.tech-inner-hero {
+    background: linear-gradient(135deg, #090d16 0%, #0f172a 100%) !important;
+    padding: 60px 20px !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    text-align: center !important;
+}
+.tech-inner-hero::before {
+    content: '' !important;
+    position: absolute !important;
+    top: -50% !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 600px !important;
+    height: 300px !important;
+    background: radial-gradient(circle, rgba(2, 132, 199, 0.25) 0%, rgba(2, 132, 199, 0) 70%) !important;
+    filter: blur(50px) !important;
+    pointer-events: none !important;
+}
+.tech-inner-hero-inner {
+    max-width: 800px !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+    position: relative !important;
+    z-index: 2 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+.tech-inner-hero-title {
+    font-size: 2.6rem !important;
+    font-weight: 900 !important;
     color: #ffffff !important;
-    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.6) !important;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5) !important;
+    margin: 0 0 14px 0 !important;
+    text-align: center !important;
+    width: 100% !important;
+    display: block !important;
+}
+.tech-inner-hero-desc {
+    font-size: 1.2rem !important;
+    font-weight: 600 !important;
+    color: #f1f5f9 !important;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4) !important;
+    line-height: 1.8 !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+    width: 100% !important;
+    max-width: 700px !important;
+    display: block !important;
 }
