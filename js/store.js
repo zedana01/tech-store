@@ -1,462 +1,411 @@
-/**
- * Techno Nova Store - Core Frontend Logic
- */
 
-let storeData = null;
-let cart = JSON.parse(localStorage.getItem('techno_cart') || '[]');
-let currentCategory = 'all';
-let searchQuery = '';
+    /* ==========================================================================
+       1. FLASH DEALS 4-CARD SLIDESHOW WITH AUTOPLAY & SMOOTH CONTROLS
+       ========================================================================== */
+    var sliderCurrentIndex = 0;
+    var sliderTotalItems = 6;
+    var sliderAutoPlayTimer = null;
 
-// Load initial store data
-async function initStore() {
-  try {
-    const res = await fetch('data/products.json?v=' + Date.now());
-    const freshData = await res.json();
-    
-    const localOverride = localStorage.getItem('techno_store_data');
-    if (localOverride) {
-      const parsed = JSON.parse(localOverride);
-      // Auto-migrate any broken/old image links to fresh local images
-      if (parsed.products && Array.isArray(parsed.products)) {
-        parsed.products.forEach(p => {
-          const fresh = freshData.products.find(fp => fp.id === p.id);
-          if (fresh && (!p.image || p.image.includes('unsplash') || p.image.includes('photo-1622445262464'))) {
-            p.image = fresh.image;
-          }
+    function getVisibleCardsCount() {
+        if (window.innerWidth <= 768) return 1;
+        if (window.innerWidth <= 1024) return 2;
+        return 4; // Exactly 4 cards on desktop!
+    }
+
+    function updateSliderPosition() {
+        var track = document.getElementById('sliderTrack');
+        if (!track) return;
+        var visibleCards = getVisibleCardsCount();
+        var maxIndex = Math.max(0, sliderTotalItems - visibleCards);
+        if (sliderCurrentIndex > maxIndex) sliderCurrentIndex = maxIndex;
+        if (sliderCurrentIndex < 0) sliderCurrentIndex = 0;
+        
+        // Positive offset moves track in RTL to reveal items smoothly
+        var percentagePerCard = 100 / visibleCards;
+        var offset = sliderCurrentIndex * percentagePerCard;
+        track.style.transform = 'translateX(' + offset + '%)';
+    }
+
+    function slideNext() {
+        var visibleCards = getVisibleCardsCount();
+        var maxIndex = Math.max(0, sliderTotalItems - visibleCards);
+        if (sliderCurrentIndex < maxIndex) {
+            sliderCurrentIndex = sliderCurrentIndex + 1;
+        } else {
+            sliderCurrentIndex = 0; // loop back to first
+        }
+        updateSliderPosition();
+    }
+
+    function slidePrev() {
+        var visibleCards = getVisibleCardsCount();
+        var maxIndex = Math.max(0, sliderTotalItems - visibleCards);
+        if (sliderCurrentIndex > 0) {
+            sliderCurrentIndex = sliderCurrentIndex - 1;
+        } else {
+            sliderCurrentIndex = maxIndex; // loop to last
+        }
+        updateSliderPosition();
+    }
+
+    function startSliderAutoPlay() {
+        stopSliderAutoPlay();
+        sliderAutoPlayTimer = setInterval(function() {
+            slideNext();
+        }, 3600);
+    }
+
+    function stopSliderAutoPlay() {
+        if (sliderAutoPlayTimer) {
+            clearInterval(sliderAutoPlayTimer);
+            sliderAutoPlayTimer = null;
+        }
+    }
+
+    // Attach pause on mouse hover
+    var sliderViewport = document.querySelector('.tech-slider-viewport');
+    if (sliderViewport) {
+        sliderViewport.addEventListener('mouseenter', stopSliderAutoPlay);
+        sliderViewport.addEventListener('mouseleave', startSliderAutoPlay);
+    }
+
+    window.addEventListener('resize', function() {
+        updateSliderPosition();
+    });
+
+    /* ==========================================================================
+       2. CATALOG CATEGORIES & DYNAMIC FILTERING (WITH AUTO-SCROLL TO PRODUCTS)
+       ========================================================================== */
+    var currentCategory = 'all';
+    var currentSort = 'featured';
+    var maxPriceFilter = 2500;
+
+    function filterCategory(cat, btn) {
+        currentCategory = cat;
+
+        // Highlight sidebar button
+        var sideBtns = document.querySelectorAll('.tech-filter-cat-btn');
+        sideBtns.forEach(function(b) {
+            b.classList.remove('active');
+            var onclickAttr = b.getAttribute('onclick') || '';
+            if (onclickAttr.indexOf("'" + cat + "'") !== -1) {
+                b.classList.add('active');
+            }
         });
-      }
-      storeData = parsed;
-      localStorage.setItem('techno_store_data', JSON.stringify(storeData));
-    } else {
-      storeData = freshData;
+
+        // Highlight navbar tab
+        var navItems = document.querySelectorAll('.tech-nav-item');
+        navItems.forEach(function(item) {
+            item.classList.remove('active');
+            var link = item.querySelector('a');
+            if (link) {
+                var onclickAttr = link.getAttribute('onclick') || '';
+                if (cat !== 'all') {
+                    if (onclickAttr.indexOf("'" + cat + "'") !== -1) {
+                        item.classList.add('active');
+                    }
+                }
+            }
+        });
+
+        // Apply filters
+        applyFilters();
+
+        // Smooth scroll to catalog so user sees the filtered devices!
+        var catalogEl = document.getElementById('catalog');
+        if (catalogEl) {
+            catalogEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
     }
-  } catch (e) {
-    console.error('Failed to load store data:', e);
-  }
 
-  updateHeaderAndHero();
-  renderCategoryTabs();
-  renderProducts();
-  updateCartUI();
-  setupEventListeners();
-}
-
-function updateHeaderAndHero() {
-  if (!storeData || !storeData.settings) return;
-  const s = storeData.settings;
-  
-  const storeNameEls = document.querySelectorAll('.store-name-text');
-  storeNameEls.forEach(el => el.textContent = s.storeName);
-
-  const phoneEls = document.querySelectorAll('.store-phone-text');
-  phoneEls.forEach(el => {
-    el.textContent = s.phone;
-    if (el.tagName === 'A') el.href = `tel:${s.phone}`;
-  });
-
-  const whatsappLinks = document.querySelectorAll('.store-whatsapp-link');
-  whatsappLinks.forEach(el => el.href = `https://wa.me/${s.whatsapp}`);
-
-  const heroTitle = document.getElementById('heroTitle');
-  if (heroTitle && s.heroTitle) heroTitle.innerHTML = s.heroTitle;
-
-  const heroSubtitle = document.getElementById('heroSubtitle');
-  if (heroSubtitle && s.heroSubtitle) heroSubtitle.textContent = s.heroSubtitle;
-
-  const heroBadge = document.getElementById('heroBadge');
-  if (heroBadge && s.heroBadge) heroBadge.textContent = s.heroBadge;
-}
-
-function renderCategoryTabs() {
-  const container = document.getElementById('categoryTabs');
-  if (!container || !storeData.categories) return;
-
-  container.innerHTML = storeData.categories.map(cat => `
-    <button class="cat-btn ${cat.id === currentCategory ? 'active' : ''}" onclick="selectCategory('${cat.id}')">
-      <i class="fas ${cat.icon || 'fa-tag'}"></i>
-      ${cat.name}
-    </button>
-  `).join('');
-}
-
-function selectCategory(catId) {
-  currentCategory = catId;
-  renderCategoryTabs();
-  renderProducts();
-}
-
-function renderProducts() {
-  const container = document.getElementById('productsGrid');
-  if (!container || !storeData.products) return;
-
-  let filtered = storeData.products;
-
-  if (currentCategory !== 'all') {
-    filtered = filtered.filter(p => p.category === currentCategory);
-  }
-
-  if (searchQuery.trim() !== '') {
-    const q = searchQuery.toLowerCase();
-    filtered = filtered.filter(p => 
-      p.name.toLowerCase().includes(q) || 
-      (p.description && p.description.toLowerCase().includes(q))
-    );
-  }
-
-  if (filtered.length === 0) {
-    container.innerHTML = `
-      <div style="grid-column: 1/-1; text-align: center; padding: 50px 20px; color: #64748b;">
-        <i class="fas fa-box-open" style="font-size: 3rem; margin-bottom: 15px; color: #cbd5e1;"></i>
-        <h3>لا توجد منتجات مطابقة لهذا القسم حالياً</h3>
-        <p>يرجى اختيار قسم آخر أو تجربة كلمات بحث مختلفة</p>
-      </div>
-    `;
-    return;
-  }
-
-  const currency = storeData.settings.currency || 'ر.س';
-
-  container.innerHTML = filtered.map(prod => `
-    <div class="product-card" data-id="${prod.id}">
-      <div class="product-thumb">
-        <span class="product-badge ${prod.oldPrice ? 'sale' : ''}">${prod.badge || 'جديد'}</span>
-        <img src="${prod.image}" alt="${prod.name}" loading="lazy">
-        <button class="quick-view-btn" onclick="openQuickView(${prod.id})">
-          <i class="fas fa-eye"></i> نظرة سريعة
-        </button>
-      </div>
-      <div class="product-body">
-        <div class="product-category">${prod.categoryName || 'إلكترونيات ذكية'}</div>
-        <h3 class="product-title">${prod.name}</h3>
-        <div class="product-rating">
-          ${renderStars(prod.rating || 5)}
-          <span>(${prod.reviewsCount || 50}+ تقييم)</span>
-        </div>
-        <div class="product-footer">
-          <div class="product-price">
-            <span class="current-price">${prod.price} ${currency}</span>
-            ${prod.oldPrice ? `<span class="old-price">${prod.oldPrice} ${currency}</span>` : ''}
-          </div>
-          <button class="add-to-cart-btn" onclick="addToCart(${prod.id})" title="أضف إلى السلة">
-            <i class="fas fa-cart-plus"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-  `).join('');
-}
-
-function renderStars(rating) {
-  let stars = '';
-  const fullStars = Math.floor(rating);
-  for (let i = 0; i < 5; i++) {
-    if (i < fullStars) {
-      stars += '<i class="fas fa-star"></i>';
-    } else {
-      stars += '<i class="far fa-star"></i>';
+    function sortProducts(sortType, btn) {
+        currentSort = sortType;
+        if (btn) {
+            document.querySelectorAll('.tech-sort-btn').forEach(function(b) {
+                b.classList.remove('active');
+            });
+            btn.classList.add('active');
+        }
+        applyFilters();
     }
-  }
-  return stars;
-}
 
-// Cart Functionality
-function addToCart(productId) {
-  const prod = storeData.products.find(p => p.id === productId);
-  if (!prod) return;
+    function filterByPrice(val) {
+        maxPriceFilter = parseInt(val);
+        var display = document.getElementById('priceDisplay');
+        if (display) {
+            display.textContent = parseInt(val).toLocaleString() + ' ر.س';
+        }
+        applyFilters();
+    }
 
-  const existing = cart.find(item => item.id === productId);
-  if (existing) {
-    existing.qty += 1;
-  } else {
-    cart.push({
-      id: prod.id,
-      name: prod.name,
-      price: prod.price,
-      image: prod.image,
-      qty: 1
+    function searchProducts() {
+        applyFilters();
+        var catalogEl = document.getElementById('catalog');
+        if (catalogEl) {
+            catalogEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+
+    function applyFilters() {
+        var searchInput = document.getElementById('searchInput');
+        var query = '';
+        if (searchInput) {
+            query = (searchInput.value || '').trim().toLowerCase();
+        }
+        var items = Array.from(document.querySelectorAll('.prod-item'));
+        var grid = document.getElementById('productsGrid');
+        if (!grid) return;
+        if (!items.length) return;
+
+        var visibleItems = [];
+
+        items.forEach(function(item) {
+            var cat = item.getAttribute('data-cat') || '';
+            var price = parseInt(item.getAttribute('data-price') || '0');
+            var name = (item.getAttribute('data-name') || '').toLowerCase();
+
+            var isMatch = true;
+
+            // Category test
+            if (currentCategory !== 'all') {
+                if (cat !== currentCategory) {
+                    isMatch = false;
+                }
+            }
+
+            // Price test
+            if (price > maxPriceFilter) {
+                isMatch = false;
+            }
+
+            // Search query test
+            if (query.length > 0) {
+                if (name.indexOf(query) === -1) {
+                    if (cat.indexOf(query) === -1) {
+                        isMatch = false;
+                    }
+                }
+            }
+
+            if (isMatch) {
+                item.style.display = 'flex';
+                visibleItems.push(item);
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        // Update count
+        var countEl = document.getElementById('visibleCount');
+        if (countEl) {
+            countEl.textContent = visibleItems.length;
+        }
+
+        // Sorting
+        visibleItems.sort(function(a, b) {
+            var pA = parseInt(a.getAttribute('data-price') || '0');
+            var pB = parseInt(b.getAttribute('data-price') || '0');
+            var sA = parseInt(a.getAttribute('data-sales') || '0');
+            var sB = parseInt(b.getAttribute('data-sales') || '0');
+            var fA = parseInt(a.getAttribute('data-featured') || '0');
+            var fB = parseInt(b.getAttribute('data-featured') || '0');
+
+            if (currentSort === 'price-asc') return pA - pB;
+            if (currentSort === 'price-desc') return pB - pA;
+            if (currentSort === 'bestseller') return sB - sA;
+            return fB - fA;
+        });
+
+        visibleItems.forEach(function(item) {
+            grid.appendChild(item);
+        });
+    }
+
+    /* ==========================================================================
+       3. CART & INTERACTIVE DRAWER
+       ========================================================================== */
+    var cart = [];
+
+    function addToCart(title, price, img) {
+        cart.push({ title: title, price: price, img: img });
+        updateCartUI();
+        showToast('تمت إضافة "' + title.substring(0, 25) + '..." إلى سلة المشتريات بنجاح! 🚀');
+    }
+
+    function removeFromCart(index) {
+        cart.splice(index, 1);
+        updateCartUI();
+    }
+
+    function updateCartUI() {
+        var badge = document.getElementById('cartBadge');
+        var headerCount = document.getElementById('cartCountHeader');
+        var totalSum = document.getElementById('cartTotalSum');
+        var container = document.getElementById('cartItemsContainer');
+
+        if (badge) badge.textContent = cart.length;
+        if (headerCount) headerCount.textContent = cart.length;
+
+        var total = 0;
+        cart.forEach(function(item) {
+            total = total + item.price;
+        });
+        if (totalSum) totalSum.textContent = total.toLocaleString() + ' ر.س';
+
+        if (!container) return;
+
+        if (cart.length === 0) {
+            container.innerHTML = '<div class="tech-cart-empty">' +
+                '<i class="fa-solid fa-cart-shopping"></i>' +
+                '<h4>سلتك لا تزال فارغة</h4>' +
+                '<p>تصفح أحدث الأجهزة الذكية وأضفها لسلتك بسهولة</p>' +
+                '</div>';
+            return;
+        }
+
+        var html = '';
+        cart.forEach(function(item, idx) {
+            html += '<div class="tech-cart-item">' +
+                '<img decoding="async" src="' + item.img + '" alt="' + item.title + '" class="tech-cart-item-img">' +
+                '<div class="tech-cart-item-info">' +
+                    '<h5 class="tech-cart-item-title">' + item.title + '</h5>' +
+                    '<div class="tech-cart-item-price">' + item.price.toLocaleString() + ' ر.س</div>' +
+                '</div>' +
+                '<button class="tech-cart-remove" onclick="removeFromCart(' + idx + ')" title="حذف">' +
+                    '<i class="fa-solid fa-trash-can"></i>' +
+                '</button>' +
+            '</div>';
+        });
+        container.innerHTML = html;
+    }
+
+    function toggleCartDrawer() {
+        var overlay = document.getElementById('cartOverlay');
+        var drawer = document.getElementById('cartDrawer');
+        if (overlay) {
+            if (drawer) {
+                overlay.classList.toggle('active');
+                drawer.classList.toggle('active');
+            }
+        }
+    }
+
+    function proceedCheckout() {
+        if (cart.length === 0) {
+            showToast('السلة فارغة! أضف بعض الأجهزة أولاً للمتابعة.');
+            return;
+        }
+        showToast('جاري تحويلك إلى بوابة الدفع الآمنة والتقسيط...');
+    }
+
+    function showToast(msg) {
+        var toast = document.getElementById('techToast');
+        var toastMsg = document.getElementById('toastMsg');
+        if (toast) {
+            if (toastMsg) {
+                toastMsg.textContent = msg;
+                toast.classList.add('show');
+                setTimeout(function() {
+                    toast.classList.remove('show');
+                }, 3500);
+            }
+        }
+    }
+
+    /* ==========================================================================
+       4. MODALS (ORDER TRACKING & 24/7 SUPPORT)
+       ========================================================================== */
+    function openTrackingModal() {
+        var overlay = document.getElementById('trackingOverlay');
+        var modal = document.getElementById('trackingModal');
+        if (overlay) overlay.classList.add('active');
+        if (modal) modal.style.display = 'block';
+    }
+    function closeTrackingModal() {
+        var overlay = document.getElementById('trackingOverlay');
+        var modal = document.getElementById('trackingModal');
+        if (overlay) overlay.classList.remove('active');
+        if (modal) modal.style.display = 'none';
+        var res = document.getElementById('trackResult');
+        if (res) res.style.display = 'none';
+    }
+    function trackShipment() {
+        var input = document.getElementById('trackInput');
+        var res = document.getElementById('trackResult');
+        if (input) {
+            if (input.value.trim().length === 0) {
+                showToast('يرجى إدخال رقم الشحنة للمتابعة');
+                return;
+            }
+        }
+        if (res) res.style.display = 'block';
+    }
+
+    function openSupportModal() {
+        var overlay = document.getElementById('supportOverlay');
+        var modal = document.getElementById('supportModal');
+        if (overlay) overlay.classList.add('active');
+        if (modal) modal.style.display = 'block';
+    }
+    function closeSupportModal() {
+        var overlay = document.getElementById('supportOverlay');
+        var modal = document.getElementById('supportModal');
+        if (overlay) overlay.classList.remove('active');
+        if (modal) modal.style.display = 'none';
+    }
+
+    /* ==========================================================================
+       5. COUNTDOWN TIMER CONTROLLER
+       ========================================================================== */
+    function startCountdown() {
+        var h = 14, m = 35, s = 20;
+        setInterval(function() {
+            s = s - 1;
+            if (s < 0) { s = 59; m = m - 1; }
+            if (m < 0) { m = 59; h = h - 1; }
+            if (h < 0) { h = 24; }
+            var eh = document.getElementById('cd-hours');
+            var em = document.getElementById('cd-minutes');
+            var es = document.getElementById('cd-seconds');
+            if (eh) eh.textContent = h < 10 ? '0' + h : h;
+            if (em) em.textContent = m < 10 ? '0' + m : m;
+            if (es) es.textContent = s < 10 ? '0' + s : s;
+        }, 1000);
+    }
+
+    // Initialize immediately
+    updateSliderPosition();
+    startSliderAutoPlay();
+    startCountdown();
+    
+
+// Overridden proceedCheckout with direct WhatsApp routing to 01027093535
+function proceedCheckout() {
+    if (!cart || cart.length === 0) {
+        showToast("سلة المشتريات فارغة حالياً!");
+        return;
+    }
+    
+    let total = 0;
+    let itemsList = "";
+    cart.forEach((item, index) => {
+        let itemTotal = item.price * item.quantity;
+        total += itemTotal;
+        itemsList += `\n${index + 1}) *${item.name}*\n   الكمية: ${item.quantity} × ${item.price} = ${itemTotal} ر.س`;
     });
-  }
-
-  saveCart();
-  updateCartUI();
-  showToast(`تمت إضافة "${prod.name}" إلى السلة`);
-  openCartDrawer();
+    
+    let orderNum = "TECH-" + Math.floor(100000 + Math.random() * 900000);
+    let msg = `*طلب شراء جديد من متجر تكنو نوفا* 🛍️\n`;
+    msg += `*رقم الطلب:* ${orderNum}\n`;
+    msg += `--------------------------------\n`;
+    msg += `*المنتجات المطلوبة:*${itemsList}\n`;
+    msg += `--------------------------------\n`;
+    msg += `💰 *الإجمالي الكلي:* *${total} ر.س*\n\n`;
+    msg += `أود تأكيد الطلب والشحن المباشر.`;
+    
+    let waUrl = `https://wa.me/201027093535?text=${encodeURIComponent(msg)}`;
+    showToast("جاري تحويلك إلى واتساب لإتمام الطلب...");
+    setTimeout(() => {
+        window.open(waUrl, "_blank");
+    }, 800);
 }
-
-function updateCartQty(productId, delta) {
-  const item = cart.find(item => item.id === productId);
-  if (!item) return;
-
-  item.qty += delta;
-  if (item.qty <= 0) {
-    cart = cart.filter(p => p.id !== productId);
-  }
-
-  saveCart();
-  updateCartUI();
-}
-
-function removeFromCart(productId) {
-  cart = cart.filter(p => p.id !== productId);
-  saveCart();
-  updateCartUI();
-  showToast('تم حذف المنتج من السلة');
-}
-
-function saveCart() {
-  localStorage.setItem('techno_cart', JSON.stringify(cart));
-}
-
-function updateCartUI() {
-  const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
-  const badges = document.querySelectorAll('.cart-badge');
-  badges.forEach(b => b.textContent = totalCount);
-
-  const cartList = document.getElementById('cartItemsList');
-  const cartTotalEl = document.getElementById('cartTotalPrice');
-  if (!cartList) return;
-
-  const currency = (storeData && storeData.settings && storeData.settings.currency) || 'ر.س';
-
-  if (cart.length === 0) {
-    cartList.innerHTML = `
-      <div class="cart-empty-state">
-        <i class="fas fa-shopping-bag"></i>
-        <h4>سلة مشترياتك فارغة</h4>
-        <p>تصفح أحدث الأجهزة والعروض واختر ما يناسبك</p>
-      </div>
-    `;
-    if (cartTotalEl) cartTotalEl.textContent = `0 ${currency}`;
-    return;
-  }
-
-  let totalAmount = 0;
-  cartList.innerHTML = cart.map(item => {
-    const itemTotal = item.price * item.qty;
-    totalAmount += itemTotal;
-    return `
-      <div class="cart-item">
-        <img src="${item.image}" alt="${item.name}" class="cart-item-img">
-        <div class="cart-item-info">
-          <h4 class="cart-item-title">${item.name}</h4>
-          <div class="cart-item-price">${item.price} ${currency}</div>
-          <div class="cart-qty-ctrl">
-            <button class="qty-btn" onclick="updateCartQty(${item.id}, -1)">-</button>
-            <span class="qty-val">${item.qty}</span>
-            <button class="qty-btn" onclick="updateCartQty(${item.id}, 1)">+</button>
-          </div>
-        </div>
-        <button class="cart-remove-item" onclick="removeFromCart(${item.id})" title="حذف">
-          <i class="fas fa-trash-alt"></i>
-        </button>
-      </div>
-    `;
-  }).join('');
-
-  if (cartTotalEl) cartTotalEl.textContent = `${totalAmount} ${currency}`;
-}
-
-function openCartDrawer() {
-  document.getElementById('cartDrawer').classList.add('active');
-  document.getElementById('cartOverlay').classList.add('active');
-}
-
-function closeCartDrawer() {
-  document.getElementById('cartDrawer').classList.remove('active');
-  document.getElementById('cartOverlay').classList.remove('active');
-}
-
-// Quick View Modal
-function openQuickView(productId) {
-  const prod = storeData.products.find(p => p.id === productId);
-  if (!prod) return;
-
-  const currency = storeData.settings.currency || 'ر.س';
-  const modalBody = document.getElementById('quickViewBody');
-  if (!modalBody) return;
-
-  modalBody.innerHTML = `
-    <div class="modal-content-grid">
-      <div class="modal-img-wrap">
-        <img src="${prod.image}" alt="${prod.name}">
-      </div>
-      <div class="modal-details">
-        <span class="product-badge ${prod.oldPrice ? 'sale' : ''}">${prod.badge || 'متاح فوراً'}</span>
-        <h2 style="font-size: 1.5rem; font-weight: 800; margin: 12px 0 8px;">${prod.name}</h2>
-        <div class="product-rating" style="margin-bottom: 12px;">
-          ${renderStars(prod.rating || 5)}
-          <span>(${prod.reviewsCount || 50}+ تقييم)</span>
-        </div>
-        <div class="product-price" style="margin-bottom: 15px;">
-          <span class="current-price" style="font-size: 1.6rem;">${prod.price} ${currency}</span>
-          ${prod.oldPrice ? `<span class="old-price">${prod.oldPrice} ${currency}</span>` : ''}
-        </div>
-        <p style="color: #475569; font-size: 0.95rem; line-height: 1.6; margin-bottom: 15px;">
-          ${prod.description || ''}
-        </p>
-        <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 8px;">المواصفات والخصائص:</h4>
-        <ul class="modal-specs-list">
-          ${(prod.specs || []).map(s => `<li><i class="fas fa-check-circle"></i> ${s}</li>`).join('')}
-        </ul>
-        <div style="display: flex; gap: 12px; margin-top: 25px;">
-          <button class="btn-primary" style="flex: 1;" onclick="addToCart(${prod.id}); closeModal();">
-            <i class="fas fa-cart-plus"></i> أضف إلى السلة
-          </button>
-          <button class="btn-whatsapp-checkout" style="flex: 1;" onclick="orderSingleViaWhatsApp(${prod.id})">
-            <i class="fab fa-whatsapp"></i> طلب مباشر
-          </button>
-        </div>
-      </div>
-    </div>
-  `;
-
-  document.getElementById('quickViewModal').classList.add('active');
-}
-
-function closeModal() {
-  const modal = document.getElementById('quickViewModal');
-  if (modal) modal.classList.remove('active');
-  const checkoutModal = document.getElementById('checkoutModal');
-  if (checkoutModal) checkoutModal.classList.remove('active');
-}
-
-// Checkout & WhatsApp Ordering
-function initiateWhatsAppCheckout() {
-  if (cart.length === 0) {
-    showToast('سلتك فارغة حالياً!');
-    return;
-  }
-  closeCartDrawer();
-  document.getElementById('checkoutModal').classList.add('active');
-}
-
-function completeWhatsAppOrder(event) {
-  event.preventDefault();
-
-  const name = document.getElementById('orderName').value.trim();
-  const phone = document.getElementById('orderPhone').value.trim();
-  const city = document.getElementById('orderCity').value.trim();
-  const address = document.getElementById('orderAddress').value.trim();
-  const notes = document.getElementById('orderNotes').value.trim();
-
-  if (!name || !phone || !city) {
-    alert('يرجى ملء كافة الحقول الأساسية (الاسم، الهاتف، المدينة)');
-    return;
-  }
-
-  const currency = (storeData && storeData.settings && storeData.settings.currency) || 'ر.س';
-  let total = 0;
-  let itemsText = '';
-
-  cart.forEach((item, index) => {
-    const itemSub = item.price * item.qty;
-    total += itemSub;
-    itemsText += `\n${index + 1}) *${item.name}*\n   الكمية: ${item.qty} × ${item.price} = ${itemSub} ${currency}`;
-  });
-
-  const orderId = 'ORD-' + Math.floor(100000 + Math.random() * 900000);
-  const now = new Date().toLocaleString('ar-EG');
-
-  // Save order to history
-  const newOrder = {
-    id: orderId,
-    customerName: name,
-    customerPhone: phone,
-    city: city,
-    address: address,
-    notes: notes,
-    items: [...cart],
-    total: total,
-    currency: currency,
-    date: now,
-    status: 'جديد'
-  };
-
-  const existingOrders = JSON.parse(localStorage.getItem('techno_orders') || '[]');
-  existingOrders.unshift(newOrder);
-  localStorage.setItem('techno_orders', JSON.stringify(existingOrders));
-
-  // WhatsApp Message
-  const whatsappNumber = (storeData && storeData.settings && storeData.settings.whatsapp) || '201027093535';
-  
-  let msg = `*طلب شراء جديد من متجر تكنو نوفا* 🛍️\n`;
-  msg += `*رقم الطلب:* ${orderId}\n`;
-  msg += `*التاريخ:* ${now}\n`;
-  msg += `--------------------------------\n`;
-  msg += `*المنتجات المطلوبة:*${itemsText}\n`;
-  msg += `--------------------------------\n`;
-  msg += `💰 *الإجمالي الكلي:* *${total} ${currency}*\n\n`;
-  msg += `👤 *بيانات العميل:* \n`;
-  msg += `• *الاسم:* ${name}\n`;
-  msg += `• *الهاتف:* ${phone}\n`;
-  msg += `• *المدينة:* ${city}\n`;
-  if (address) msg += `• *العنوان:* ${address}\n`;
-  if (notes) msg += `• *ملاحظات إضافية:* ${notes}\n\n`;
-  msg += `_أرجو تأكيد توفر الطلب والبدء في الشحن._`;
-
-  const encodedMsg = encodeURIComponent(msg);
-  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMsg}`;
-
-  // Clear cart & close
-  cart = [];
-  saveCart();
-  updateCartUI();
-  closeModal();
-
-  showToast('تم تسجيل طلبك بنجاح! جاري تحويلك للواتساب...');
-  setTimeout(() => {
-    window.open(whatsappUrl, '_blank');
-  }, 1000);
-}
-
-function orderSingleViaWhatsApp(productId) {
-  const prod = storeData.products.find(p => p.id === productId);
-  if (!prod) return;
-
-  const currency = storeData.settings.currency || 'ر.س';
-  const whatsappNumber = (storeData && storeData.settings && storeData.settings.whatsapp) || '201027093535';
-
-  let msg = `*استفسار وطلب منتج من متجر تكنو نوفا* ⚡\n\n`;
-  msg += `*المنتج:* ${prod.name}\n`;
-  msg += `*السعر:* ${prod.price} ${currency}\n`;
-  msg += `*رابط الصورة:* ${prod.image}\n\n`;
-  msg += `أود الاستفسار عن توفر المنتج وتأكيد طلب شرائه.`;
-
-  window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
-}
-
-function showToast(text) {
-  const existing = document.querySelector('.toast-msg');
-  if (existing) existing.remove();
-
-  const toast = document.createElement('div');
-  toast.className = 'toast-msg';
-  toast.innerHTML = `<i class="fas fa-check-circle" style="color: #10b981;"></i> ${text}`;
-  document.body.appendChild(toast);
-
-  setTimeout(() => {
-    toast.style.opacity = '0';
-    toast.style.transition = '0.3s';
-    setTimeout(() => toast.remove(), 300);
-  }, 2500);
-}
-
-function setupEventListeners() {
-  const searchInput = document.getElementById('storeSearchInput');
-  if (searchInput) {
-    searchInput.addEventListener('input', (e) => {
-      searchQuery = e.target.value;
-      renderProducts();
-    });
-  }
-
-  const mobileToggle = document.getElementById('mobileMenuToggle');
-  const navLinks = document.getElementById('navLinks');
-  if (mobileToggle && navLinks) {
-    mobileToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('open');
-    });
-  }
-}
-
-document.addEventListener('DOMContentLoaded', initStore);

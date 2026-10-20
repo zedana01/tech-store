@@ -1,360 +1,1442 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>تكنو نوفا | Techno Nova - متجر الإلكترونيات والأجهزة الذكية</title>
-  <meta name="description" content="تسوق أحدث الأجهزة الذكية والساعات وسماعات الرأس والشواحن الأصلية مع ضمان شامل وشحن سريع والدفع عند الاستلام.">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تكنو نوفا | Techno Nova - متجر الإلكترونيات والأجهزة الذكية</title>
+    <meta name="description" content="عالم التكنولوجيا الذكية بين يديك.. أداء فائق وتجربة استثنائية مع أحدث الساعات الذكية وسماعات الرأس وقواعد الشحن.">
+    <!-- Font Awesome 6 Pro / Free -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Main Style -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <!-- Top Announcement Bar -->
-  <div class="top-bar">
-    <div class="container">
-      <div class="top-bar-left">
-        <span><i class="fas fa-truck"></i> شحن سريع ومجاني للطلبات فوق 300 ر.س</span>
-        <span><i class="fas fa-shield-alt"></i> ضمان ذهبي لمدة عامين على كافة المنتجات</span>
-      </div>
-      <div class="top-bar-right">
-        <a href="tel:01027093535" class="store-phone-text"><i class="fas fa-phone-alt"></i> 01027093535</a>
-        <a href="admin/index.html" style="color: #93c5fd; font-weight: 700;"><i class="fas fa-user-shield"></i> لوحة التحكم</a>
-      </div>
-    </div>
-  </div>
+<header class="tech-header">
+        <div class="tech-container">
+            <div class="tech-header-main">
+                <!-- Logo -->
+                <a href="#" class="tech-logo-link">
+                    <div class="tech-logo-icon">
+                        <i class="fa-solid fa-microchip"></i>
+                    </div>
+                    <div class="tech-logo-text">
+                        <span class="tech-logo-title">تكنو نوفا</span>
+                        <span class="tech-logo-sub">TECHNOVA STORE</span>
+                    </div>
+                </a>
 
-  <!-- Navbar -->
-  <header class="navbar">
-    <div class="container nav-wrapper">
-      <a href="index.html" class="logo">
-        <i class="fas fa-microchip"></i>
-        <div><span class="store-name-text">تكنو نوفا</span></div>
-      </a>
+                <!-- Search Form -->
+                <form class="tech-search-form" onsubmit="event.preventDefault(); searchProducts();">
+                    <input type="text" id="searchInput" class="tech-search-input" placeholder="ابحث عن أحدث السماعات، الساعات الذكية، الشواحن، أو الكاميرات..." onkeyup="searchProducts()">
+                    <button type="submit" class="tech-search-btn">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <span>بحث</span>
+                    </button>
+                </form>
 
-      <ul class="nav-links" id="navLinks">
-        <li><a href="index.html" class="active"><i class="fas fa-home"></i> الرئيسية</a></li>
-        <li><a href="shop.html"><i class="fas fa-layer-group"></i> كافة الأجهزة</a></li>
-        <li><a href="about.html"><i class="fas fa-info-circle"></i> من نحن</a></li>
-        <li><a href="contact.html"><i class="fas fa-envelope"></i> اتصل بنا</a></li>
-      </ul>
+                <!-- Header Actions -->
+                <div class="tech-header-actions">
+                <a href="admin/index.html" class="tech-action-btn" title="لوحة التحكم الإدارية" style="background: rgba(2, 132, 199, 0.12); color: #0284c7; font-weight: 700; border-radius: 12px; border: 1px solid rgba(2, 132, 199, 0.3);">
+                    <i class="fa-solid fa-user-shield"></i>
+                </a>
 
-      <div class="nav-actions">
-        <div class="nav-search">
-          <input type="text" id="storeSearchInput" placeholder="ابحث عن ساعة، سماعة، شاحن...">
-          <i class="fas fa-search"></i>
+                    <div class="tech-action-btn" onclick="showToast('تمت إضافة المنتج إلى قائمة أجهزتك المفضلة ❤️')">
+                        <i class="fa-regular fa-heart" style="font-size: 18px; color: var(--color-primary);"></i>
+                        <span class="tech-action-badge">3</span>
+                    </div>
+                    <div class="tech-action-btn" onclick="toggleCartDrawer()">
+                        <i class="fa-solid fa-bag-shopping" style="font-size: 18px; color: var(--color-primary);"></i>
+                        <span>سلة المشتريات</span>
+                        <span class="tech-action-badge" id="cartBadge">0</span>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <button class="cart-btn" onclick="openCartDrawer()" title="سلة المشتريات">
-          <i class="fas fa-shopping-cart"></i>
-          <span class="cart-badge">0</span>
-        </button>
+        <!-- Secondary Nav -->
+        <div class="tech-navbar">
+            <div class="tech-container">
+                <div class="tech-navbar-inner">
+                    <ul class="tech-nav-menu">
+                        <li class="tech-nav-item">
+                            <a href="#catalog" id="btnAllCategories" class="tech-nav-mega-btn" onclick="filterCategory('all')" style="background-color: #2563eb !important; color: #ffffff !important;">
+                                <i class="fa-solid fa-layer-group" style="color: #ffffff !important;"></i>
+                                <span style="color: #ffffff !important;">كافة الأقسام الذكية</span>
+                            </a>
+                        </li>
+                        <li class="tech-nav-item active"><a href="#">الرئيسية</a></li>
+                        <li class="tech-nav-item"><a href="#flashDeals">عروض التوفير الخاطفة</a></li>
+                        <li class="tech-nav-item"><a href="#catalog" onclick="filterCategory('audio')">السماعات والصوتيات</a></li>
+                        <li class="tech-nav-item"><a href="#catalog" onclick="filterCategory('watches')">الساعات الذكية</a></li>
+                        <li class="tech-nav-item"><a href="#catalog" onclick="filterCategory('chargers')">الشواحن والمنصات</a></li>
+                        <li class="tech-nav-item"><a href="#catalog" onclick="filterCategory('drones')">الدرون والتصوير 4K</a></li>
+                    </ul>
+                    <div class="tech-nav-hotline">
+                        <i class="fa-solid fa-phone-volume"></i>
+                        <span>الرقم الموحد المباشر: <strong>800-TECH-NOVA</strong></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
 
-        <a href="admin/index.html" class="admin-link-btn" title="دخول الإدارة">
-          <i class="fas fa-cog"></i> <span>الإدارة</span>
-        </a>
+    <!-- 3. HERO SHOWCASE SECTION -->
+    <section class="tech-hero">
+        <div class="tech-container">
+            <div class="tech-hero-grid">
+                <!-- Text Content -->
+                <div class="tech-hero-content">
+                    <div class="tech-hero-tag">
+                        <i class="fa-solid fa-shield-halved"></i> الجيل الجديد من الأجهزة الإلكترونية الذكية 2026
+                    </div>
+                    <h1 class="tech-hero-title">
+                        عالم التكنولوجيا الذكية بين يديك.. <span>أداء فائق وتجربة استثنائية</span>
+                    </h1>
+                    <p class="tech-hero-desc">
+                        استمتع بأحدث التقنيات العصرية مع متجر "تكنو نوفا". تشكيلة متكاملة من الساعات الذكية، السماعات الاحترافية، شواحن MagSafe، وطائرات التصوير بأعلى جودة وضمان محلي معتمد سنتين.
+                    </p>
+                    <div class="tech-hero-ctas">
+                        <a href="#catalog" class="btn-tech-primary">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            <span>تسوق الأجهزة الآن</span>
+                        </a>
+                        <a href="#flashDeals" class="btn-tech-secondary">
+                            <i class="fa-solid fa-bolt" style="color: var(--color-cyan);"></i>
+                            <span>استكشف عروض اليوم</span>
+                        </a>
+                    </div>
+                    <div class="tech-hero-trust">
+                        <div class="tech-trust-pill">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <span>أصلية 100% مع الضمان</span>
+                        </div>
+                        <div class="tech-trust-pill">
+                            <i class="fa-solid fa-truck-bolt"></i>
+                            <span>توصيل سريع 24-48 ساعة</span>
+                        </div>
+                        <div class="tech-trust-pill">
+                            <i class="fa-solid fa-arrow-rotate-left"></i>
+                            <span>إرجاع مجاني خلال 14 يوم</span>
+                        </div>
+                    </div>
+                </div>
 
-        <button class="menu-toggle" id="mobileMenuToggle" title="القائمة">
-          <i class="fas fa-bars"></i>
-        </button>
-      </div>
+                <!-- Visual Showcase Banner -->
+                <div class="tech-hero-visual">
+                    <div class="tech-hero-image-wrapper">
+                        <img decoding="async" src="images/hero_banner.jpg" alt="تكنو نوفا - أجهزة ذكية متطورة" title="Ù…ØªØ¬Ø± ØªÙƒÙ†Ùˆ Ù†ÙˆÙØ§ | Ù†Ù…ÙˆØ°Ø¬ Ù…ØªØ¬Ø± Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠØ§Øª ÙˆØ£Ø¬Ù‡Ø²Ø© Ø°ÙƒÙŠØ© Ø¹ØµØ±ÙŠ ÙˆØ­Ø¯ÙŠØ«">
+                    </div>
+                    <!-- Floating Chips -->
+                    <div class="tech-float-badge top-left">
+                        <div class="tech-badge-icon">
+                            <i class="fa-solid fa-battery-full"></i>
+                        </div>
+                        <div>
+                            <div class="tech-badge-title">بطارية تدوم 48 ساعة</div>
+                            <div class="tech-badge-sub">أداء متواصل وشحن فائق السرعة</div>
+                        </div>
+                    </div>
+                    <div class="tech-float-badge bottom-right">
+                        <div class="tech-badge-icon" style="background: var(--color-primary-light); color: var(--color-primary);">
+                            <i class="fa-solid fa-wave-square"></i>
+                        </div>
+                        <div>
+                            <div class="tech-badge-title">عزل ضوضاء هجين 45dB</div>
+                            <div class="tech-badge-sub">نقاء صوتي استثنائي ثلاثي الأبعاد</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. VALUE PROPOSITION BAR -->
+    <div class="tech-features-bar">
+        <div class="tech-container">
+            <div class="tech-features-grid">
+                <div class="tech-feature-item">
+                    <div class="tech-feature-icon">
+                        <i class="fa-solid fa-box-open"></i>
+                    </div>
+                    <div class="tech-feature-info">
+                        <h4>شحن مجاني وسريع</h4>
+                        <p>توصيل آمن لجميع مناطق المملكة للطلبات فوق 300 ر.س</p>
+                    </div>
+                </div>
+                <div class="tech-feature-item">
+                    <div class="tech-feature-icon" style="background: var(--color-cyan-light); color: var(--color-cyan);">
+                        <i class="fa-solid fa-certificate"></i>
+                    </div>
+                    <div class="tech-feature-info">
+                        <h4>ضمان سنتين معتمد</h4>
+                        <p>ضمان الوكيل الرسمي المعتمد لجميع الأجهزة والملحقات</p>
+                    </div>
+                </div>
+                <div class="tech-feature-item">
+                    <div class="tech-feature-icon">
+                        <i class="fa-solid fa-credit-card"></i>
+                    </div>
+                    <div class="tech-feature-info">
+                        <h4>دفع آمن بالتقسيط</h4>
+                        <p>قسم فاتورتك على 4 دفعات بدون فوائد مع تابي وتمارا</p>
+                    </div>
+                </div>
+                <div class="tech-feature-item">
+                    <div class="tech-feature-icon" style="background: #fef3c7; color: #d97706;">
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+                    <div class="tech-feature-info">
+                        <h4>دعم فني استشاري 24/7</h4>
+                        <p>فريق تقني متخصص للإجابة على استفساراتك الفنية</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </header>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="container hero-content">
-      <div>
-        <div class="hero-tag" id="heroBadge">🔥 أحدث عروض الموسم - خصومات تصل إلى 40%</div>
-        <h1 class="hero-title" id="heroTitle">
-          المستقبل بين يديك بأحدث <span>الأجهزة الذكية</span>
-        </h1>
-        <p class="hero-desc" id="heroSubtitle">
-          استكشف تشكيلتنا الحصرية من الساعات الذكية، السماعات اللاسلكية، وقواعد الشحن المغناطيسية الأصلية مع ضمان الوكيل المعتمد وشحن فوري.
+    <!-- 5. QUICK CATEGORIES -->
+    <section class="tech-section">
+        <div class="tech-container">
+            <div class="tech-section-header">
+                <div class="tech-section-title-box">
+                    <span class="tech-section-subtitle">تصفح حسب الاهتمام</span>
+                    <h2 class="tech-section-title">الأقسام الإلكترونية الذكية</h2>
+                </div>
+                <a href="#catalog" class="btn-tech-secondary" style="padding: 10px 20px; font-size: 13.5px;" onclick="filterCategory('all')">
+                    <span>عرض كافة المنتجات</span>
+                    <i class="fa-solid fa-arrow-left"></i>
+                </a>
+            </div>
+
+            <div class="tech-categories-grid">
+                <div class="tech-cat-card" onclick="filterCategory('audio')">
+                    <div class="tech-cat-icon">
+                        <i class="fa-solid fa-headphones"></i>
+                    </div>
+                    <h3 class="tech-cat-name">سماعات وصوتيات</h3>
+                    <span class="tech-cat-count">18 منتج متوفر</span>
+                </div>
+                <div class="tech-cat-card" onclick="filterCategory('watches')">
+                    <div class="tech-cat-icon" style="background: var(--color-cyan-light); color: var(--color-cyan);">
+                        <i class="fa-solid fa-stopwatch"></i>
+                    </div>
+                    <h3 class="tech-cat-name">ساعات ذكية ورياضية</h3>
+                    <span class="tech-cat-count">12 طراز متطور</span>
+                </div>
+                <div class="tech-cat-card" onclick="filterCategory('chargers')">
+                    <div class="tech-cat-icon" style="background: #fdf2f8; color: #db2777;">
+                        <i class="fa-solid fa-charging-station"></i>
+                    </div>
+                    <h3 class="tech-cat-name">شواحن ومنصات MagSafe</h3>
+                    <span class="tech-cat-count">15 منتج سريع</span>
+                </div>
+                <div class="tech-cat-card" onclick="filterCategory('drones')">
+                    <div class="tech-cat-icon" style="background: #f0fdf4; color: #16a34a;">
+                        <i class="fa-solid fa-helicopter"></i>
+                    </div>
+                    <h3 class="tech-cat-name">درون وتصوير 4K</h3>
+                    <span class="tech-cat-count">8 طائرات احترافية</span>
+                </div>
+                <div class="tech-cat-card" onclick="filterCategory('smarthome')">
+                    <div class="tech-cat-icon" style="background: #faf5ff; color: #9333ea;">
+                        <i class="fa-solid fa-house-signal"></i>
+                    </div>
+                    <h3 class="tech-cat-name">أجهزة منزل ذكي</h3>
+                    <span class="tech-cat-count">14 نظام متكامل</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. FLASH DEALS SLIDER (EXACT 4 CARDS, WORKING ARROWS) -->
+    <section class="tech-flash-section" id="flashDeals">
+        <div class="tech-container">
+            <div class="tech-flash-header">
+                <div>
+                    <div class="tech-section-subtitle" style="color: #0891b2;"><i class="fa-solid fa-bolt"></i> صفقات محدودة الوقت</div>
+                    <h2 class="tech-section-title">عروض الأجهزة الخاطفة</h2>
+                </div>
+                <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+                    <!-- Countdown Timer -->
+                    <div class="tech-flash-timer-box">
+                        <span class="tech-flash-timer-label"><i class="fa-regular fa-clock"></i> ينتهي العرض خلال:</span>
+                        <div class="tech-countdown">
+                            <div class="tech-countdown-unit" id="cd-hours">14</div>
+                            <span>:</span>
+                            <div class="tech-countdown-unit" id="cd-minutes">35</div>
+                            <span>:</span>
+                            <div class="tech-countdown-unit" id="cd-seconds">20</div>
+                        </div>
+                    </div>
+                    <!-- Navigation Arrows -->
+                    <div class="tech-slider-controls">
+                        <button class="tech-slider-arrow" onclick="slidePrev()" aria-label="السابق" title="السابق">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                        <button class="tech-slider-arrow" onclick="slideNext()" aria-label="التالي" title="التالي">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slider Viewport (Pre-rendered 6 items with 4 visible cards on desktop) -->
+            <div class="tech-slider-viewport">
+                <div class="tech-slider-track" id="sliderTrack">
+                    <!-- Item 1: Smart Watch -->
+                    <div class="tech-slider-item">
+                        <div class="tech-card">
+                            <span class="tech-card-badge" style="background: linear-gradient(135deg, #0891b2, #06b6d4);">وفر 210 ر.س</span>
+                            <div class="tech-card-img-box">
+                                <img decoding="async" src="images/prod_smart_watch.jpg" alt="ساعة ألترا برو الذكية تيتانيوم AMOLED" title="Ù…ØªØ¬Ø± ØªÙƒÙ†Ùˆ Ù†ÙˆÙØ§ | Ù†Ù…ÙˆØ°Ø¬ Ù…ØªØ¬Ø± Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠØ§Øª ÙˆØ£Ø¬Ù‡Ø²Ø© Ø°ÙƒÙŠØ© Ø¹ØµØ±ÙŠ ÙˆØ­Ø¯ÙŠØ«">
+                            </div>
+                            <div class="tech-card-body">
+                                <div>
+                                    <div class="tech-card-cat">ساعات وأساور ذكية</div>
+                                    <h4 class="tech-card-title">ساعة ألترا برو الذكية تيتانيوم AMOLED</h4>
+                                    <div class="tech-card-rating">
+                                        <div class="tech-card-stars">
+                                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                        </div>
+                                        <span class="tech-card-reviews">(4.9)</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="tech-card-pricing">
+                                        <span class="tech-price-current">680 ر.س</span>
+                                        <span class="tech-price-old">890 ر.س</span>
+                                    </div>
+                                    <button class="tech-btn-add" onclick="addToCart('ساعة ألترا برو الذكية تيتانيوم AMOLED', 680, 'images/prod_smart_watch.jpg')">
+                                        <i class="fa-solid fa-cart-plus"></i>
+                                        <span>أضف للسلة</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 2: Silver Headphones -->
+                    <div class="tech-slider-item">
+                        <div class="tech-card">
+                            <span class="tech-card-badge" style="background: linear-gradient(135deg, #0891b2, #06b6d4);">وفر 300 ر.س</span>
+                            <div class="tech-card-img-box">
+                                <img decoding="async" src="images/prod_silver_headphones.jpg" alt="سماعات الرأس الفاخرة عازلة للضوضاء ANC Pro" title="Ù…ØªØ¬Ø± ØªÙƒÙ†Ùˆ Ù†ÙˆÙØ§ | Ù†Ù…ÙˆØ°Ø¬ Ù…ØªØ¬Ø± Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠØ§Øª ÙˆØ£Ø¬Ù‡Ø²Ø© Ø°ÙƒÙŠØ© Ø¹ØµØ±ÙŠ ÙˆØ­Ø¯ÙŠØ«">
+                            </div>
+                            <div class="tech-card-body">
+                                <div>
+                                    <div class="tech-card-cat">سماعات وصوتيات</div>
+                                    <h4 class="tech-card-title">سماعات الرأس الفاخرة عازلة للضوضاء ANC Pro</h4>
+                                    <div class="tech-card-rating">
+                                        <div class="tech-card-stars">
+                                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                        </div>
+                                        <span class="tech-card-reviews">(5.0)</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="tech-card-pricing">
+                                        <span class="tech-price-current">950 ر.س</span>
+                                        <span class="tech-price-old">1,250 ر.س</span>
+                                    </div>
+                                    <button class="tech-btn-add" onclick="addToCart('سماعات الرأس الفاخرة عازلة للضوضاء ANC Pro', 950, 'images/prod_silver_headphones.jpg')">
+                                        <i class="fa-solid fa-cart-plus"></i>
+                                        <span>أضف للسلة</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 3: Wireless Charger -->
+                    <div class="tech-slider-item">
+                        <div class="tech-card">
+                            <span class="tech-card-badge" style="background: linear-gradient(135deg, #0891b2, #06b6d4);">وفر 100 ر.س</span>
+                            <div class="tech-card-img-box">
+                                <img decoding="async" src="images/prod_wireless_charger.jpg" alt="محطة شحن مغناطيسية لاسلكية 3 في 1 MagFast" title="Ù…ØªØ¬Ø± ØªÙƒÙ†Ùˆ Ù†ÙˆÙØ§ | Ù†Ù…ÙˆØ°Ø¬ Ù…ØªØ¬Ø± Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠØ§Øª ÙˆØ£Ø¬Ù‡Ø²Ø© Ø°ÙƒÙŠØ© Ø¹ØµØ±ÙŠ ÙˆØ­Ø¯ÙŠØ«">
+                            </div>
+                            <div class="tech-card-body">
+                                <div>
+                                    <div class="tech-card-cat">شواحن وملحقات</div>
+                                    <h4 class="tech-card-title">محطة شحن مغناطيسية لاسلكية 3 في 1 MagFast</h4>
+                                    <div class="tech-card-rating">
+                                        <div class="tech-card-stars">
+                                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                        </div>
+                                        <span class="tech-card-reviews">(4.8)</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="tech-card-pricing">
+                                        <span class="tech-price-current">290 ر.س</span>
+                                        <span class="tech-price-old">390 ر.س</span>
+                                    </div>
+                                    <button class="tech-btn-add" onclick="addToCart('محطة شحن مغناطيسية لاسلكية 3 في 1 MagFast', 290, 'images/prod_wireless_charger.jpg')">
+                                        <i class="fa-solid fa-cart-plus"></i>
+                                        <span>أضف للسلة</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 4: Smart Speaker -->
+                    <div class="tech-slider-item">
+                        <div class="tech-card">
+                            <span class="tech-card-badge" style="background: linear-gradient(135deg, #0891b2, #06b6d4);">وفر 130 ر.س</span>
+                            <div class="tech-card-img-box">
+                                <img decoding="async" src="images/prod_smart_speaker.jpg" alt="مكبر الصوت الذكي الأسطواني بمحيط ضوئي تفاعلي" title="Ù…ØªØ¬Ø± ØªÙƒÙ†Ùˆ Ù†ÙˆÙØ§ | Ù†Ù…ÙˆØ°Ø¬ Ù…ØªØ¬Ø± Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠØ§Øª ÙˆØ£Ø¬Ù‡Ø²Ø© Ø°ÙƒÙŠØ© Ø¹ØµØ±ÙŠ ÙˆØ­Ø¯ÙŠØ«">
+                            </div>
+                            <div class="tech-card-body">
+                                <div>
+                                    <div class="tech-card-cat">أجهزة منزل ذكي</div>
+                                    <h4 class="tech-card-title">مكبر الصوت الذكي الأسطواني بمحيط ضوئي تفاعلي</h4>
+                                    <div class="tech-card-rating">
+                                        <div class="tech-card-stars">
+                                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                        </div>
+                                        <span class="tech-card-reviews">(4.9)</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="tech-card-pricing">
+                                        <span class="tech-price-current">420 ر.س</span>
+                                        <span class="tech-price-old">550 ر.س</span>
+                                    </div>
+                                    <button class="tech-btn-add" onclick="addToCart('مكبر الصوت الذكي الأسطواني بمحيط ضوئي تفاعلي', 420, 'images/prod_smart_speaker.jpg')">
+                                        <i class="fa-solid fa-cart-plus"></i>
+                                        <span>أضف للسلة</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 5: Earbuds Pro -->
+                    <div class="tech-slider-item">
+                        <div class="tech-card">
+                            <span class="tech-card-badge" style="background: linear-gradient(135deg, #0891b2, #06b6d4);">وفر 140 ر.س</span>
+                            <div class="tech-card-img-box">
+                                <img decoding="async" src="images/prod_earbuds_pro.jpg" alt="سماعات إيربودز برو اللاسلكية بنقاء استوديو مذهل" title="Ù…ØªØ¬Ø± ØªÙƒÙ†Ùˆ Ù†ÙˆÙØ§ | Ù†Ù…ÙˆØ°Ø¬ Ù…ØªØ¬Ø± Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠØ§Øª ÙˆØ£Ø¬Ù‡Ø²Ø© Ø°ÙƒÙŠØ© Ø¹ØµØ±ÙŠ ÙˆØ­Ø¯ÙŠØ«">
+                            </div>
+                            <div class="tech-card-body">
+                                <div>
+                                    <div class="tech-card-cat">سماعات وصوتيات</div>
+                                    <h4 class="tech-card-title">سماعات إيربودز برو اللاسلكية بنقاء استوديو مذهل</h4>
+                                    <div class="tech-card-rating">
+                                        <div class="tech-card-stars">
+                                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                        </div>
+                                        <span class="tech-card-reviews">(4.9)</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="tech-card-pricing">
+                                        <span class="tech-price-current">340 ر.س</span>
+                                        <span class="tech-price-old">480 ر.س</span>
+                                    </div>
+                                    <button class="tech-btn-add" onclick="addToCart('سماعات إيربودز برو اللاسلكية بنقاء استوديو مذهل', 340, 'images/prod_earbuds_pro.jpg')">
+                                        <i class="fa-solid fa-cart-plus"></i>
+                                        <span>أضف للسلة</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 6: Drone 4K -->
+                    <div class="tech-slider-item">
+                        <div class="tech-card">
+                            <span class="tech-card-badge" style="background: linear-gradient(135deg, #0891b2, #06b6d4);">وفر 550 ر.س</span>
+                            <div class="tech-card-img-box">
+                                <img decoding="async" src="images/prod_smart_drone.jpg" alt="طائرة درون احترافية SkyMaster 4K بمثبت ثلاثي المحاور" title="Ù…ØªØ¬Ø± ØªÙƒÙ†Ùˆ Ù†ÙˆÙØ§ | Ù†Ù…ÙˆØ°Ø¬ Ù…ØªØ¬Ø± Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠØ§Øª ÙˆØ£Ø¬Ù‡Ø²Ø© Ø°ÙƒÙŠØ© Ø¹ØµØ±ÙŠ ÙˆØ­Ø¯ÙŠØ«">
+                            </div>
+                            <div class="tech-card-body">
+                                <div>
+                                    <div class="tech-card-cat">طائرات درون 4K</div>
+                                    <h4 class="tech-card-title">طائرة درون احترافية SkyMaster 4K بمثبت ثلاثي</h4>
+                                    <div class="tech-card-rating">
+                                        <div class="tech-card-stars">
+                                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                        </div>
+                                        <span class="tech-card-reviews">(5.0)</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="tech-card-pricing">
+                                        <span class="tech-price-current">1,850 ر.س</span>
+                                        <span class="tech-price-old">2,400 ر.س</span>
+                                    </div>
+                                    <button class="tech-btn-add" onclick="addToCart('طائرة درون احترافية SkyMaster 4K بمثبت ثلاثي المحاور', 1850, 'images/prod_smart_drone.jpg')">
+                                        <i class="fa-solid fa-cart-plus"></i>
+                                        <span>أضف للسلة</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. MAIN CATALOG WITH SIDEBAR & PRODUCTS GRID -->
+    <section class="tech-section" id="catalog">
+        <div class="tech-container">
+            <div class="tech-catalog-layout">
+                <!-- Filter Sidebar -->
+                <aside class="tech-sidebar">
+                    <h3 class="tech-sidebar-title">
+                        <i class="fa-solid fa-sliders" style="color: var(--color-primary);"></i>
+                        <span>تصفية الأجهزة</span>
+                    </h3>
+
+                    <!-- Categories -->
+                    <div class="tech-filter-group">
+                        <label class="tech-filter-label">الأقسام الذكية</label>
+                        <div class="tech-filter-cats">
+                            <button class="tech-filter-cat-btn active" onclick="filterCategory('all', this)">
+                                <span>كافة الأجهزة</span>
+                                <span class="badge" id="badge-all">6</span>
+                            </button>
+                            <button class="tech-filter-cat-btn" onclick="filterCategory('audio', this)">
+                                <span>سماعات وصوتيات</span>
+                                <span class="badge" id="badge-audio">2</span>
+                            </button>
+                            <button class="tech-filter-cat-btn" onclick="filterCategory('watches', this)">
+                                <span>ساعات ذكية</span>
+                                <span class="badge" id="badge-watches">1</span>
+                            </button>
+                            <button class="tech-filter-cat-btn" onclick="filterCategory('chargers', this)">
+                                <span>شواحن وملحقات</span>
+                                <span class="badge" id="badge-chargers">1</span>
+                            </button>
+                            <button class="tech-filter-cat-btn" onclick="filterCategory('drones', this)">
+                                <span>طائرات درون 4K</span>
+                                <span class="badge" id="badge-drones">1</span>
+                            </button>
+                            <button class="tech-filter-cat-btn" onclick="filterCategory('smarthome', this)">
+                                <span>أجهزة منزل ذكي</span>
+                                <span class="badge" id="badge-smarthome">1</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Sort Options -->
+                    <div class="tech-filter-group">
+                        <label class="tech-filter-label">ترتيب حسب الأولويات</label>
+                        <div class="tech-sort-grid">
+                            <button class="tech-sort-btn active" onclick="sortProducts('featured', this)">المميز</button>
+                            <button class="tech-sort-btn" onclick="sortProducts('bestseller', this)">الأكثر مبيعاً</button>
+                            <button class="tech-sort-btn" onclick="sortProducts('price-desc', this)">الأعلى سعراً</button>
+                            <button class="tech-sort-btn" onclick="sortProducts('price-asc', this)">الأقل سعراً</button>
+                        </div>
+                    </div>
+
+                    <!-- Price Slider -->
+                    <div class="tech-filter-group">
+                        <label class="tech-filter-label">السعر الأقصى</label>
+                        <input type="range" class="tech-price-slider" id="priceRange" min="200" max="2500" step="50" value="2500" oninput="filterByPrice(this.value)">
+                        <div class="tech-price-display">
+                            <span>200 ر.س</span>
+                            <span id="priceDisplay" style="color: var(--color-primary); font-weight: 900;">2,500 ر.س</span>
+                        </div>
+                    </div>
+
+                    <!-- Features Checklist -->
+                    <div class="tech-filter-group" style="margin-bottom: 0;">
+                        <label class="tech-filter-label">المميزات الإضافية</label>
+                        <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13px; font-weight: 700; color: var(--color-slate);">
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" checked style="accent-color: var(--color-primary);"> شحن سريع متوفر
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" checked style="accent-color: var(--color-primary);"> ضمان معتمد سنتين
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" checked style="accent-color: var(--color-primary);"> خصم حصري ساري
+                            </label>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Products Catalog Area (Pre-rendered for instantaneous speed & reliability) -->
+                <div class="tech-catalog-content">
+                    <div class="tech-grid-header">
+                        <div class="tech-grid-count">
+                            عرض <span id="visibleCount">6</span> أجهزة ذكية متطورة
+                        </div>
+                        <div style="font-size: 13px; color: var(--color-muted); font-weight: 700;">
+                            <i class="fa-solid fa-check-double" style="color: #059669;"></i> جميع المنتجات جاهزة للشحن الفوري
+                        </div>
+                    </div>
+
+                    <!-- Products Grid -->
+                    <div class="tech-products-grid" id="productsGrid">
+                        <!-- Prod 1: Smart Watch -->
+                        <div class="tech-card prod-item" data-cat="watches" data-price="680" data-sales="340" data-featured="1" data-name="ساعة ألترا برو الذكية تيتانيوم AMOLED">
+                            <span class="tech-card-badge">خصم 24%</span>
+                            <div class="tech-card-img-box">
+                                <img decoding="async" src="images/prod_smart_watch.jpg" alt="ساعة ألترا برو الذكية تيتانيوم AMOLED" title="Ù…ØªØ¬Ø± ØªÙƒÙ†Ùˆ Ù†ÙˆÙØ§ | Ù†Ù…ÙˆØ°Ø¬ Ù…ØªØ¬Ø± Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠØ§Øª ÙˆØ£Ø¬Ù‡Ø²Ø© Ø°ÙƒÙŠØ© Ø¹ØµØ±ÙŠ ÙˆØ­Ø¯ÙŠØ«">
+                            </div>
+                            <div class="tech-card-body">
+                                <div>
+                                    <div class="tech-card-cat">ساعات وأساور ذكية</div>
+                                    <h4 class="tech-card-title">ساعة ألترا برو الذكية تيتانيوم AMOLED</h4>
+                                    <div class="tech-card-specs">
+                                        <span class="tech-spec-tag">شاشة AMOLED</span>
+                                        <span class="tech-spec-tag">بطارية 14 يوم</span>
+                                        <span class="tech-spec-tag">تيتانيوم مقاوم للصدمات</span>
+                                    </div>
+                                    <div class="tech-card-rating">
+                                        <div class="tech-card-stars">
+                                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                        </div>
+                                        <span class="tech-card-reviews">(142 تقييم موثق)</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="tech-card-pricing">
+                                        <span class="tech-price-current">680 ر.س</span>
+                                        <span class="tech-price-old">890 ر.س</span>
+                                    </div>
+                                    <button class="tech-btn-add" onclick="addToCart('ساعة ألترا برو الذكية تيتانيوم AMOLED', 680, 'images/prod_smart_watch.jpg')">
+                                        <i class="fa-solid fa-cart-plus"></i>
+                                        <span>إضافة إلى السلة</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Prod 2: Headphones Pro -->
+                        <div class="tech-card prod-item" data-cat="audio" data-price="950" data-sales="520" data-featured="1" data-name="سماعات الرأس الفاخرة عازلة للضوضاء ANC Pro">
+                            <span class="tech-card-badge">خصم 24%</span>
+                            <div class="tech-card-img-box">
+                                <img decoding="async" src="images/prod_silver_headphones.jpg" alt="سماعات الرأس الفاخرة عازلة للضوضاء ANC Pro" title="Ù…ØªØ¬Ø± ØªÙƒÙ†Ùˆ Ù†ÙˆÙØ§ | Ù†Ù…ÙˆØ°Ø¬ Ù…ØªØ¬Ø± Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠØ§Øª ÙˆØ£Ø¬Ù‡Ø²Ø© Ø°ÙƒÙŠØ© Ø¹ØµØ±ÙŠ ÙˆØ­Ø¯ÙŠØ«">
+                            </div>
+                            <div class="tech-card-body">
+                                <div>
+                                    <div class="tech-card-cat">سماعات وصوتيات</div>
+                                    <h4 class="tech-card-title">سماعات الرأس الفاخرة عازلة للضوضاء ANC Pro</h4>
+                                    <div class="tech-card-specs">
+                                        <span class="tech-spec-tag">عزل هجين 45dB</span>
+                                        <span class="tech-spec-tag">صوت مكاني 3D</span>
+                                        <span class="tech-spec-tag">بطارية 60 ساعة</span>
+                                    </div>
+                                    <div class="tech-card-rating">
+                                        <div class="tech-card-stars">
+                                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                        </div>
+                                        <span class="tech-card-reviews">(215 تقييم موثق)</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="tech-card-pricing">
+                                        <span class="tech-price-current">950 ر.س</span>
+                                        <span class="tech-price-old">1,250 ر.س</span>
+                                    </div>
+                                    <button class="tech-btn-add" onclick="addToCart('سماعات الرأس الفاخرة عازلة للضوضاء ANC Pro', 950, 'images/prod_silver_headphones.jpg')">
+                                        <i class="fa-solid fa-cart-plus"></i>
+                                        <span>إضافة إلى السلة</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Prod 3: Wireless Charger -->
+                        <div class="tech-card prod-item" data-cat="chargers" data-price="290" data-sales="180" data-featured="0" data-name="محطة شحن مغناطيسية لاسلكية 3 في 1 MagFast">
+                            <span class="tech-card-badge">خصم 26%</span>
+                            <div class="tech-card-img-box">
+                                <img decoding="async" src="images/prod_wireless_charger.jpg" alt="محطة شحن مغناطيسية لاسلكية 3 في 1 MagFast" title="Ù…ØªØ¬Ø± ØªÙƒÙ†Ùˆ Ù†ÙˆÙØ§ | Ù†Ù…ÙˆØ°Ø¬ Ù…ØªØ¬Ø± Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠØ§Øª ÙˆØ£Ø¬Ù‡Ø²Ø© Ø°ÙƒÙŠØ© Ø¹ØµØ±ÙŠ ÙˆØ­Ø¯ÙŠØ«">
+                            </div>
+                            <div class="tech-card-body">
+                                <div>
+                                    <div class="tech-card-cat">شواحن وملحقات</div>
+                                    <h4 class="tech-card-title">محطة شحن مغناطيسية لاسلكية 3 في 1 MagFast</h4>
+                                    <div class="tech-card-specs">
+                                        <span class="tech-spec-tag">شحن سريع 25W</span>
+                                        <span class="tech-spec-tag">سبائك ألمنيوم</span>
+                                        <span class="tech-spec-tag">MagSafe معتمد</span>
+                                    </div>
+                                    <div class="tech-card-rating">
+                                        <div class="tech-card-stars">
+                                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                        </div>
+                                        <span class="tech-card-reviews">(88 تقييم موثق)</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="tech-card-pricing">
+                                        <span class="tech-price-current">290 ر.س</span>
+                                        <span class="tech-price-old">390 ر.س</span>
+                                    </div>
+                                    <button class="tech-btn-add" onclick="addToCart('محطة شحن مغناطيسية لاسلكية 3 في 1 MagFast', 290, 'images/prod_wireless_charger.jpg')">
+                                        <i class="fa-solid fa-cart-plus"></i>
+                                        <span>إضافة إلى السلة</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Prod 4: Smart Speaker -->
+                        <div class="tech-card prod-item" data-cat="smarthome" data-price="420" data-sales="260" data-featured="0" data-name="مكبر الصوت الذكي الأسطواني بمحيط ضوئي تفاعلي">
+                            <span class="tech-card-badge">خصم 24%</span>
+                            <div class="tech-card-img-box">
+                                <img decoding="async" src="images/prod_smart_speaker.jpg" alt="مكبر الصوت الذكي الأسطواني بمحيط ضوئي تفاعلي" title="Ù…ØªØ¬Ø± ØªÙƒÙ†Ùˆ Ù†ÙˆÙØ§ | Ù†Ù…ÙˆØ°Ø¬ Ù…ØªØ¬Ø± Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠØ§Øª ÙˆØ£Ø¬Ù‡Ø²Ø© Ø°ÙƒÙŠØ© Ø¹ØµØ±ÙŠ ÙˆØ­Ø¯ÙŠØ«">
+                            </div>
+                            <div class="tech-card-body">
+                                <div>
+                                    <div class="tech-card-cat">أجهزة منزل ذكي</div>
+                                    <h4 class="tech-card-title">مكبر الصوت الذكي الأسطواني بمحيط ضوئي تفاعلي</h4>
+                                    <div class="tech-card-specs">
+                                        <span class="tech-spec-tag">صوت نقي 360°</span>
+                                        <span class="tech-spec-tag">مساعد صوتي ذكي</span>
+                                        <span class="tech-spec-tag">إضاءة محيطية RGB</span>
+                                    </div>
+                                    <div class="tech-card-rating">
+                                        <div class="tech-card-stars">
+                                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                        </div>
+                                        <span class="tech-card-reviews">(119 تقييم موثق)</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="tech-card-pricing">
+                                        <span class="tech-price-current">420 ر.س</span>
+                                        <span class="tech-price-old">550 ر.س</span>
+                                    </div>
+                                    <button class="tech-btn-add" onclick="addToCart('مكبر الصوت الذكي الأسطواني بمحيط ضوئي تفاعلي', 420, 'images/prod_smart_speaker.jpg')">
+                                        <i class="fa-solid fa-cart-plus"></i>
+                                        <span>إضافة إلى السلة</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Prod 5: Earbuds Pro -->
+                        <div class="tech-card prod-item" data-cat="audio" data-price="340" data-sales="610" data-featured="1" data-name="سماعات إيربودز برو اللاسلكية بنقاء استوديو مذهل">
+                            <span class="tech-card-badge">خصم 29%</span>
+                            <div class="tech-card-img-box">
+                                <img decoding="async" src="images/prod_earbuds_pro.jpg" alt="سماعات إيربودز برو اللاسلكية بنقاء استوديو مذهل" title="Ù…ØªØ¬Ø± ØªÙƒÙ†Ùˆ Ù†ÙˆÙØ§ | Ù†Ù…ÙˆØ°Ø¬ Ù…ØªØ¬Ø± Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠØ§Øª ÙˆØ£Ø¬Ù‡Ø²Ø© Ø°ÙƒÙŠØ© Ø¹ØµØ±ÙŠ ÙˆØ­Ø¯ÙŠØ«">
+                            </div>
+                            <div class="tech-card-body">
+                                <div>
+                                    <div class="tech-card-cat">سماعات وصوتيات</div>
+                                    <h4 class="tech-card-title">سماعات إيربودز برو اللاسلكية بنقاء استوديو مذهل</h4>
+                                    <div class="tech-card-specs">
+                                        <span class="tech-spec-tag">ميكروفونات ذكية بالـ AI</span>
+                                        <span class="tech-spec-tag">زمن استجابة 30ms</span>
+                                        <span class="tech-spec-tag">مقاومة للماء IPX5</span>
+                                    </div>
+                                    <div class="tech-card-rating">
+                                        <div class="tech-card-stars">
+                                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                        </div>
+                                        <span class="tech-card-reviews">(310 تقييم موثق)</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="tech-card-pricing">
+                                        <span class="tech-price-current">340 ر.س</span>
+                                        <span class="tech-price-old">480 ر.س</span>
+                                    </div>
+                                    <button class="tech-btn-add" onclick="addToCart('سماعات إيربودز برو اللاسلكية بنقاء استوديو مذهل', 340, 'images/prod_earbuds_pro.jpg')">
+                                        <i class="fa-solid fa-cart-plus"></i>
+                                        <span>إضافة إلى السلة</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Prod 6: Drone 4K -->
+                        <div class="tech-card prod-item" data-cat="drones" data-price="1850" data-sales="110" data-featured="1" data-name="طائرة درون احترافية SkyMaster 4K بمثبت ثلاثي المحاور">
+                            <span class="tech-card-badge">خصم 23%</span>
+                            <div class="tech-card-img-box">
+                                <img decoding="async" src="images/prod_smart_drone.jpg" alt="طائرة درون احترافية SkyMaster 4K بمثبت ثلاثي المحاور" title="Ù…ØªØ¬Ø± ØªÙƒÙ†Ùˆ Ù†ÙˆÙØ§ | Ù†Ù…ÙˆØ°Ø¬ Ù…ØªØ¬Ø± Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠØ§Øª ÙˆØ£Ø¬Ù‡Ø²Ø© Ø°ÙƒÙŠØ© Ø¹ØµØ±ÙŠ ÙˆØ­Ø¯ÙŠØ«">
+                            </div>
+                            <div class="tech-card-body">
+                                <div>
+                                    <div class="tech-card-cat">طائرات درون 4K</div>
+                                    <h4 class="tech-card-title">طائرة درون احترافية SkyMaster 4K بمثبت ثلاثي</h4>
+                                    <div class="tech-card-specs">
+                                        <span class="tech-spec-tag">تصوير 4K HDR</span>
+                                        <span class="tech-spec-tag">مدى تحكم 12KM</span>
+                                        <span class="tech-spec-tag">تفادي العوائق الذكي</span>
+                                    </div>
+                                    <div class="tech-card-rating">
+                                        <div class="tech-card-stars">
+                                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                        </div>
+                                        <span class="tech-card-reviews">(94 تقييم موثق)</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="tech-card-pricing">
+                                        <span class="tech-price-current">1,850 ر.س</span>
+                                        <span class="tech-price-old">2,400 ر.س</span>
+                                    </div>
+                                    <button class="tech-btn-add" onclick="addToCart('طائرة درون احترافية SkyMaster 4K بمثبت ثلاثي المحاور', 1850, 'images/prod_smart_drone.jpg')">
+                                        <i class="fa-solid fa-cart-plus"></i>
+                                        <span>إضافة إلى السلة</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. PRO HIGH-END TECH SPOTLIGHT -->
+    <section class="tech-container">
+        <div class="tech-spotlight">
+            <div class="tech-spotlight-grid">
+                <div class="tech-spotlight-info">
+                    <span class="tech-section-subtitle" style="color: var(--color-primary);">الإصدار الرائد 2026</span>
+                    <h3>طائرة درون SkyMaster 4K بمثبت جيروسكوبي احترافي</h3>
+                    <p>
+                        ارتقِ بتجربة التصوير الجوي إلى مستويات غير مسبوقة. تصوير فيديو فائق الدقة 4K HDR بمعدل 60 إطاراً في الثانية، مدى اتصال لاسلكي يصل إلى 12 كم، مستشعرات ذكية لتفادي العوائق في 5 اتجاهات، مع بطارية ذكية تدوم حتى 38 دقيقة طيران متواصل.
+                    </p>
+                    <div class="tech-spotlight-specs">
+                        <div class="tech-spec-box">
+                            <span class="val">4K HDR</span>
+                            <span class="lbl">دقة الكاميرا</span>
+                        </div>
+                        <div class="tech-spec-box">
+                            <span class="val">12 KM</span>
+                            <span class="lbl">مدى التحكم</span>
+                        </div>
+                        <div class="tech-spec-box">
+                            <span class="val">38 دقيقة</span>
+                            <span class="lbl">زمن التحليق</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 16px;">
+                        <button class="btn-tech-primary" onclick="addToCart('طائرة درون احترافية SkyMaster 4K بمثبت ثلاثي المحاور', 1850, 'images/prod_smart_drone.jpg')">
+                            <i class="fa-solid fa-cart-plus"></i>
+                            <span>أضف للسلة الآن - 1,850 ر.س</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="tech-spotlight-img">
+                    <img decoding="async" src="images/prod_smart_drone.jpg" alt="طائرة درون احترافية SkyMaster 4K" title="Ù…ØªØ¬Ø± ØªÙƒÙ†Ùˆ Ù†ÙˆÙØ§ | Ù†Ù…ÙˆØ°Ø¬ Ù…ØªØ¬Ø± Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠØ§Øª ÙˆØ£Ø¬Ù‡Ø²Ø© Ø°ÙƒÙŠØ© Ø¹ØµØ±ÙŠ ÙˆØ­Ø¯ÙŠØ«">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. TESTIMONIALS & TRUST -->
+    <section class="tech-reviews-section">
+        <div class="tech-container">
+            <div class="tech-section-header" style="justify-content: center; text-align: center;">
+                <div class="tech-section-title-box" style="text-align: center;">
+                    <span class="tech-section-subtitle" style="text-align: center;">تقييمات عملاء تكنو نوفا</span>
+                    <h2 class="tech-section-title" style="text-align: center;">ماذا يقول عملاؤنا عن الأجهزة والخدمة؟</h2>
+                </div>
+            </div>
+
+            <div class="tech-reviews-grid">
+                <div class="tech-review-card">
+                    <div class="tech-card-stars">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p style="font-size: 14px; color: var(--color-slate); line-height: 1.6;">
+                        "اشتريت ساعة التيتانيوم وسماعة ANC، الصراحة جودة لا غبار عليها، المنتج أصلي 100% والتوصيل بالرياض وصلني خلال 24 ساعة فقط بتغليف فخم جداً."
+                    </p>
+                    <div class="tech-review-author">
+                        <div class="tech-avatar">م.ع</div>
+                        <div class="tech-author-info">
+                            <h5>م. عبد الرحمن الشهري</h5>
+                            <span><i class="fa-solid fa-circle-check"></i> مشتري موثق • الرياض</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tech-review-card">
+                    <div class="tech-card-stars">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p style="font-size: 14px; color: var(--color-slate); line-height: 1.6;">
+                        "قاعدة الشحن اللاسلكي 3 في 1 حلت لي أزمة الأسلاك على المكتب! شحن سريع وسعر ممتاز مقارنة بالوكيل، ودعم المتجر متجاوب جداً عبر الواتساب."
+                    </p>
+                    <div class="tech-review-author">
+                        <div class="tech-avatar" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">س.ح</div>
+                        <div class="tech-author-info">
+                            <h5>سعود الحازمي</h5>
+                            <span><i class="fa-solid fa-circle-check"></i> مشتري موثق • جدة</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tech-review-card">
+                    <div class="tech-card-stars">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p style="font-size: 14px; color: var(--color-slate); line-height: 1.6;">
+                        "الدرون SkyMaster فوق الوصف، ثبات رهيب أثناء الرياح ودقة الكاميرا 4K نقية جداً. شكراً لتكنو نوفا على مصداقيتهم وسرعة الإرسال."
+                    </p>
+                    <div class="tech-review-author">
+                        <div class="tech-avatar" style="background: linear-gradient(135deg, #3b82f6, #6366f1);">ف.د</div>
+                        <div class="tech-author-info">
+                            <h5>فهد الدوسري</h5>
+                            <span><i class="fa-solid fa-circle-check"></i> مشتري موثق • الدمام</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. EXECUTIVE FOOTER -->
+    <footer class="tech-footer">
+        <div class="tech-container">
+            <div class="tech-footer-grid">
+                <!-- Col 1 -->
+                <div class="tech-footer-col">
+                    <div class="tech-logo-link" style="margin-bottom: 16px;">
+                        <div class="tech-logo-icon">
+                            <i class="fa-solid fa-microchip"></i>
+                        </div>
+                        <div class="tech-logo-text">
+                            <span class="tech-logo-title">تكنو نوفا</span>
+                            <span class="tech-logo-sub">TECHNOVA SMART ELECTRONICS</span>
+                        </div>
+                    </div>
+                    <p style="font-size: 14px; color: #1e293b !important; font-weight: 600; line-height: 1.8; margin-bottom: 20px;">
+                        المتجر السعودي المتخصص في تقديم أحدث الأجهزة والملحقات التقنية الأصلية 100% مع ضمان الوكيل المعتمد سنتين وخدمة شحن سريعة لجميع أنحاء المملكة.
+                    </p>
+                    <div style="display: flex; gap: 10px;">
+                        <span class="tech-payment-badge"><i class="fa-brands fa-whatsapp" style="color: #22c55e;"></i> خدمة العملاء 24/7</span>
+                        <span class="tech-payment-badge"><i class="fa-solid fa-shield" style="color: #2563eb;"></i> موثق بسجل تجاري معتمد</span>
+                    </div>
+                </div>
+
+                <!-- Col 2 -->
+                <div class="tech-footer-col">
+                    <h4>أقسام المتجر</h4>
+                    <ul class="tech-footer-links">
+                        <li><a href="#catalog" onclick="filterCategory('audio')">السماعات والصوتيات</a></li>
+                        <li><a href="#catalog" onclick="filterCategory('watches')">الساعات الذكية والرياضية</a></li>
+                        <li><a href="#catalog" onclick="filterCategory('chargers')">الشواحن والمنصات اللاسلكية</a></li>
+                        <li><a href="#catalog" onclick="filterCategory('drones')">طائرات درون وكاميرات 4K</a></li>
+                        <li><a href="#catalog" onclick="filterCategory('smarthome')">أجهزة وحلول المنزل الذكي</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3 -->
+                <div class="tech-footer-col">
+                    <h4>خدمة العملاء</h4>
+                    <ul class="tech-footer-links">
+                        <li><a href="#terms">سياسة الضمان والاستبدال</a></li>
+                        <li><a href="#shipping">طرق الشحن ومدة التوصيل</a></li>
+                        <li><a href="#privacy">سياسة الخصوصية والأمان</a></li>
+                        <li><a href="#payment">خيارات التقسيط (تابي وتمارا)</a></li>
+                        <li><a href="#contact">تواصل معنا والدعم المباشر</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4 -->
+                <div class="tech-footer-col">
+                    <h4>النشرة الإخبارية والعروض</h4>
+                    <p style="font-size: 13.5px; color: #1e293b !important; font-weight: 600; margin-bottom: 12px;">
+                        اشترك للحصول على كود خصم فوري بقيمة <strong style="color: #090d16;">50 ر.س</strong> على طلبك الأول وأحدث التخفيضات.
+                    </p>
+                    <form class="tech-newsletter-form" onsubmit="event.preventDefault(); showToast('تم الاشتراك بنجاح! كود خصمك: TECH50 ✨');">
+                        <input type="email" required class="tech-newsletter-input" placeholder="أدخل بريدك الإلكتروني...">
+                        <button type="submit" class="tech-newsletter-btn">اشتراك</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Bottom Row -->
+            <div class="tech-footer-bottom">
+                <div style="color: #1e293b !important; font-weight: 600;">
+                    جميع الحقوق محفوظة © 2026 <strong style="color: #090d16 !important;">متجر تكنو نوفا الإلكتروني</strong> | تصميم وتطوير احترافي بواسطة <a href="https://entejsites.com/%d8%aa%d8%b5%d9%85%d9%8a%d9%85-%d9%85%d9%88%d8%a7%d9%82%d8%b9/%d8%aa%d8%b5%d9%85%d9%8a%d9%85-%d9%88%d8%a8%d8%b1%d9%85%d8%ac%d8%a9-%d8%a7%d9%84%d9%85%d8%aa%d8%a7%d8%ac%d8%b1-%d8%a7%d9%84%d8%a7%d9%84%d9%83%d8%aa%d8%b1%d9%88%d9%86%d9%8a%d8%a9-ecommerce/" style="color: #1d4ed8 !important; font-weight: 900; text-decoration: underline;">شركة إنتاج لتصميم وبرمجة المتاجر الإلكترونية</a>
+                </div>
+                <div class="tech-payment-icons">
+                    <span class="tech-payment-badge">مدى Mada</span>
+                    <span class="tech-payment-badge">Visa / Mastercard</span>
+                    <span class="tech-payment-badge">Apple Pay</span>
+                    <span class="tech-payment-badge">Tabby تابي</span>
+                    <span class="tech-payment-badge">Tamara تمارا</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 11. SLIDE-OUT CART DRAWER -->
+    <div class="tech-drawer-overlay" id="cartOverlay" onclick="toggleCartDrawer()"></div>
+    <div class="tech-cart-drawer" id="cartDrawer">
+        <div class="tech-drawer-header">
+            <h3><i class="fa-solid fa-bag-shopping" style="color: var(--color-primary);"></i> سلة مشترياتك (<span id="cartCountHeader">0</span>)</h3>
+            <button class="tech-drawer-close" onclick="toggleCartDrawer()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="tech-drawer-body" id="cartItemsContainer">
+            <div class="tech-cart-empty">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <h4>سلتك لا تزال فارغة</h4>
+                <p>تصفح أحدث الأجهزة الذكية وأضفها لسلتك بسهولة</p>
+            </div>
+        </div>
+        <div class="tech-drawer-footer">
+            <div class="tech-drawer-total">
+                <span>الإجمالي المقدر:</span>
+                <span id="cartTotalSum" style="color: var(--color-primary);">0 ر.س</span>
+            </div>
+            <button class="tech-drawer-checkout" onclick="proceedCheckout()">
+                <span>إتمام الطلب والدفع الآمن</span>
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- 12. TOAST NOTIFICATION -->
+    <div class="tech-toast" id="techToast">
+        <i class="fa-solid fa-circle-check" style="color: #22c55e; font-size: 18px;"></i>
+        <span id="toastMsg">تمت الإضافة بنجاح!</span>
+    </div>
+
+    <!-- 13. TRACKING MODAL -->
+    <div class="tech-drawer-overlay" id="trackingOverlay" onclick="closeTrackingModal()"></div>
+    <div class="tech-modal" id="trackingModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:#ffffff; border-radius:20px; padding:30px; z-index:999999; width:90%; max-width:480px; box-shadow:0 20px 50px rgba(15,23,42,0.2); border:1px solid var(--color-border); direction:rtl; text-align:right;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+            <h3 style="font-size:18px; font-weight:900; color:var(--color-navy); display:flex; align-items:center; gap:8px;">
+                <i class="fa-solid fa-truck-fast" style="color:var(--color-primary);"></i> تتبع شحنتك المباشرة
+            </h3>
+            <button onclick="closeTrackingModal()" style="background:#f1f5f9; border:none; width:32px; height:32px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; color:var(--color-slate);">✕</button>
+        </div>
+        <p style="font-size: 13.5px; color: #1e293b !important; font-weight: 600; line-height: 1.6; margin-bottom: 18px;">
+            أدخل رقم بوليصة الشحن الخاصة بطلبك (SMSA, Aramex, DHL) لمعرفة موقع شحنتك اللحظي:
         </p>
-        <div class="hero-btns">
-          <a href="#productsSection" class="btn-primary">
-            <i class="fas fa-bolt"></i> تسوق العروض الآن
-          </a>
-          <a href="https://wa.me/201027093535" target="_blank" class="btn-outline store-whatsapp-link">
-            <i class="fab fa-whatsapp"></i> تواصل مع المبيعات
-          </a>
+        <div style="display:flex; gap:10px; margin-bottom:14px;">
+            <input type="text" id="trackInput" placeholder="مثال: TN-984214-KSA" style="flex:1; padding:12px 16px; border:1.5px solid var(--color-border); border-radius:12px; font-size:14px; outline:none; font-family:var(--font-main);">
+            <button onclick="trackShipment()" class="btn-tech-primary" style="padding:12px 20px; white-space:nowrap;">تتبع الآن</button>
         </div>
-      </div>
-      <div class="hero-img-box">
-        <img src="images/hero_banner.jpg" alt="Tech Hero" class="hero-img">
-      </div>
+        <div id="trackResult" style="display:none; padding:14px; border-radius:12px; background:#ecfeff; border:1px solid #a5f3fc; font-size:13px; color:#0e7490;">
+            <i class="fa-solid fa-circle-check" style="color:#0891b2;"></i> <strong>تم العثور على الشحنة:</strong> في طريقها للتوصيل مع مندوب أرامكس بالرياض، الاستلام المتوقع خلال اليوم.
+        </div>
     </div>
-  </section>
 
-  <!-- Features Strip -->
-  <div class="features-bar">
-    <div class="container features-grid">
-      <div class="feature-item">
-        <div class="feature-icon"><i class="fas fa-shipping-fast"></i></div>
-        <div class="feature-info">
-          <h4>توصيل فوري وسريع</h4>
-          <p>شحن لباب منزلك خلال 24 - 48 ساعة</p>
+    <!-- 14. 24/7 SUPPORT MODAL -->
+    <div class="tech-drawer-overlay" id="supportOverlay" onclick="closeSupportModal()"></div>
+    <div class="tech-modal" id="supportModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:#ffffff; border-radius:20px; padding:30px; z-index:999999; width:90%; max-width:480px; box-shadow:0 20px 50px rgba(15,23,42,0.2); border:1px solid var(--color-border); direction:rtl; text-align:right;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+            <h3 style="font-size:18px; font-weight:900; color:var(--color-navy); display:flex; align-items:center; gap:8px;">
+                <i class="fa-solid fa-headset" style="color:var(--color-primary);"></i> مركز خدمة العملاء والدعم الفني
+            </h3>
+            <button onclick="closeSupportModal()" style="background:#f1f5f9; border:none; width:32px; height:32px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; color:var(--color-slate);">✕</button>
         </div>
-      </div>
-      <div class="feature-item">
-        <div class="feature-icon"><i class="fas fa-award"></i></div>
-        <div class="feature-info">
-          <h4>منتجات أصلية 100%</h4>
-          <p>ضمان الوكلاء المعتمدين وسيريال أصلي</p>
+        <p style="font-size: 13.5px; color: #1e293b !important; font-weight: 600; line-height: 1.6; margin-bottom: 20px;">
+            فريق المهندسين والدعم الفني متاح على مدار الساعة للإجابة عن أي استفسار تقني أو متابعة طلبك:
+        </p>
+        <div style="display:flex; flex-direction:column; gap:12px;">
+            <a href="https://wa.me/201027093535" target="_blank" style="display:flex; align-items:center; gap:14px; padding:14px; background:#f0fdf4; border:1px solid #bbf7d0; border-radius:14px; color:#166534; font-weight:800; font-size:14px;" rel="noopener">
+                <i class="fa-brands fa-whatsapp" style="font-size:24px; color:#22c55e;"></i>
+                <div>
+                    <div>المحادثة الفورية عبر واتساب</div>
+                    <div style="font-size:11.5px; color:#15803d; font-weight:600;">متوسط وقت الرد: أقل من دقيقة</div>
+                </div>
+            </a>
+            <a href="tel:01027093535" style="display:flex; align-items:center; gap:14px; padding:14px; background:#eff6ff; border:1px solid #bfdbfe; border-radius:14px; color:#1e40af; font-weight:800; font-size:14px;">
+                <i class="fa-solid fa-phone" style="font-size:20px; color:#2563eb;"></i>
+                <div>
+                    <div>الاتصال بالرقم الموحد المجاني</div>
+                    <div style="font-size:11.5px; color:#3b82f6; font-weight:600;">800-TECH-NOVA (800-832-46682)</div>
+                </div>
+            </a>
         </div>
-      </div>
-      <div class="feature-item">
-        <div class="feature-icon"><i class="fas fa-undo-alt"></i></div>
-        <div class="feature-info">
-          <h4>استبدال واسترجاع سهل</h4>
-          <p>سياسة مرنة لمدة 14 يوماً مع المعاينة</p>
-        </div>
-      </div>
-      <div class="feature-item">
-        <div class="feature-icon"><i class="fas fa-headset"></i></div>
-        <div class="feature-info">
-          <h4>دعم فني واستشارات</h4>
-          <p>فريقنا معك عبر واتساب على مدار الساعة</p>
-        </div>
-      </div>
     </div>
-  </div>
 
-  <!-- Products Section -->
-  <section class="section" id="productsSection">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-badge">أحدث الإصدارات</span>
-        <h2 class="section-title">أحدث الأجهزة والإلكترونيات الذكية</h2>
-        <p class="section-subtitle">اختر القسم المناسب وتصفح مواصفات وأسعار أحدث المنتجات التقنية مع إمكانية الطلب المباشر عبر واتساب</p>
-      </div>
+    <!-- JAVASCRIPT CONTROLLERS (100% BULLETPROOF - ZERO AMPERSANDS) -->
+    <script>
+    /* ==========================================================================
+       1. FLASH DEALS 4-CARD SLIDESHOW WITH AUTOPLAY & SMOOTH CONTROLS
+       ========================================================================== */
+    var sliderCurrentIndex = 0;
+    var sliderTotalItems = 6;
+    var sliderAutoPlayTimer = null;
 
-      <!-- Categories Filter Tabs -->
-      <div class="category-tabs" id="categoryTabs"></div>
+    function getVisibleCardsCount() {
+        if (window.innerWidth <= 768) return 1;
+        if (window.innerWidth <= 1024) return 2;
+        return 4; // Exactly 4 cards on desktop!
+    }
 
-      <!-- Products Grid -->
-      <div class="products-grid" id="productsGrid"></div>
-    </div>
-  </section>
+    function updateSliderPosition() {
+        var track = document.getElementById('sliderTrack');
+        if (!track) return;
+        var visibleCards = getVisibleCardsCount();
+        var maxIndex = Math.max(0, sliderTotalItems - visibleCards);
+        if (sliderCurrentIndex > maxIndex) sliderCurrentIndex = maxIndex;
+        if (sliderCurrentIndex < 0) sliderCurrentIndex = 0;
+        
+        // Positive offset moves track in RTL to reveal items smoothly
+        var percentagePerCard = 100 / visibleCards;
+        var offset = sliderCurrentIndex * percentagePerCard;
+        track.style.transform = 'translateX(' + offset + '%)';
+    }
 
-  <!-- Promo Banner -->
-  <div class="container">
-    <div class="promo-banner">
-      <div class="promo-content">
-        <h3>هل تبحث عن جهاز محدد أو كمية للشركات؟</h3>
-        <p>تواصل مع فريق تكنو نوفا مباشرة عبر واتساب للحصول على أسعار الجملة وعروض المشاريع الحصرية.</p>
-      </div>
-      <a href="https://wa.me/201027093535" target="_blank" class="btn-whatsapp-checkout store-whatsapp-link" style="width: auto; padding: 14px 28px;">
-        <i class="fab fa-whatsapp" style="font-size: 1.3rem;"></i> محادثة واتساب فورية
-      </a>
-    </div>
-  </div>
+    function slideNext() {
+        var visibleCards = getVisibleCardsCount();
+        var maxIndex = Math.max(0, sliderTotalItems - visibleCards);
+        if (sliderCurrentIndex < maxIndex) {
+            sliderCurrentIndex = sliderCurrentIndex + 1;
+        } else {
+            sliderCurrentIndex = 0; // loop back to first
+        }
+        updateSliderPosition();
+    }
 
-  <!-- Reviews Section -->
-  <section class="section" style="background: #f1f5f9;">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-badge">تجارب حقيقية</span>
-        <h2 class="section-title">آراء وتقييمات عملائنا الكرام</h2>
-        <p class="section-subtitle">أكثر من 15,000 عميل يثقون في متجر تكنو نوفا لجودة الأجهزة والسرعة العالية في التوصيل</p>
-      </div>
+    function slidePrev() {
+        var visibleCards = getVisibleCardsCount();
+        var maxIndex = Math.max(0, sliderTotalItems - visibleCards);
+        if (sliderCurrentIndex > 0) {
+            sliderCurrentIndex = sliderCurrentIndex - 1;
+        } else {
+            sliderCurrentIndex = maxIndex; // loop to last
+        }
+        updateSliderPosition();
+    }
 
-      <div class="reviews-grid">
-        <div class="review-card">
-          <div class="review-rating">
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-          </div>
-          <p>"ساعة التيتانيوم خرافية، شاشتها تحت أشعة الشمس واضحة جداً والبطارية قعدت معايا أسبوع كامل بدون شحن. التوصيل كان في أقل من 24 ساعة."</p>
-          <div class="reviewer-info">
-            <div class="reviewer-avatar">ع</div>
-            <div class="reviewer-meta">
-              <h5>عبدالرحمن القحطاني</h5>
-              <span>عميل موثق - الرياض</span>
-            </div>
-          </div>
-        </div>
+    function startSliderAutoPlay() {
+        stopSliderAutoPlay();
+        sliderAutoPlayTimer = setInterval(function() {
+            slideNext();
+        }, 3600);
+    }
 
-        <div class="review-card">
-          <div class="review-rating">
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-          </div>
-          <p>"سماعة الرأس ANC Pro عزل الضوضاء فيها ينافس الماركات العالمية اللي بتلات أضعاف السعر، جربتها في رحلة طيران وكانت مريحة جداً ونقاء الصوت 10/10."</p>
-          <div class="reviewer-info">
-            <div class="reviewer-avatar">م</div>
-            <div class="reviewer-meta">
-              <h5>محمد إبراهيم</h5>
-              <span>عميل موثق - جدة</span>
-            </div>
-          </div>
-        </div>
+    function stopSliderAutoPlay() {
+        if (sliderAutoPlayTimer) {
+            clearInterval(sliderAutoPlayTimer);
+            sliderAutoPlayTimer = null;
+        }
+    }
 
-        <div class="review-card">
-          <div class="review-rating">
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-          </div>
-          <p>"قاعدة الشحن 3 في 1 حلت مشكلة الأسلاك على مكتبي تماماً، بتشحن الآيفون والساعة والسماعة بكفاءة وبدون أي حرارة زائدة. شكراً لفريق الدعم المحترم."</p>
-          <div class="reviewer-info">
-            <div class="reviewer-avatar">س</div>
-            <div class="reviewer-meta">
-              <h5>سارة التميمي</h5>
-              <span>عميلة موثقة - الدمام</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+    // Attach pause on mouse hover
+    var sliderViewport = document.querySelector('.tech-slider-viewport');
+    if (sliderViewport) {
+        sliderViewport.addEventListener('mouseenter', stopSliderAutoPlay);
+        sliderViewport.addEventListener('mouseleave', startSliderAutoPlay);
+    }
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <div class="logo" style="color: #fff; margin-bottom: 15px;">
-            <i class="fas fa-microchip"></i>
-            <span class="store-name-text">تكنو نوفا</span>
-          </div>
-          <p>متجرك المتخصص للأجهزة الذكية والإلكترونيات العصرية، نقدم أفضل الماركات العالمية المعتمدة مع ضمان حقيقي وخدمة عملاء ممتازة قبل وبعد البيع.</p>
-          <div style="display: flex; gap: 10px; font-size: 1.2rem;">
-            <a href="https://wa.me/201027093535" target="_blank" style="color: #25d366;"><i class="fab fa-whatsapp"></i></a>
-            <a href="#" style="color: #3b82f6;"><i class="fab fa-facebook"></i></a>
-            <a href="#" style="color: #ec4899;"><i class="fab fa-instagram"></i></a>
-            <a href="#" style="color: #06b6d4;"><i class="fab fa-twitter"></i></a>
-          </div>
-        </div>
+    window.addEventListener('resize', function() {
+        updateSliderPosition();
+    });
 
-        <div class="footer-col">
-          <h4>روابط سريعة</h4>
-          <ul class="footer-links">
-            <li><a href="index.html"><i class="fas fa-chevron-left"></i> الرئيسية</a></li>
-            <li><a href="shop.html"><i class="fas fa-chevron-left"></i> كافة الأجهزة</a></li>
-            <li><a href="about.html"><i class="fas fa-chevron-left"></i> من نحن</a></li>
-            <li><a href="contact.html"><i class="fas fa-chevron-left"></i> اتصل بنا</a></li>
-            <li><a href="admin/index.html"><i class="fas fa-chevron-left"></i> لوحة التحكم</a></li>
-          </ul>
-        </div>
+    /* ==========================================================================
+       2. CATALOG CATEGORIES & DYNAMIC FILTERING (WITH AUTO-SCROLL TO PRODUCTS)
+       ========================================================================== */
+    var currentCategory = 'all';
+    var currentSort = 'featured';
+    var maxPriceFilter = 2500;
 
-        <div class="footer-col">
-          <h4>أقسام المتجر</h4>
-          <ul class="footer-links">
-            <li><a href="shop.html"><i class="fas fa-chevron-left"></i> ساعات ذكية ورياضية</a></li>
-            <li><a href="shop.html"><i class="fas fa-chevron-left"></i> سماعات وصوتيات Hi-Res</a></li>
-            <li><a href="shop.html"><i class="fas fa-chevron-left"></i> شواحن MagSafe وQi</a></li>
-            <li><a href="shop.html"><i class="fas fa-chevron-left"></i> درون وتصوير سينمائي 4K</a></li>
-            <li><a href="shop.html"><i class="fas fa-chevron-left"></i> أجهزة منزلية ذكية</a></li>
-          </ul>
-        </div>
+    function filterCategory(cat, btn) {
+        currentCategory = cat;
 
-        <div class="footer-col">
-          <h4>تواصل واستفسارات</h4>
-          <div class="footer-contact-item">
-            <i class="fas fa-phone-alt"></i>
-            <div>
-              <strong>الهاتف المباشر:</strong><br>
-              <a href="tel:01027093535" class="store-phone-text">01027093535</a>
-            </div>
-          </div>
-          <div class="footer-contact-item">
-            <i class="fab fa-whatsapp"></i>
-            <div>
-              <strong>خدمة عملاء واتساب:</strong><br>
-              <a href="https://wa.me/201027093535" target="_blank" class="store-whatsapp-link">+20 102 709 3535</a>
-            </div>
-          </div>
-          <div class="footer-contact-item">
-            <i class="fas fa-clock"></i>
-            <div>
-              <strong>أوقات العمل:</strong><br>
-              يومياً من 9:00 صباحاً حتى 11:00 مساءً
-            </div>
-          </div>
-        </div>
-      </div>
+        // Highlight sidebar button
+        var sideBtns = document.querySelectorAll('.tech-filter-cat-btn');
+        sideBtns.forEach(function(b) {
+            b.classList.remove('active');
+            var onclickAttr = b.getAttribute('onclick') || '';
+            if (onclickAttr.indexOf("'" + cat + "'") !== -1) {
+                b.classList.add('active');
+            }
+        });
 
-      <div class="footer-bottom">
-        <p>جميع الحقوق محفوظة © 2026 لمتجر <span class="store-name-text">تكنو نوفا | Techno Nova</span> - مشغل بواسطة Cloudflare Pages</p>
-      </div>
-    </div>
-  </footer>
+        // Highlight navbar tab
+        var navItems = document.querySelectorAll('.tech-nav-item');
+        navItems.forEach(function(item) {
+            item.classList.remove('active');
+            var link = item.querySelector('a');
+            if (link) {
+                var onclickAttr = link.getAttribute('onclick') || '';
+                if (cat !== 'all') {
+                    if (onclickAttr.indexOf("'" + cat + "'") !== -1) {
+                        item.classList.add('active');
+                    }
+                }
+            }
+        });
 
-  <!-- Slide-out Cart Drawer -->
-  <div class="cart-drawer-overlay" id="cartOverlay" onclick="closeCartDrawer()"></div>
-  <div class="cart-drawer" id="cartDrawer">
-    <div class="cart-header">
-      <h3><i class="fas fa-shopping-bag"></i> سلة المشتريات</h3>
-      <button class="close-cart-btn" onclick="closeCartDrawer()"><i class="fas fa-times"></i></button>
-    </div>
-    <div class="cart-items-body" id="cartItemsList"></div>
-    <div class="cart-footer">
-      <div class="cart-total-row">
-        <span>الإجمالي التقديري:</span>
-        <span class="cart-total-price" id="cartTotalPrice">0 ر.س</span>
-      </div>
-      <button class="btn-whatsapp-checkout" onclick="initiateWhatsAppCheckout()">
-        <i class="fab fa-whatsapp"></i> إتمام الطلب عبر واتساب
-      </button>
-    </div>
-  </div>
+        // Apply filters
+        applyFilters();
 
-  <!-- Quick View Modal -->
-  <div class="modal-overlay" id="quickViewModal" onclick="if(event.target === this) closeModal()">
-    <div class="modal-box">
-      <button class="close-modal-btn" onclick="closeModal()"><i class="fas fa-times"></i></button>
-      <div id="quickViewBody"></div>
-    </div>
-  </div>
+        // Smooth scroll to catalog so user sees the filtered devices!
+        var catalogEl = document.getElementById('catalog');
+        if (catalogEl) {
+            catalogEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
 
-  <!-- WhatsApp Checkout Modal -->
-  <div class="modal-overlay" id="checkoutModal" onclick="if(event.target === this) closeModal()">
-    <div class="modal-box" style="max-width: 520px; padding: 30px;">
-      <button class="close-modal-btn" onclick="closeModal()"><i class="fas fa-times"></i></button>
-      <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 8px; color: #0f172a;">
-        <i class="fab fa-whatsapp" style="color: #25d366;"></i> إتمام الشراء والتأكيد عبر واتساب
-      </h3>
-      <p style="font-size: 0.88rem; color: #64748b; margin-bottom: 20px;">
-        أدخل بيانات التوصيل وسيتم فتح محادثة مباشرة مع خدمة المبيعات برقمك وتفاصيل سلتك لتأكيد الشحن فوراً.
-      </p>
+    function sortProducts(sortType, btn) {
+        currentSort = sortType;
+        if (btn) {
+            document.querySelectorAll('.tech-sort-btn').forEach(function(b) {
+                b.classList.remove('active');
+            });
+            btn.classList.add('active');
+        }
+        applyFilters();
+    }
 
-      <form id="checkoutForm" onsubmit="completeWhatsAppOrder(event)">
-        <div style="margin-bottom: 15px;">
-          <label style="display: block; font-weight: 700; font-size: 0.88rem; margin-bottom: 6px;">الاسم الكريم *</label>
-          <input type="text" id="orderName" required placeholder="مثال: محمد عبدالله" style="width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem;">
-        </div>
+    function filterByPrice(val) {
+        maxPriceFilter = parseInt(val);
+        var display = document.getElementById('priceDisplay');
+        if (display) {
+            display.textContent = parseInt(val).toLocaleString() + ' ر.س';
+        }
+        applyFilters();
+    }
 
-        <div style="margin-bottom: 15px;">
-          <label style="display: block; font-weight: 700; font-size: 0.88rem; margin-bottom: 6px;">رقم الجوال / الواتساب *</label>
-          <input type="tel" id="orderPhone" required placeholder="مثال: 05xxxxxxx أو 010xxxxxxx" style="width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem;">
-        </div>
+    function searchProducts() {
+        applyFilters();
+        var catalogEl = document.getElementById('catalog');
+        if (catalogEl) {
+            catalogEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px;">
-          <div>
-            <label style="display: block; font-weight: 700; font-size: 0.88rem; margin-bottom: 6px;">المدينة *</label>
-            <input type="text" id="orderCity" required placeholder="الرياض / جدة / القاهرة..." style="width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem;">
-          </div>
-          <div>
-            <label style="display: block; font-weight: 700; font-size: 0.88rem; margin-bottom: 6px;">الحي والشارع</label>
-            <input type="text" id="orderAddress" placeholder="اسم الحي والشارع" style="width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem;">
-          </div>
-        </div>
+    function applyFilters() {
+        var searchInput = document.getElementById('searchInput');
+        var query = '';
+        if (searchInput) {
+            query = (searchInput.value || '').trim().toLowerCase();
+        }
+        var items = Array.from(document.querySelectorAll('.prod-item'));
+        var grid = document.getElementById('productsGrid');
+        if (!grid) return;
+        if (!items.length) return;
 
-        <div style="margin-bottom: 20px;">
-          <label style="display: block; font-weight: 700; font-size: 0.88rem; margin-bottom: 6px;">ملاحظات خاصة بالتسليم</label>
-          <textarea id="orderNotes" rows="2" placeholder="أي تفاصيل ترغب بإخبار مندوب التوصيل بها..." style="width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem; resize: none;"></textarea>
-        </div>
+        var visibleItems = [];
 
-        <button type="submit" class="btn-whatsapp-checkout" style="font-size: 1.05rem; padding: 14px;">
-          <i class="fab fa-whatsapp" style="font-size: 1.3rem;"></i> تأكيد الطلب وإرسال عبر واتساب
-        </button>
-      </form>
-    </div>
-  </div>
+        items.forEach(function(item) {
+            var cat = item.getAttribute('data-cat') || '';
+            var price = parseInt(item.getAttribute('data-price') || '0');
+            var name = (item.getAttribute('data-name') || '').toLowerCase();
 
-  <!-- Floating WhatsApp Icon -->
-  <a href="https://wa.me/201027093535" target="_blank" class="floating-whatsapp store-whatsapp-link" title="تواصل معنا عبر واتساب">
-    <i class="fab fa-whatsapp"></i>
-  </a>
+            var isMatch = true;
 
-  <script src="js/store.js"></script>
+            // Category test
+            if (currentCategory !== 'all') {
+                if (cat !== currentCategory) {
+                    isMatch = false;
+                }
+            }
+
+            // Price test
+            if (price > maxPriceFilter) {
+                isMatch = false;
+            }
+
+            // Search query test
+            if (query.length > 0) {
+                if (name.indexOf(query) === -1) {
+                    if (cat.indexOf(query) === -1) {
+                        isMatch = false;
+                    }
+                }
+            }
+
+            if (isMatch) {
+                item.style.display = 'flex';
+                visibleItems.push(item);
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        // Update count
+        var countEl = document.getElementById('visibleCount');
+        if (countEl) {
+            countEl.textContent = visibleItems.length;
+        }
+
+        // Sorting
+        visibleItems.sort(function(a, b) {
+            var pA = parseInt(a.getAttribute('data-price') || '0');
+            var pB = parseInt(b.getAttribute('data-price') || '0');
+            var sA = parseInt(a.getAttribute('data-sales') || '0');
+            var sB = parseInt(b.getAttribute('data-sales') || '0');
+            var fA = parseInt(a.getAttribute('data-featured') || '0');
+            var fB = parseInt(b.getAttribute('data-featured') || '0');
+
+            if (currentSort === 'price-asc') return pA - pB;
+            if (currentSort === 'price-desc') return pB - pA;
+            if (currentSort === 'bestseller') return sB - sA;
+            return fB - fA;
+        });
+
+        visibleItems.forEach(function(item) {
+            grid.appendChild(item);
+        });
+    }
+
+    /* ==========================================================================
+       3. CART & INTERACTIVE DRAWER
+       ========================================================================== */
+    var cart = [];
+
+    function addToCart(title, price, img) {
+        cart.push({ title: title, price: price, img: img });
+        updateCartUI();
+        showToast('تمت إضافة "' + title.substring(0, 25) + '..." إلى سلة المشتريات بنجاح! 🚀');
+    }
+
+    function removeFromCart(index) {
+        cart.splice(index, 1);
+        updateCartUI();
+    }
+
+    function updateCartUI() {
+        var badge = document.getElementById('cartBadge');
+        var headerCount = document.getElementById('cartCountHeader');
+        var totalSum = document.getElementById('cartTotalSum');
+        var container = document.getElementById('cartItemsContainer');
+
+        if (badge) badge.textContent = cart.length;
+        if (headerCount) headerCount.textContent = cart.length;
+
+        var total = 0;
+        cart.forEach(function(item) {
+            total = total + item.price;
+        });
+        if (totalSum) totalSum.textContent = total.toLocaleString() + ' ر.س';
+
+        if (!container) return;
+
+        if (cart.length === 0) {
+            container.innerHTML = '<div class="tech-cart-empty">' +
+                '<i class="fa-solid fa-cart-shopping"></i>' +
+                '<h4>سلتك لا تزال فارغة</h4>' +
+                '<p>تصفح أحدث الأجهزة الذكية وأضفها لسلتك بسهولة</p>' +
+                '</div>';
+            return;
+        }
+
+        var html = '';
+        cart.forEach(function(item, idx) {
+            html += '<div class="tech-cart-item">' +
+                '<img decoding="async" src="' + item.img + '" alt="' + item.title + '" class="tech-cart-item-img">' +
+                '<div class="tech-cart-item-info">' +
+                    '<h5 class="tech-cart-item-title">' + item.title + '</h5>' +
+                    '<div class="tech-cart-item-price">' + item.price.toLocaleString() + ' ر.س</div>' +
+                '</div>' +
+                '<button class="tech-cart-remove" onclick="removeFromCart(' + idx + ')" title="حذف">' +
+                    '<i class="fa-solid fa-trash-can"></i>' +
+                '</button>' +
+            '</div>';
+        });
+        container.innerHTML = html;
+    }
+
+    function toggleCartDrawer() {
+        var overlay = document.getElementById('cartOverlay');
+        var drawer = document.getElementById('cartDrawer');
+        if (overlay) {
+            if (drawer) {
+                overlay.classList.toggle('active');
+                drawer.classList.toggle('active');
+            }
+        }
+    }
+
+    function proceedCheckout() {
+        if (cart.length === 0) {
+            showToast('السلة فارغة! أضف بعض الأجهزة أولاً للمتابعة.');
+            return;
+        }
+        showToast('جاري تحويلك إلى بوابة الدفع الآمنة والتقسيط...');
+    }
+
+    function showToast(msg) {
+        var toast = document.getElementById('techToast');
+        var toastMsg = document.getElementById('toastMsg');
+        if (toast) {
+            if (toastMsg) {
+                toastMsg.textContent = msg;
+                toast.classList.add('show');
+                setTimeout(function() {
+                    toast.classList.remove('show');
+                }, 3500);
+            }
+        }
+    }
+
+    /* ==========================================================================
+       4. MODALS (ORDER TRACKING & 24/7 SUPPORT)
+       ========================================================================== */
+    function openTrackingModal() {
+        var overlay = document.getElementById('trackingOverlay');
+        var modal = document.getElementById('trackingModal');
+        if (overlay) overlay.classList.add('active');
+        if (modal) modal.style.display = 'block';
+    }
+    function closeTrackingModal() {
+        var overlay = document.getElementById('trackingOverlay');
+        var modal = document.getElementById('trackingModal');
+        if (overlay) overlay.classList.remove('active');
+        if (modal) modal.style.display = 'none';
+        var res = document.getElementById('trackResult');
+        if (res) res.style.display = 'none';
+    }
+    function trackShipment() {
+        var input = document.getElementById('trackInput');
+        var res = document.getElementById('trackResult');
+        if (input) {
+            if (input.value.trim().length === 0) {
+                showToast('يرجى إدخال رقم الشحنة للمتابعة');
+                return;
+            }
+        }
+        if (res) res.style.display = 'block';
+    }
+
+    function openSupportModal() {
+        var overlay = document.getElementById('supportOverlay');
+        var modal = document.getElementById('supportModal');
+        if (overlay) overlay.classList.add('active');
+        if (modal) modal.style.display = 'block';
+    }
+    function closeSupportModal() {
+        var overlay = document.getElementById('supportOverlay');
+        var modal = document.getElementById('supportModal');
+        if (overlay) overlay.classList.remove('active');
+        if (modal) modal.style.display = 'none';
+    }
+
+    /* ==========================================================================
+       5. COUNTDOWN TIMER CONTROLLER
+       ========================================================================== */
+    function startCountdown() {
+        var h = 14, m = 35, s = 20;
+        setInterval(function() {
+            s = s - 1;
+            if (s < 0) { s = 59; m = m - 1; }
+            if (m < 0) { m = 59; h = h - 1; }
+            if (h < 0) { h = 24; }
+            var eh = document.getElementById('cd-hours');
+            var em = document.getElementById('cd-minutes');
+            var es = document.getElementById('cd-seconds');
+            if (eh) eh.textContent = h < 10 ? '0' + h : h;
+            if (em) em.textContent = m < 10 ? '0' + m : m;
+            if (es) es.textContent = s < 10 ? '0' + s : s;
+        }, 1000);
+    }
+
+    // Initialize immediately
+    updateSliderPosition();
+    startSliderAutoPlay();
+    startCountdown();
+    </script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d0102709353592" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"bbcadc53fd2b42ecb2fb7edb038b25f4","r":1,"spa":2}' crossorigin="anonymous"></script>
+
+<!-- Floating WhatsApp Button -->
+<a href="https://wa.me/201027093535" target="_blank" class="tech-floating-whatsapp" style="position: fixed; bottom: 25px; right: 25px; width: 60px; height: 60px; background: #25d366; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5); z-index: 9999; text-decoration: none; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'" title="تواصل عبر واتساب">
+    <i class="fa-brands fa-whatsapp"></i>
+</a>
+
+
+    <script src="js/store.js"></script>
 </body>
 </html>
