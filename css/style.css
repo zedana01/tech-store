@@ -2305,3 +2305,106 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
         font-size: 13.5px;
     }
 }
+
+
+/* ==========================================================================
+   CATEGORY GRID & CARD LAYOUT NORMALIZATION
+   ========================================================================== */
+.tech-category-products-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 340px)) !important;
+    gap: 24px !important;
+    justify-content: start !important;
+    align-items: stretch !important;
+    width: 100% !important;
+    margin-bottom: 40px !important;
+}
+
+/* Ensure single or few cards don't float or blow up */
+.tech-category-products-grid .tech-card {
+    width: 100% !important;
+    max-width: 340px !important;
+    min-height: 480px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    background: #ffffff !important;
+    border: 1px solid var(--color-border) !important;
+    border-radius: 18px !important;
+    overflow: hidden !important;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05) !important;
+    position: relative !important;
+    margin: 0 !important;
+    float: none !important;
+    clear: none !important;
+}
+
+.tech-category-products-grid .tech-card:hover {
+    transform: translateY(-5px) !important;
+    border-color: var(--color-primary) !important;
+    box-shadow: 0 12px 28px rgba(2, 132, 199, 0.15) !important;
+}
+
+.tech-category-products-grid .tech-card-img-box {
+    width: 100% !important;
+    height: 230px !important;
+    min-height: 230px !important;
+    max-height: 230px !important;
+    background: #f8fafc !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 20px !important;
+    position: relative !important;
+    overflow: hidden !important;
+    text-align: center !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+}
+
+.tech-category-products-grid .tech-card-img-box img {
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
+    display: block !important;
+    margin: 0 auto !important;
+    transition: transform 0.35s ease !important;
+}
+
+.tech-category-products-grid .tech-card:hover .tech-card-img-box img {
+    transform: scale(1.06) !important;
+}
+
+.tech-category-products-grid .tech-card-body {
+    padding: 18px 20px 22px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 !important;
+    justify-content: space-between !important;
+    gap: 14px !important;
+    background: #ffffff !important;
+}
+
+.tech-category-products-grid .tech-card-cat {
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+    color: var(--color-primary) !important;
+    margin-bottom: 6px !important;
+}
+
+.tech-category-products-grid .tech-card-title {
+    font-size: 15.5px !important;
+    font-weight: 800 !important;
+    line-height: 1.5 !important;
+    margin-bottom: 8px !important;
+    color: var(--color-navy) !important;
+    min-height: 46px !important;
+}
+
+@media (max-width: 640px) {
+    .tech-category-products-grid {
+        grid-template-columns: 1fr !important;
+    }
+    .tech-category-products-grid .tech-card {
+        max-width: 100% !important;
+    }
+}

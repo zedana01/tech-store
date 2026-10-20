@@ -153,18 +153,18 @@
         </div>
     </section>
 
-    <!-- 4. PRODUCTS CATALOG GRID FOR THIS CATEGORY -->
-    <section class="tech-section" style="padding-top: 10px;">
+    <!-- 4. MAIN CATEGORY PRODUCTS SECTION -->
+    <section class="tech-section" style="padding-top: 10px; padding-bottom: 30px;">
         <div class="tech-container">
             <!-- Controls Bar -->
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 14px; background: #ffffff; padding: 14px 20px; border-radius: 16px; border: 1px solid var(--color-border);">
-                <div style="font-size: 15px; font-weight: 700; color: var(--color-navy); display: flex; align-items: center; gap: 8px;">
-                    <i class="fa-solid fa-filter" style="color: var(--color-primary);"></i>
-                    <span id="catProductsStatus">عرض كافة منتجات القسم</span>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 14px; background: #ffffff; padding: 14px 22px; border-radius: 16px; border: 1px solid var(--color-border); box-shadow: 0 2px 10px rgba(0,0,0,0.02);">
+                <div style="font-size: 15px; font-weight: 800; color: var(--color-navy); display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-boxes-stacked" style="color: var(--color-primary); font-size: 17px;"></i>
+                    <span id="catProductsStatus">جاري تحميل أجهزة هذا القسم...</span>
                 </div>
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <span style="font-size: 13.5px; color: var(--color-slate); font-weight: 600;">ترتيب حسب:</span>
-                    <select id="sortSelect" onchange="sortCategoryProducts()" style="padding: 8px 14px; border: 1.5px solid var(--color-border); border-radius: 10px; font-family: var(--font-main); font-size: 13px; font-weight: 600; outline: none; background: #f8fafc;">
+                    <select id="sortSelect" onchange="sortCategoryProducts()" style="padding: 8px 14px; border: 1.5px solid var(--color-border); border-radius: 10px; font-family: var(--font-main); font-size: 13px; font-weight: 700; outline: none; background: #f8fafc; cursor: pointer;">
                         <option value="featured">الأكثر تميزاً وشهرة</option>
                         <option value="price-asc">السعر: من الأقل للأعلى</option>
                         <option value="price-desc">السعر: من الأعلى للأقل</option>
@@ -172,9 +172,26 @@
                 </div>
             </div>
 
-            <!-- Products Grid Container -->
-            <div class="tech-catalog-grid" id="categoryProductsGrid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px;">
-                <!-- Dynamically populated -->
+            <!-- Products Grid Container (Normalized Layout) -->
+            <div class="tech-category-products-grid" id="categoryProductsGrid">
+                <!-- Dynamically populated with normalized cards -->
+            </div>
+
+            <!-- Recommendations Section for richer experience -->
+            <div id="recommendationsWrapper" style="margin-top: 40px; padding-top: 36px; border-top: 1.5px solid #e2e8f0;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <div>
+                        <span style="font-size: 13px; font-weight: 700; color: var(--color-primary); display: block; margin-bottom: 4px;">تشكيلة تكنو نوفا المختارة</span>
+                        <h3 style="font-size: 20px; font-weight: 900; color: var(--color-navy);">أجهزة مقترحة لك من الأقسام الأخرى</h3>
+                    </div>
+                    <a href="shop.html" class="btn-tech-secondary" style="padding: 8px 16px; font-size: 13px;">
+                        <span>تصفح كل المتجر</span>
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </a>
+                </div>
+                <div class="tech-category-products-grid" id="recommendationsGrid">
+                    <!-- Populated with cross-category recommendations -->
+                </div>
             </div>
         </div>
     </section>
@@ -372,6 +389,7 @@
         }
     };
 
+    // Built-in verified products with 100% existing local images
     const defaultProducts = [
         {
             id: 1,
@@ -394,7 +412,7 @@
             price: 490,
             oldPrice: 650,
             discount: 'خصم 25%',
-            image: 'images/prod_headphones.jpg',
+            image: 'images/prod_silver_headphones.jpg',
             badge: 'الأكثر مبيعاً',
             specs: ['عزل ضوضاء ANC', 'صوت Hi-Res محيطي', 'بطارية 40 ساعة'],
             reviewsCount: 215
@@ -407,7 +425,7 @@
             price: 260,
             oldPrice: 350,
             discount: 'خصم 26%',
-            image: 'images/prod_magsafe_charger.jpg',
+            image: 'images/prod_wireless_charger.jpg',
             badge: 'جديد 2026',
             specs: ['شحن سريع 15W', 'MagSafe أصلي', 'حماية ضد الحرارة'],
             reviewsCount: 88
@@ -420,7 +438,7 @@
             price: 380,
             oldPrice: 480,
             discount: 'خصم 21%',
-            image: 'images/prod_speaker.jpg',
+            image: 'images/prod_smart_speaker.jpg',
             badge: 'مميز جداً',
             specs: ['صوت محيطي 360°', 'إضاءات RGB متزامنة', 'مقاوم للماء IPX7'],
             reviewsCount: 94
@@ -433,7 +451,7 @@
             price: 320,
             oldPrice: 420,
             discount: 'خصم 24%',
-            image: 'images/prod_earbuds.jpg',
+            image: 'images/prod_earbuds_pro.jpg',
             badge: 'الأعلى تقييماً',
             specs: ['بلوتوث 5.4', 'شحن لاسلكي سريع', 'ميكروفونات عازلة'],
             reviewsCount: 176
@@ -446,10 +464,62 @@
             price: 1850,
             oldPrice: 2400,
             discount: 'خصم 23%',
-            image: 'images/prod_drone.jpg',
+            image: 'images/prod_smart_drone.jpg',
             badge: 'إصدار برو',
             specs: ['كاميرا 4K HDR', 'مدى طيران 10 كم', 'مثبت 3-Axis Gimbal'],
             reviewsCount: 63
+        },
+        {
+            id: 7,
+            name: 'سوار المعصم الرياضي الذكي FitBand Ultra',
+            category: 'watches',
+            categoryName: 'ساعات وأساور ذكية',
+            price: 195,
+            oldPrice: 260,
+            discount: 'خصم 25%',
+            image: 'images/prod_smart_watch.jpg',
+            badge: 'رياضي مريح',
+            specs: ['قياس نبضات القلب', 'مقاوم للماء 50M', 'بطارية 18 يوم'],
+            reviewsCount: 54
+        },
+        {
+            id: 8,
+            name: 'بنك طاقة مغناطيسي MagSafe محمول 10,000mAh',
+            category: 'chargers',
+            categoryName: 'شواحن ومنصات ذكية',
+            price: 185,
+            oldPrice: 240,
+            discount: 'خصم 23%',
+            image: 'images/prod_wireless_charger.jpg',
+            badge: 'فائق النحافة',
+            specs: ['شحن لاسلكي 15W', 'منفذ Type-C 20W', 'تثبيت مغناطيسي قوي'],
+            reviewsCount: 71
+        },
+        {
+            id: 9,
+            name: 'مصباح ذكي تفاعلي بألوان RGB وتحكم صوتي',
+            category: 'home',
+            categoryName: 'أجهزة منزل ذكي',
+            price: 175,
+            oldPrice: 220,
+            discount: 'خصم 20%',
+            image: 'images/prod_smart_speaker.jpg',
+            badge: 'إضاءة ذكية',
+            specs: ['16 مليون لون', 'تزامن مع الصوت', 'تحكم عبر الواي فاي'],
+            reviewsCount: 43
+        },
+        {
+            id: 10,
+            name: 'طائرة درون تصوير جوي ذكية ميني 4K للمبتدئين والسفر',
+            category: 'drones',
+            categoryName: 'درون وتصوير جوي',
+            price: 890,
+            oldPrice: 1150,
+            discount: 'خصم 22%',
+            image: 'images/prod_smart_drone.jpg',
+            badge: 'خفيفة وسهلة',
+            specs: ['تصوير 4K سينمائي', 'طي ذكي مدمج', 'تثبيت GPS دقيق'],
+            reviewsCount: 38
         }
     ];
 
@@ -461,18 +531,57 @@
         return urlParams.get(key);
     }
 
-    function initCategoryPage() {
-        const param = getParam('cat') || 'watches';
+    // Comprehensive category matching logic
+    function matchCategory(p, cat) {
+        if (!cat || cat === 'all') return true;
+        const target = (cat || '').toLowerCase().trim();
+        const pCat = (p.category || '').toLowerCase().trim();
+        const pCatName = (p.categoryName || '').toLowerCase().trim();
+        const pName = (p.name || '').toLowerCase().trim();
+
+        if (target === 'watches') {
+            return pCat === 'watches' || pCatName.includes('ساع') || pName.includes('ساع') || pName.includes('سوار');
+        }
+        if (target === 'audio') {
+            return pCat === 'audio' || pCatName.includes('سماع') || pCatName.includes('صوت') || pName.includes('سماع') || pName.includes('إيربود');
+        }
+        if (target === 'chargers') {
+            return pCat === 'chargers' || pCatName.includes('شاح') || pName.includes('شاح') || pName.includes('منصة') || pName.includes('طاقة');
+        }
+        if (target === 'drones') {
+            return pCat === 'drones' || pCatName.includes('درون') || pName.includes('درون') || pName.includes('طائر');
+        }
+        if (target === 'home' || target === 'smarthome') {
+            return pCat === 'home' || pCat === 'smarthome' || pCatName.includes('منزل') || pName.includes('مكبر') || pName.includes('مصباح') || pName.includes('كاميرا') || pName.includes('تحكم');
+        }
+        return pCat === target;
+    }
+
+    async function loadDataAndInit() {
+        const param = getParam('cat') || 'all';
         currentCat = param.toLowerCase();
         if (currentCat === 'smarthome') currentCat = 'home';
 
-        // Check if products exist in localStorage
-        const stored = localStorage.getItem('technova_products');
-        if (stored) {
+        // 1. Try local storage (admin changes)
+        try {
+            const local = localStorage.getItem('techno_store_data');
+            if (local) {
+                const parsed = JSON.parse(local);
+                if (parsed && Array.isArray(parsed.products) && parsed.products.length > 0) {
+                    allProducts = parsed.products;
+                }
+            }
+        } catch (e) {}
+
+        // 2. Try fetching data/products.json if available
+        if (allProducts === defaultProducts) {
             try {
-                const parsed = JSON.parse(stored);
-                if (Array.isArray(parsed) && parsed.length > 0) {
-                    allProducts = parsed;
+                const res = await fetch('data/products.json?v=' + Date.now());
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data && Array.isArray(data.products) && data.products.length > 0) {
+                        allProducts = data.products;
+                    }
                 }
             } catch (e) {}
         }
@@ -480,6 +589,7 @@
         renderCategoryHeader(currentCat);
         highlightActiveChip(currentCat);
         renderProducts(currentCat);
+        renderRecommendations(currentCat);
         if (typeof updateCartUI === 'function') {
             updateCartUI();
         }
@@ -505,24 +615,66 @@
         });
     }
 
+    function createProductCardHTML(p) {
+        const specsHtml = (p.specs || []).slice(0, 3).map(s => `<span class="tech-spec-tag">${s}</span>`).join('');
+        const escapedName = (p.name || '').replace(/'/g, "\\'");
+        const img = p.image || 'images/prod_smart_watch.jpg';
+
+        return `
+            <div class="tech-card">
+                <span class="tech-card-badge">${p.badge || p.discount || 'مميز'}</span>
+                <a href="product?id=${p.id}" class="tech-card-img-box" style="text-decoration:none; display:flex;">
+                    <img decoding="async" src="${img}" alt="${p.name}" onerror="this.onerror=null; this.src='images/prod_smart_watch.jpg';">
+                </a>
+                <div class="tech-card-body">
+                    <div>
+                        <div class="tech-card-cat">${p.categoryName || 'أجهزة ذكية'}</div>
+                        <h4 class="tech-card-title">
+                            <a href="product?id=${p.id}" style="color:inherit; text-decoration:none; display:inline-block; transition:color 0.2s;" onmouseover="this.style.color='#0284c7'" onmouseout="this.style.color='inherit'">
+                                ${p.name}
+                            </a>
+                        </h4>
+                        <div class="tech-card-specs">
+                            ${specsHtml}
+                        </div>
+                        <div class="tech-card-rating">
+                            <div class="tech-card-stars">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <span class="tech-card-reviews">(${p.reviewsCount || 85} تقييم)</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="tech-card-pricing">
+                            <span class="tech-price-current">${p.price} ر.س</span>
+                            ${p.oldPrice ? `<span class="tech-price-old">${p.oldPrice} ر.س</span>` : ''}
+                        </div>
+                        <div class="tech-card-actions">
+                            <button class="tech-btn-add" onclick="addToCart('${escapedName}', ${p.price}, '${img}')">
+                                <i class="fa-solid fa-cart-plus"></i>
+                                <span>إضافة للسلة</span>
+                            </button>
+                            <a href="product?id=${p.id}" class="tech-btn-view">
+                                <i class="fa-regular fa-eye"></i>
+                                <span>عرض المنتج</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
     function renderProducts(cat, searchTerm = '') {
         const grid = document.getElementById('categoryProductsGrid');
-        let filtered = allProducts;
-
-        if (cat && cat !== 'all') {
-            filtered = filtered.filter(p => {
-                const pCat = (p.category || '').toLowerCase();
-                if (cat === 'home' && (pCat === 'home' || pCat === 'smarthome')) return true;
-                return pCat === cat;
-            });
-        }
+        let filtered = allProducts.filter(p => matchCategory(p, cat));
 
         if (searchTerm) {
             const term = searchTerm.trim().toLowerCase();
             filtered = filtered.filter(p => (p.name || '').toLowerCase().includes(term) || (p.categoryName || '').toLowerCase().includes(term));
         }
 
-        // Update badge status
+        // Update badge and status
         const countBadge = document.getElementById('catCountBadge');
         if (countBadge) {
             countBadge.innerHTML = `<i class="fa-solid fa-boxes-stacked"></i> ${filtered.length} منتجات معتمدة متوفرة`;
@@ -534,65 +686,40 @@
 
         if (filtered.length === 0) {
             grid.innerHTML = `
-                <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; background: #ffffff; border-radius: 20px; border: 1.5px dashed var(--color-border);">
-                    <i class="fa-solid fa-box-open" style="font-size: 50px; color: var(--color-slate); margin-bottom: 16px;"></i>
-                    <h3 style="font-size: 20px; color: var(--color-navy); margin-bottom: 8px;">لا توجد أجهزة مطابقة حالياً</h3>
-                    <p style="color: var(--color-slate); font-size: 14px; margin-bottom: 20px;">جرب تصفح الأقسام الأخرى أو عرض كافة المنتجات</p>
+                <div style="grid-column: 1 / -1; text-align: center; padding: 50px 20px; background: #ffffff; border-radius: 20px; border: 1.5px dashed var(--color-border); width: 100%;">
+                    <i class="fa-solid fa-box-open" style="font-size: 46px; color: var(--color-slate); margin-bottom: 14px;"></i>
+                    <h3 style="font-size: 19px; color: var(--color-navy); margin-bottom: 8px;">لا توجد أجهزة مطابقة حالياً لهذا البحث</h3>
+                    <p style="color: var(--color-slate); font-size: 14px; margin-bottom: 18px;">تصفح كافة الأجهزة المتوفرة في المتجر بكل سهولة</p>
                     <a href="category?cat=all" class="btn-tech-primary" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 12px;">
-                        <i class="fa-solid fa-layer-group"></i> عرض كل المنتجات
+                        <i class="fa-solid fa-layer-group"></i> عرض كل الأجهزة
                     </a>
                 </div>
             `;
             return;
         }
 
-        grid.innerHTML = filtered.map(p => {
-            const specsHtml = (p.specs || []).map(s => `<span class="tech-spec-tag">${s}</span>`).join('');
-            const escapedName = p.name.replace(/'/g, "\\'");
-            return `
-                <div class="tech-card">
-                    <span class="tech-card-badge">${p.badge || p.discount || 'مميز'}</span>
-                    <a href="product?id=${p.id}" class="tech-card-img-box" style="text-decoration:none; display:block;">
-                        <img decoding="async" src="${p.image}" alt="${p.name}" title="عرض تفاصيل ${p.name}">
-                    </a>
-                    <div class="tech-card-body">
-                        <div>
-                            <div class="tech-card-cat">${p.categoryName || 'أجهزة ذكية'}</div>
-                            <h4 class="tech-card-title">
-                                <a href="product?id=${p.id}" style="color:inherit; text-decoration:none; display:inline-block; transition:color 0.2s;" onmouseover="this.style.color='#0284c7'" onmouseout="this.style.color='inherit'">
-                                    ${p.name}
-                                </a>
-                            </h4>
-                            <div class="tech-card-specs">
-                                ${specsHtml}
-                            </div>
-                            <div class="tech-card-rating">
-                                <div class="tech-card-stars">
-                                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                                </div>
-                                <span class="tech-card-reviews">(${p.reviewsCount || 120} تقييم موثق)</span>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="tech-card-pricing">
-                                <span class="tech-price-current">${p.price} ر.س</span>
-                                ${p.oldPrice ? `<span class="tech-price-old">${p.oldPrice} ر.س</span>` : ''}
-                            </div>
-                            <div class="tech-card-actions">
-                                <button class="tech-btn-add" onclick="addToCart('${escapedName}', ${p.price}, '${p.image}')">
-                                    <i class="fa-solid fa-cart-plus"></i>
-                                    <span>إضافة للسلة</span>
-                                </button>
-                                <a href="product?id=${p.id}" class="tech-btn-view">
-                                    <i class="fa-regular fa-eye"></i>
-                                    <span>عرض المنتج</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }).join('');
+        grid.innerHTML = filtered.map(p => createProductCardHTML(p)).join('');
+    }
+
+    function renderRecommendations(cat) {
+        const recGrid = document.getElementById('recommendationsGrid');
+        const recWrapper = document.getElementById('recommendationsWrapper');
+        if (!recGrid) return;
+
+        // Pick products outside the current category
+        let others = allProducts.filter(p => !matchCategory(p, cat));
+        if (others.length === 0) {
+            others = allProducts.slice(0, 3);
+        }
+        // Take up to 3 items
+        const selected = others.slice(0, 3);
+        if (selected.length === 0) {
+            if (recWrapper) recWrapper.style.display = 'none';
+            return;
+        }
+
+        if (recWrapper) recWrapper.style.display = 'block';
+        recGrid.innerHTML = selected.map(p => createProductCardHTML(p)).join('');
     }
 
     function searchCategoryProducts() {
@@ -614,7 +741,7 @@
     }
 
     // Initialize when DOM ready
-    document.addEventListener('DOMContentLoaded', initCategoryPage);
+    document.addEventListener('DOMContentLoaded', loadDataAndInit);
     </script>
 
     <script src="js/store.js"></script>
