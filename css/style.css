@@ -2003,3 +2003,23 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
             }
         }
         
+/* ==========================================================================
+   BRIGHT TEXT IN DARK BANNERS & SECTIONS (USER PREFERENCE)
+   ========================================================================== */
+.tech-hero-desc,
+.page-hero-sub,
+.tech-section-subtitle,
+.tech-spotlight-desc,
+.tech-hero p,
+.page-hero-banner p {
+    color: #f1f5f9 !important;
+    font-weight: 600 !important;
+    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.4) !important;
+}
+
+.tech-hero-title,
+.page-hero-title,
+.tech-spotlight-title {
+    color: #ffffff !important;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.6) !important;
+}
