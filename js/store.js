@@ -443,15 +443,129 @@ function proceedCheckout() {
     msg += `💰 *الإجمالي الكلي:* *${total} ر.س*\n\n`;
     msg += `أود تأكيد الطلب والشحن المباشر.`;
     
-    let waUrl = `https://wa.me/201027093535?text=${encodeURIComponent(msg)}`;
+    // Log order to localStorage for Admin Orders tab
+    try {
+        let orders = JSON.parse(localStorage.getItem('techno_orders') || '[]');
+        let summary = cart.map(i => `${i.name} (x${i.quantity})`).join(', ');
+        orders.unshift({
+            orderNum: orderNum,
+            date: new Date().toLocaleDateString('ar-SA') + ' ' + new Date().toLocaleTimeString('ar-SA'),
+            summary: summary,
+            total: total,
+            fullText: msg
+        });
+        localStorage.setItem('techno_orders', JSON.stringify(orders.slice(0, 50)));
+    } catch(e) {}
+
+    // Dynamic WhatsApp Number from Settings
+    let waPhone = "201027093535";
+    try {
+        let store = JSON.parse(localStorage.getItem('techno_store_data') || '{}');
+        if (store && store.settings && store.settings.whatsappFormatted) {
+            waPhone = store.settings.whatsappFormatted;
+        }
+    } catch(e) {}
+    
+    let waUrl = `https://wa.me/${waPhone}?text=${encodeURIComponent(msg)}`;
     showToast("جاري تحويلك إلى واتساب لإتمام الطلب...");
     setTimeout(() => {
         window.open(waUrl, "_blank");
     }, 800);
 }
 
+// Global Frontend Live Sync from Admin CMS
+function applyLiveStoreData() {
+    let data = null;
+    try {
+        let raw = localStorage.getItem('techno_store_data');
+        if (raw) data = JSON.parse(raw);
+    } catch(e) {}
+
+    if (!data) return;
+
+    // 1. Global Settings
+    if (data.settings) {
+        let s = data.settings;
+        let topAnnounce = document.querySelector('.tech-topbar-text span');
+        if (topAnnounce && s.topbarAnnouncement) {
+            topAnnounce.textContent = s.topbarAnnouncement;
+        }
+        let waFloat = document.querySelector('.tech-floating-whatsapp');
+        if (waFloat && s.whatsappFormatted) {
+            waFloat.href = `https://wa.me/${s.whatsappFormatted}`;
+        }
+        let hotlines = document.querySelectorAll('.tech-nav-hotline span strong');
+        hotlines.forEach(h => {
+            if (s.phone) h.textContent = s.phone;
+        });
+    }
+
+    // 2. Home Page CMS
+    if (data.pages && data.pages.home) {
+        let h = data.pages.home;
+        let heroTitle = document.querySelector('.tech-hero-title');
+        if (heroTitle && h.heroTitle) {
+            heroTitle.innerHTML = h.heroTitle;
+        }
+        let heroTag = document.querySelector('.tech-hero-tag');
+        if (heroTag && h.heroBadge) {
+            heroTag.innerHTML = `<i class="fa-solid fa-bolt"></i> ${h.heroBadge}`;
+        }
+        let heroDesc = document.querySelector('.tech-hero-desc');
+        if (heroDesc && h.heroSubtitle) {
+            heroDesc.textContent = h.heroSubtitle;
+        }
+        let heroImg = document.querySelector('.tech-hero-img-box img');
+        if (heroImg && h.heroImage) {
+            heroImg.src = h.heroImage;
+        }
+        // Trust features
+        if (h.trustFeatures && Array.isArray(h.trustFeatures)) {
+            let featCards = document.querySelectorAll('.tech-feature-card');
+            featCards.forEach((card, idx) => {
+                if (h.trustFeatures[idx]) {
+                    let f = h.trustFeatures[idx];
+                    let tEl = card.querySelector('.tech-feature-title');
+                    let dEl = card.querySelector('.tech-feature-desc');
+                    if (tEl && f.title) tEl.textContent = f.title;
+                    if (dEl && f.desc) dEl.textContent = f.desc;
+                }
+            });
+        }
+        // Spotlight
+        if (h.spotlight) {
+            let sp = h.spotlight;
+            let spTitle = document.querySelector('.tech-spotlight-title');
+            if (spTitle && sp.title) spTitle.textContent = sp.title;
+            let spDesc = document.querySelector('.tech-spotlight-desc');
+            if (spDesc && sp.subtitle) spDesc.textContent = sp.subtitle;
+            let spBadge = document.querySelector('.tech-spotlight-badge');
+            if (spBadge && sp.badge) spBadge.textContent = sp.badge;
+            let spImg = document.querySelector('.tech-spotlight-img img');
+            if (spImg && sp.image) spImg.src = sp.image;
+        }
+    }
+
+    // 3. About Page CMS
+    if (data.pages && data.pages.about && window.location.pathname.includes('about')) {
+        let ab = data.pages.about;
+        let titleEl = document.querySelector('.tech-inner-hero-title');
+        if (titleEl && ab.title) titleEl.textContent = ab.title;
+        let subEl = document.querySelector('.tech-inner-hero-desc');
+        if (subEl && ab.subtitle) subEl.textContent = ab.subtitle;
+    }
+
+    // 4. Contact Page CMS
+    if (data.pages && data.pages.contact && window.location.pathname.includes('contact')) {
+        let ct = data.pages.contact;
+        let titleEl = document.querySelector('.tech-inner-hero-title');
+        if (titleEl && ct.title) titleEl.textContent = ct.title;
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     if (typeof updateCartUI === 'function') {
         updateCartUI();
     }
+    applyLiveStoreData();
 });

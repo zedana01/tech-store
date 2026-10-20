@@ -544,7 +544,14 @@
 
             // Direct WhatsApp link
             const waMsg = `مرحباً، أود الاستفسار وطلب شراء: *${currentProd.name}*\nالسعر: *${currentProd.price} ر.س*\nالكمية المطلوبة: *${selectedQty}*\nرابط المنتج: ${window.location.href}`;
-            document.getElementById('btnDirectWhatsApp').href = `https://wa.me/201027093535?text=${encodeURIComponent(waMsg)}`;
+            let waPhone = "201027093535";
+                try {
+                    const localStore = JSON.parse(localStorage.getItem('techno_store_data') || '{}');
+                    if (localStore && localStore.settings && localStore.settings.whatsappFormatted) {
+                        waPhone = localStore.settings.whatsappFormatted;
+                    }
+                } catch(e) {}
+                document.getElementById('btnDirectWhatsApp').href = `https://wa.me/${waPhone}?text=${encodeURIComponent(waMsg)}`;
 
             // Render Related
             const relatedGrid = document.getElementById('relatedProductsGrid');
@@ -605,7 +612,14 @@
             document.getElementById('detailQty').textContent = selectedQty;
             if (currentProd) {
                 const waMsg = `مرحباً، أود الاستفسار وطلب شراء: *${currentProd.name}*\nالسعر: *${currentProd.price} ر.س*\nالكمية المطلوبة: *${selectedQty}*\nرابط المنتج: ${window.location.href}`;
-                document.getElementById('btnDirectWhatsApp').href = `https://wa.me/201027093535?text=${encodeURIComponent(waMsg)}`;
+                let waPhone = "201027093535";
+                try {
+                    const localStore = JSON.parse(localStorage.getItem('techno_store_data') || '{}');
+                    if (localStore && localStore.settings && localStore.settings.whatsappFormatted) {
+                        waPhone = localStore.settings.whatsappFormatted;
+                    }
+                } catch(e) {}
+                document.getElementById('btnDirectWhatsApp').href = `https://wa.me/${waPhone}?text=${encodeURIComponent(waMsg)}`;
             }
         }
 
