@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>اتصل بنا | تكنو نوفا - Techno Nova</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="top-bar">
+    <div class="container">
+      <div class="top-bar-left">
+        <span><i class="fas fa-truck"></i> خدمة عملاء واستشارات فنية مباشرة</span>
+      </div>
+      <div class="top-bar-right">
+        <a href="tel:01027093535" class="store-phone-text"><i class="fas fa-phone-alt"></i> 01027093535</a>
+        <a href="admin/index.html" style="color: #93c5fd; font-weight: 700;"><i class="fas fa-user-shield"></i> لوحة التحكم</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="logo">
+        <i class="fas fa-microchip"></i>
+        <div><span class="store-name-text">تكنو نوفا</span></div>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+        <li><a href="shop.html"><i class="fas fa-layer-group"></i> كافة الأجهزة</a></li>
+        <li><a href="about.html"><i class="fas fa-info-circle"></i> من نحن</a></li>
+        <li><a href="contact.html" class="active"><i class="fas fa-envelope"></i> اتصل بنا</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="cart-btn" onclick="openCartDrawer()" title="سلة المشتريات">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-badge">0</span>
+        </button>
+        <a href="admin/index.html" class="admin-link-btn" title="دخول الإدارة">
+          <i class="fas fa-cog"></i> <span>الإدارة</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contact Banner -->
+  <section style="background: linear-gradient(135deg, #0b1120 0%, #1e293b 100%); color: #fff; padding: 50px 0; text-align: center;">
+    <div class="container">
+      <h1 style="font-size: 2.3rem; font-weight: 800; margin-bottom: 10px;">يسعدنا دائماً تواصلكم معنا</h1>
+      <p style="color: #94a3b8; font-size: 1rem;">فريق خدمة العملاء جاهز للإجابة على جميع استفساراتكم ومساعدتكم في اختيار جهازكم القادم</p>
+    </div>
+  </section>
+
+  <!-- Contact Grid -->
+  <section class="section">
+    <div class="container" style="max-width: 1000px;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+        
+        <!-- Direct Contact Cards -->
+        <div>
+          <div style="background: #fff; border-radius: 16px; padding: 30px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
+            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+              <div style="width: 50px; height: 50px; border-radius: 12px; background: #dcfce7; color: #16a34a; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+                <i class="fab fa-whatsapp"></i>
+              </div>
+              <div>
+                <h4 style="font-size: 1.1rem; font-weight: 800; color: #0f172a;">محادثة واتساب الفورية</h4>
+                <p style="font-size: 0.85rem; color: #64748b;">الرد خلال دقائق لمتابعة الطلبات والاستفسارات</p>
+              </div>
+            </div>
+            <a href="https://wa.me/201027093535" target="_blank" class="btn-whatsapp-checkout store-whatsapp-link">
+              <i class="fab fa-whatsapp"></i> راسلنا عبر واتساب
+            </a>
+          </div>
+
+          <div style="background: #fff; border-radius: 16px; padding: 30px; border: 1px solid #e2e8f0;">
+            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+              <div style="width: 50px; height: 50px; border-radius: 12px; background: #eff6ff; color: #2563eb; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+                <i class="fas fa-phone-alt"></i>
+              </div>
+              <div>
+                <h4 style="font-size: 1.1rem; font-weight: 800; color: #0f172a;">الاتصال الهاتفي المباشر</h4>
+                <p style="font-size: 0.85rem; color: #64748b;">خط المبيعات المباشر (متاح يومياً)</p>
+              </div>
+            </div>
+            <a href="tel:01027093535" class="btn-primary store-phone-text" style="width: 100%; justify-content: center;">
+              <i class="fas fa-phone-alt"></i> اتصل بنا: 01027093535
+            </a>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div style="background: #fff; border-radius: 16px; padding: 30px; border: 1px solid #e2e8f0;">
+          <h3 style="font-size: 1.3rem; font-weight: 800; color: #0f172a; margin-bottom: 8px;">أرسل رسالة سريعة</h3>
+          <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 20px;">سيتم تحويل رسالتك إلى فريق الدعم الفني فوراً</p>
+
+          <form onsubmit="handleContactSubmit(event)">
+            <div style="margin-bottom: 15px;">
+              <label style="display: block; font-weight: 700; font-size: 0.88rem; margin-bottom: 6px;">الاسم الكريم</label>
+              <input type="text" id="contactName" required placeholder="اسمك" style="width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px;">
+            </div>
+            <div style="margin-bottom: 15px;">
+              <label style="display: block; font-weight: 700; font-size: 0.88rem; margin-bottom: 6px;">رقم الجوال / الواتساب</label>
+              <input type="tel" id="contactPhone" required placeholder="010xxxxxxx" style="width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px;">
+            </div>
+            <div style="margin-bottom: 20px;">
+              <label style="display: block; font-weight: 700; font-size: 0.88rem; margin-bottom: 6px;">تفاصيل رسالتك أو استفسارك</label>
+              <textarea id="contactMessage" rows="4" required placeholder="اكتب استفسارك هنا بالتفصيل..." style="width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px; resize: none;"></textarea>
+            </div>
+            <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 13px;">
+              <i class="fas fa-paper-plane"></i> إرسال الرسالة
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border: none; padding: 0;">
+        <p>جميع الحقوق محفوظة © 2026 لمتجر <span class="store-name-text">تكنو نوفا | Techno Nova</span></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Slide-out Cart Drawer -->
+  <div class="cart-drawer-overlay" id="cartOverlay" onclick="closeCartDrawer()"></div>
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+      <h3><i class="fas fa-shopping-bag"></i> سلة المشتريات</h3>
+      <button class="close-cart-btn" onclick="closeCartDrawer()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="cart-items-body" id="cartItemsList"></div>
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span>الإجمالي التقديري:</span>
+        <span class="cart-total-price" id="cartTotalPrice">0 ر.س</span>
+      </div>
+      <button class="btn-whatsapp-checkout" onclick="initiateWhatsAppCheckout()">
+        <i class="fab fa-whatsapp"></i> إتمام الطلب عبر واتساب
+      </button>
+    </div>
+  </div>
+
+  <a href="https://wa.me/201027093535" target="_blank" class="floating-whatsapp store-whatsapp-link">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <script src="js/store.js"></script>
+  <script>
+    function handleContactSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('contactName').value;
+      const phone = document.getElementById('contactPhone').value;
+      const msg = document.getElementById('contactMessage').value;
+      const fullText = `*رسالة واستفسار جديد من نموذج اتصل بنا* ✉️\n\n• *الاسم:* ${name}\n• *الهاتف:* ${phone}\n• *الرسالة:*\n${msg}`;
+      window.open(`https://wa.me/201027093535?text=${encodeURIComponent(fullText)}`, '_blank');
+      showToast('جاري فتح المحادثة المباشرة عبر واتساب...');
+      e.target.reset();
+    }
+  </script>
+</body>
+</html>
